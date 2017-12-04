@@ -12,11 +12,11 @@ import kotlin.test.assertEquals
  */
 @RunWith(JUnit4::class)
 class PetsEntityMapperTest {
-    private lateinit var petEntityMapper: PetsEntityMapper
+    private lateinit var petEntityMapper: PetEntityMapper
 
     @Before
     fun setup() {
-        petEntityMapper = PetsEntityMapper()
+        petEntityMapper = PetEntityMapper()
     }
 
     @Test

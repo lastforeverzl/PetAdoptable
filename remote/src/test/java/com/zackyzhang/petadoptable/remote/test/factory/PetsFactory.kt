@@ -1,7 +1,8 @@
 package com.zackyzhang.petadoptable.remote.test.factory
 
 import com.zackyzhang.petadoptable.remote.model.*
-import java.util.concurrent.ThreadLocalRandom
+import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomIntInString
+import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomUuid
 
 /**
  * Created by lei on 12/2/17.
@@ -63,14 +64,6 @@ class PetsFactory {
             val animal = Animal(randomUuid())
             return Pet(status, contact, age, size, media, id, breeds, name,
                     sex, description, mix, shelterId, lastUpdate, animal)
-        }
-
-        fun randomUuid(): String {
-            return java.util.UUID.randomUUID().toString()
-        }
-
-        fun randomIntInString(): String {
-            return ThreadLocalRandom.current().nextInt(0, 1000 + 1).toString()
         }
 
     }

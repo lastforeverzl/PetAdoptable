@@ -5,9 +5,10 @@ import com.zackyzhang.petadoptable.remote.model.Pet
 import javax.inject.Inject
 
 /**
- * Created by lei on 12/1/17.
+ * Map a [Pet] to and from a [PetEntity] instance when data is moving between
+ * this layer and the Data layer
  */
-open class PetsEntityMapper @Inject constructor() : EntityMapper<Pet, PetEntity> {
+open class PetEntityMapper @Inject constructor() : EntityMapper<Pet, PetEntity> {
 
     override fun mapFromRemote(type: Pet): PetEntity{
         val cityState = "%s, %s".format(type.contact.city.value, type.contact.state.value)
