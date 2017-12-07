@@ -4,6 +4,7 @@ import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsDataStore
 import com.zackyzhang.petadoptable.data.repository.PetsRemote
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -22,9 +23,15 @@ open class PetsRemoteDataStore @Inject constructor(private val petsRemote: PetsR
         throw UnsupportedOperationException()
     }
 
+    /**
+     * Retrieve a list of [PetEntity] instances from the API
+     */
     override fun getPets(key: String, location: String, options: Map<String, String>):
-            Single<List<PetEntity>> {
+            Flowable<List<PetEntity>> {
         return petsRemote.getPets(key, location, options)
     }
 
+    override fun isCached(): Single<Boolean> {
+        throw UnsupportedOperationException()
+    }
 }

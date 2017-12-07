@@ -1,12 +1,13 @@
 package com.zackyzhang.petadoptable.data.repository
 
 import com.zackyzhang.petadoptable.data.model.PetEntity
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 /**
- * Created by lei on 12/1/17.
+ * Interface defining methods for the caching of Pets. This is to be implemented by the
+ * remote layer, using this interface as a way of communicating.
  */
 interface PetsRemote {
 
-    fun getPets(key: String, location: String, options: Map<String, String>): Single<List<PetEntity>>
+    fun getPets(key: String, location: String, options: Map<String, String>): Flowable<List<PetEntity>>
 }

@@ -3,7 +3,7 @@ package com.zackyzhang.petadoptable.remote
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsRemote
 import com.zackyzhang.petadoptable.remote.mapper.PetEntityMapper
-import io.reactivex.Single
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 /**
@@ -14,7 +14,7 @@ class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinder
         PetsRemote {
 
     override fun getPets(key: String, location: String, options: Map<String, String>):
-            Single<List<PetEntity>> {
+            Flowable<List<PetEntity>> {
         return petFinderService.getPets(key, location, options)
                 .map { result ->
                     result.petfinder.pets.petList.map { listItem ->

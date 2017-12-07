@@ -3,11 +3,10 @@ package com.zackyzhang.petadoptable.data
 import com.zackyzhang.petadoptable.data.mapper.PetMapper
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.source.PetsDataStoreFactory
-import com.zackyzhang.petadoptable.data.source.PetsRemoteDataStore
 import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 /**
@@ -18,35 +17,27 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
                                              private val petsMapper: PetMapper) :
         PetsRepository {
     override fun clearPets(): Completable {
-        TODO("need implement cache")
+        return factory.retrieveCacheDataStore().clearPets()
     }
 
     override fun savePets(pets: List<Pet>): Completable {
-        val petEntities = pets.map { petsMapper.mapToEntity(it) }
-        return savePetEntities(petEntities)
+        val petEntities = mutableListOf<PetEntity>()
+        pets.map { petEntities.add(petsMapper.mapToEntity(it)) }
+        return factory.retrieveCacheDataStore().savePets(petEntities)
     }
 
     override fun getPets(key: String, location: String, options: Map<String, String>):
-            Single<List<Pet>> {
-        val dataStore = factory.retriveDataStore()
-        return dataStore.getPets(key, location, options)
+            Flowable<List<Pet>> {
+        return factory.retrieveCacheDataStore().isCached()
+                .flatMapPublisher {
+                    factory.retrieveDataStore(it).getPets(key, location, options)
+                }
                 .flatMap {
-                    if (dataStore is PetsRemoteDataStore) {
-//                        savePetEntities(it).toSingle { it }
-                        Single.just(it) // todo: delete after implement cache
-                    } else {
-                        Single.just(it)
-                    }
+                    Flowable.just(it.map { petsMapper.mapFromEntity(it) })
                 }
-                .map { list ->
-                    list.map { listItem ->
-                        petsMapper.mapFromEntity(listItem)
-                    }
-
+                .flatMap {
+                    savePets(it).toSingle { it }.toFlowable()
                 }
     }
 
-    private fun savePetEntities(pets: List<PetEntity>): Completable {
-        TODO("need implement cache")
-    }
 }

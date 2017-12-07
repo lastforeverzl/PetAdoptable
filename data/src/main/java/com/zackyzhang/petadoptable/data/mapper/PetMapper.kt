@@ -14,7 +14,7 @@ open class PetMapper @Inject constructor(): Mapper<PetEntity, Pet> {
      * Map a [PetEntity] instance to a [Pet] instance
      */
     override fun mapFromEntity(type: PetEntity): Pet {
-        return Pet(type.status, type.cityState, type.age, type.size, type.media, type.id, type.breeds,
+        return Pet(type.status, type.cityState, type.age, type.size, type.medias, type.id, type.breeds,
                 type.name, type.sex, type.description, type.mix, type.shelterId, type.lastUpdate, type.animal)
     }
 

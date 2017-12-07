@@ -46,7 +46,7 @@ class PetMapperTest {
         assertEquals(petEntity.description, pet.description)
         assertEquals(petEntity.id, pet.id)
         assertEquals(petEntity.lastUpdate, pet.lastUpdate)
-        assertEquals(petEntity.media, pet.media)
+        assertEquals(petEntity.medias, pet.media)
         assertEquals(petEntity.mix, pet.mix)
         assertEquals(petEntity.name, pet.name)
         assertEquals(petEntity.shelterId, pet.shelterId)

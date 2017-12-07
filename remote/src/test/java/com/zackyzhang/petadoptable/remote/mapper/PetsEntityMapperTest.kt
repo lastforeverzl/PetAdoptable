@@ -33,7 +33,7 @@ class PetsEntityMapperTest {
         assertEquals(petModel.description.value, petEntity.description)
         assertEquals(petModel.id.value, petEntity.id)
         assertEquals(petModel.lastUpdate.value, petEntity.lastUpdate)
-        assertEquals(petModel.media.photos.photoList[0].value, petEntity.media[0])
+        assertEquals(petModel.media.photos.photoList[0].value, petEntity.medias[0])
         assertEquals(petModel.mix.value, petEntity.mix)
         assertEquals(petModel.sex.value, petEntity.sex)
         assertEquals(petModel.size.value, petEntity.size)

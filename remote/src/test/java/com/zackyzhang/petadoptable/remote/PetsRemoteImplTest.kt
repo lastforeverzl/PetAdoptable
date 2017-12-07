@@ -7,7 +7,7 @@ import com.zackyzhang.petadoptable.remote.mapper.PetEntityMapper
 import com.zackyzhang.petadoptable.remote.model.GetPetsResponse
 import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomUuid
 import com.zackyzhang.petadoptable.remote.test.factory.PetsFactory
-import io.reactivex.Single
+import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,7 +37,7 @@ class PetsRemoteImplTest {
 
     @Test
     fun getPetsComplete() {
-        stubPetsServiceGetPets(Single.just(PetsFactory.makePetsResposne()))
+        stubPetsServiceGetPets(Flowable.just(PetsFactory.makePetsResposne()))
         val testObserver = petsRemoteImpl.getPets(key, location, mutableMapOf()).test()
         testObserver.assertComplete()
     }
@@ -45,7 +45,7 @@ class PetsRemoteImplTest {
     @Test
     fun getPetsReturnData() {
         val getPetsResposne = PetsFactory.makePetsResposne()
-        stubPetsServiceGetPets(Single.just(getPetsResposne))
+        stubPetsServiceGetPets(Flowable.just(getPetsResposne))
         val petEntities = mutableListOf<PetEntity>()
         getPetsResposne.petfinder.pets.petList.forEach {
             petEntities.add(entityMapper.mapFromRemote(it))
@@ -54,8 +54,8 @@ class PetsRemoteImplTest {
         testObserver.assertValue(petEntities)
     }
 
-    private fun stubPetsServiceGetPets(single: Single<GetPetsResponse>) {
+    private fun stubPetsServiceGetPets(observer: Flowable<GetPetsResponse>) {
         whenever(petFinderService.getPets(key, location, mutableMapOf()))
-                .thenReturn(single)
+                .thenReturn(observer)
     }
 }

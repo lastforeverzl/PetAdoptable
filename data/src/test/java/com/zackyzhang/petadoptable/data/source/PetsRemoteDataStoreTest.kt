@@ -6,7 +6,7 @@ import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsRemote
 import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.data.test.factory.PetFactory
-import io.reactivex.Single
+import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,13 +45,14 @@ class PetsRemoteDataStoreTest {
 
     @Test
     fun getPetsCompletes() {
-        stubPetRemoteGetPets(Single.just(PetFactory.makePetEntityList(2)))
+        stubPetsRemoteGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
         val testObserver = petsRemote.getPets(key, location, mutableMapOf()).test()
         testObserver.assertComplete()
     }
 
-    private fun stubPetRemoteGetPets(single: Single<List<PetEntity>>) {
+    private fun stubPetsRemoteGetPets(flowable: Flowable<List<PetEntity>>) {
         whenever(petsRemote.getPets(key, location, mutableMapOf()))
-                .thenReturn(single)
+                .thenReturn(flowable)
     }
+
 }

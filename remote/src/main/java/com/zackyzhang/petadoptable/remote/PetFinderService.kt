@@ -4,6 +4,7 @@ import com.zackyzhang.petadoptable.remote.model.GetPetResponse
 import com.zackyzhang.petadoptable.remote.model.GetPetsResponse
 import com.zackyzhang.petadoptable.remote.model.GetShelterResponse
 import com.zackyzhang.petadoptable.remote.model.GetSheltersResponse
+import io.reactivex.Flowable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,7 +18,7 @@ interface PetFinderService {
     @GET("pet.find?format=json")
     fun getPets(@Query("key") key: String,
                 @Query("location") location: String,
-                @QueryMap options: Map<String, String>) : Single<GetPetsResponse>
+                @QueryMap options: Map<String, String>) : Flowable<GetPetsResponse>
 
     @GET("shelter.get?format=json")
     fun getShelterById(@Query("key") key: String,
