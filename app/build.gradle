@@ -70,7 +70,7 @@ dependencies {
 
     implementation project(':presentation')
     implementation project(':data')
-//    implementation project(':cache')
+    implementation project(':cache')
     implementation project(':remote')
 
     implementation mobileUiDependencies.javaxAnnotation

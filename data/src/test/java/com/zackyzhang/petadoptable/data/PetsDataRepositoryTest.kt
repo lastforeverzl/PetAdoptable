@@ -7,7 +7,6 @@ import com.zackyzhang.petadoptable.data.repository.PetsDataStore
 import com.zackyzhang.petadoptable.data.source.PetsCacheDataStore
 import com.zackyzhang.petadoptable.data.source.PetsDataStoreFactory
 import com.zackyzhang.petadoptable.data.source.PetsRemoteDataStore
-import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.data.test.factory.PetFactory
 import com.zackyzhang.petadoptable.domain.model.Pet
 import io.reactivex.Completable
@@ -28,13 +27,8 @@ class PetsDataRepositoryTest {
     private lateinit var petsCacheDataStore: PetsCacheDataStore
     private lateinit var petsRemoteDataStore: PetsRemoteDataStore
 
-    private lateinit var key: String
-    private lateinit var location: String
-
     @Before
     fun setUp() {
-        key = randomUuid()
-        location = randomUuid()
         petMapper = mock()
         petsCacheDataStore = mock()
         petsRemoteDataStore = mock()
@@ -97,7 +91,7 @@ class PetsDataRepositoryTest {
         stubPetsDataStoreFactoryRetrieveDataStore(petsCacheDataStore)
         stubPetsCacheDataStoreGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
         stubPetsCacheSavePets(Completable.complete())
-        val testObserver = petsDataRepository.getPets(key, location, mutableMapOf()).test()
+        val testObserver = petsDataRepository.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
     }
 
@@ -113,7 +107,7 @@ class PetsDataRepositoryTest {
         }
         stubPetsCacheDataStoreGetPets(Flowable.just(petEntities))
 
-        val testObserver = petsDataRepository.getPets(key, location, mutableMapOf()).test()
+        val testObserver = petsDataRepository.getPets(mutableMapOf()).test()
         testObserver.assertValue(pets)
     }
 
@@ -162,12 +156,12 @@ class PetsDataRepositoryTest {
     }
 
     private fun stubPetsCacheDataStoreGetPets(flowable: Flowable<List<PetEntity>>) {
-        whenever(petsCacheDataStore.getPets(key, location, mutableMapOf()))
+        whenever(petsCacheDataStore.getPets(mutableMapOf()))
                 .thenReturn(flowable)
     }
 
     private fun stubPetsRemoteDataStoreGetPets(flowable: Flowable<List<PetEntity>>) {
-        whenever(petsRemoteDataStore.getPets(key, location, mutableMapOf()))
+        whenever(petsRemoteDataStore.getPets(mutableMapOf()))
                 .thenReturn(flowable)
     }
 

@@ -17,7 +17,7 @@ interface PetsDataStore {
 
     fun savePets(pets: List<PetEntity>): Completable
 
-    fun getPets(key: String, location: String, options: Map<String, String>): Flowable<List<PetEntity>>
+    fun getPets(options: Map<String, String>): Flowable<List<PetEntity>>
 
     fun isCached(): Single<Boolean>
 }

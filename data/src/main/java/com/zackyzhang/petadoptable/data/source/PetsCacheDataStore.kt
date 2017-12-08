@@ -35,7 +35,7 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
     /**
      * Retrieve a list of [PetEntity] instance from the cache
      */
-    override fun getPets(key: String, location: String, options: Map<String, String>):
+    override fun getPets(options: Map<String, String>):
             Flowable<List<PetEntity>> {
         return petsCache.getPets()
     }

@@ -46,12 +46,12 @@ class PetsRemoteDataStoreTest {
     @Test
     fun getPetsCompletes() {
         stubPetsRemoteGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
-        val testObserver = petsRemote.getPets(key, location, mutableMapOf()).test()
+        val testObserver = petsRemote.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
     }
 
     private fun stubPetsRemoteGetPets(flowable: Flowable<List<PetEntity>>) {
-        whenever(petsRemote.getPets(key, location, mutableMapOf()))
+        whenever(petsRemote.getPets(mutableMapOf()))
                 .thenReturn(flowable)
     }
 

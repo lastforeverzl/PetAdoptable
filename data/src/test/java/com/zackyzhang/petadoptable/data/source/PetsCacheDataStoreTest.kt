@@ -52,7 +52,7 @@ class PetsCacheDataStoreTest {
     @Test
     fun getPetsCompletes() {
         stubPetsCacheGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
-        val testObserver = petsCacheDataStore.getPets(key, location, mutableMapOf()).test()
+        val testObserver = petsCacheDataStore.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
     }
 

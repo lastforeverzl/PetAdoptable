@@ -26,9 +26,9 @@ open class PetsRemoteDataStore @Inject constructor(private val petsRemote: PetsR
     /**
      * Retrieve a list of [PetEntity] instances from the API
      */
-    override fun getPets(key: String, location: String, options: Map<String, String>):
+    override fun getPets(options: Map<String, String>):
             Flowable<List<PetEntity>> {
-        return petsRemote.getPets(key, location, options)
+        return petsRemote.getPets(options)
     }
 
     override fun isCached(): Single<Boolean> {

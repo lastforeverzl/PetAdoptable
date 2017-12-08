@@ -13,9 +13,9 @@ class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinder
                                          private val entityMapper: PetEntityMapper) :
         PetsRemote {
 
-    override fun getPets(key: String, location: String, options: Map<String, String>):
+    override fun getPets(options: Map<String, String>):
             Flowable<List<PetEntity>> {
-        return petFinderService.getPets(key, location, options)
+        return petFinderService.getPets(options)
                 .map { result ->
                     result.petfinder.pets.petList.map { listItem ->
                         entityMapper.mapFromRemote(listItem)

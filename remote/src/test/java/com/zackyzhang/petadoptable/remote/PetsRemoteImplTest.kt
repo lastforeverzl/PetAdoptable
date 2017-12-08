@@ -5,7 +5,6 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.remote.mapper.PetEntityMapper
 import com.zackyzhang.petadoptable.remote.model.GetPetsResponse
-import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomUuid
 import com.zackyzhang.petadoptable.remote.test.factory.PetsFactory
 import io.reactivex.Flowable
 import org.junit.Before
@@ -19,8 +18,6 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class PetsRemoteImplTest {
 
-    private lateinit var key: String
-    private lateinit var location: String
     private lateinit var entityMapper: PetEntityMapper
     private lateinit var petFinderService: PetFinderService
 
@@ -28,8 +25,6 @@ class PetsRemoteImplTest {
 
     @Before
     fun setup() {
-        key = randomUuid()
-        location = randomUuid()
         entityMapper = mock()
         petFinderService = mock()
         petsRemoteImpl = PetsRemoteImpl(petFinderService, entityMapper)
@@ -38,7 +33,7 @@ class PetsRemoteImplTest {
     @Test
     fun getPetsComplete() {
         stubPetsServiceGetPets(Flowable.just(PetsFactory.makePetsResposne()))
-        val testObserver = petsRemoteImpl.getPets(key, location, mutableMapOf()).test()
+        val testObserver = petsRemoteImpl.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
     }
 
@@ -50,12 +45,12 @@ class PetsRemoteImplTest {
         getPetsResposne.petfinder.pets.petList.forEach {
             petEntities.add(entityMapper.mapFromRemote(it))
         }
-        val testObserver = petsRemoteImpl.getPets(key, location, mutableMapOf()).test()
+        val testObserver = petsRemoteImpl.getPets(mutableMapOf()).test()
         testObserver.assertValue(petEntities)
     }
 
     private fun stubPetsServiceGetPets(observer: Flowable<GetPetsResponse>) {
-        whenever(petFinderService.getPets(key, location, mutableMapOf()))
+        whenever(petFinderService.getPets(mutableMapOf()))
                 .thenReturn(observer)
     }
 }

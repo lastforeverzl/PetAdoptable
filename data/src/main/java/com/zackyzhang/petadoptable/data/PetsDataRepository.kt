@@ -26,11 +26,11 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
         return factory.retrieveCacheDataStore().savePets(petEntities)
     }
 
-    override fun getPets(key: String, location: String, options: Map<String, String>):
+    override fun getPets(options: Map<String, String>):
             Flowable<List<Pet>> {
         return factory.retrieveCacheDataStore().isCached()
                 .flatMapPublisher {
-                    factory.retrieveDataStore(it).getPets(key, location, options)
+                    factory.retrieveDataStore(it).getPets(options)
                 }
                 .flatMap {
                     Flowable.just(it.map { petsMapper.mapFromEntity(it) })

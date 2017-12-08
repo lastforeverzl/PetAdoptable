@@ -9,5 +9,5 @@ import io.reactivex.Flowable
  */
 interface PetsRemote {
 
-    fun getPets(key: String, location: String, options: Map<String, String>): Flowable<List<PetEntity>>
+    fun getPets(options: Map<String, String>): Flowable<List<PetEntity>>
 }
