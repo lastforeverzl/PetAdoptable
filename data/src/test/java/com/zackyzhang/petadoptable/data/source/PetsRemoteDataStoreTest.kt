@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsRemote
 import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
-import com.zackyzhang.petadoptable.data.test.factory.PetFactory
+import com.zackyzhang.petadoptable.data.test.factory.PetsFactory
 import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
@@ -40,12 +40,12 @@ class PetsRemoteDataStoreTest {
 
     @Test(expected = UnsupportedOperationException::class)
     fun savePetsThrowsException() {
-        petsRemoteDataStore.savePets(PetFactory.makePetEntityList(2)).test()
+        petsRemoteDataStore.savePets(PetsFactory.makePetEntityList(2)).test()
     }
 
     @Test
     fun getPetsCompletes() {
-        stubPetsRemoteGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
+        stubPetsRemoteGetPets(Flowable.just(PetsFactory.makePetEntityList(2)))
         val testObserver = petsRemote.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
     }

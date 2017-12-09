@@ -9,7 +9,6 @@ import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsCache
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -98,10 +97,8 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     /**
      * Checked if there is any data in the cache
      */
-    override fun isCached(): Single<Boolean> {
-        return Single.defer {
-            Single.just(petAdoptableDatabase.getPetDao().getAllPets().isNotEmpty())
-        }
+    override fun isCached(): Boolean {
+        return petAdoptableDatabase.getPetDao().getAllPets().isNotEmpty()
     }
 
     override fun setLastCacheTime(lastCache: Long) {

@@ -5,7 +5,6 @@ import com.zackyzhang.petadoptable.data.repository.PetsCache
 import com.zackyzhang.petadoptable.data.repository.PetsDataStore
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -40,7 +39,4 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
         return petsCache.getPets()
     }
 
-    override fun isCached(): Single<Boolean> {
-        return petsCache.isCached()
-    }
 }

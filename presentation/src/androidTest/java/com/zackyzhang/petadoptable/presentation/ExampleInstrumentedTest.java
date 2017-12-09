@@ -1,4 +1,4 @@
-package com.zackyzhang.presentation;
+package com.zackyzhang.petadoptable.presentation;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.zackyzhang.presentation.test", appContext.getPackageName());
+        assertEquals("com.zackyzhang.petadoptable.presentation.test", appContext.getPackageName());
     }
 }

@@ -16,8 +16,8 @@ open class PetsDataStoreFactory @Inject constructor(
      * Returns a DataStore based on whether or not there is content in the cache and the cache
      * has not expired
      */
-    open fun retrieveDataStore(isCached: Boolean): PetsDataStore {
-        if (isCached && !petsCache.isExpired()) {
+    open fun retrieveDataStore(offset: String): PetsDataStore {
+        if (petsCache.isCached() && !petsCache.isExpired() && offset.toInt() == 0) {
             return retrieveCacheDataStore()
         }
         return retrieveRemoteDataStore()

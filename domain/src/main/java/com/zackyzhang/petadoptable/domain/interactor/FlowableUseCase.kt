@@ -12,23 +12,23 @@ import io.reactivex.subscribers.DisposableSubscriber
  * Abstract class for a UseCase that returns an instance of a [Flowable]
  */
 abstract class FlowableUseCase<T, in Params> constructor(
-        private val threadExecutor: ThreadExecutor,
-        private val postExecutionThread: PostExecutionThread) {
+        protected val threadExecutor: ThreadExecutor,
+        protected val postExecutionThread: PostExecutionThread) {
 
     private val disposables = CompositeDisposable()
 
     /**
      * Builds a [Flowable] which will be used when the current [FlowableUseCase] is executed.
      */
-    protected abstract fun buildUseCaseObservable(params: Params): Flowable<T>
+    protected abstract fun buildUseCaseObservable(params: Params? = null): Flowable<T>
 
     /**
      * Executes the current use case
      */
-    open fun execute(observer: DisposableSubscriber<T>, params: Params) {
+    open fun execute(observer: DisposableSubscriber<T>, params: Params? = null) {
         val observable = this.buildUseCaseObservable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
-                .observeOn(postExecutionThread.scheduler) as Flowable<T>
+                .observeOn(postExecutionThread.scheduler)as Flowable<T>
         addDisposable(observable.subscribeWith(observer))
     }
 
@@ -42,7 +42,7 @@ abstract class FlowableUseCase<T, in Params> constructor(
     /**
      * Dispose from current [CompositeDisposable].
      */
-    private fun addDisposable(disposable: Disposable) {
+    protected fun addDisposable(disposable: Disposable) {
         disposables.add(disposable)
     }
 }

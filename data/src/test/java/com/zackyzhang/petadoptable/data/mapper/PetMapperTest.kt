@@ -1,7 +1,7 @@
 package com.zackyzhang.petadoptable.data.mapper
 
 import com.zackyzhang.petadoptable.data.model.PetEntity
-import com.zackyzhang.petadoptable.data.test.factory.PetFactory
+import com.zackyzhang.petadoptable.data.test.factory.PetsFactory
 import com.zackyzhang.petadoptable.domain.model.Pet
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +24,7 @@ class PetMapperTest {
 
     @Test
     fun mapFromEntityMapsData() {
-        val petEntity = PetFactory.makePetEntity()
+        val petEntity = PetsFactory.makePetEntity()
         val pet = petMapper.mapFromEntity(petEntity)
 
         assertPetDataEquality(petEntity, pet)
@@ -32,7 +32,7 @@ class PetMapperTest {
 
     @Test
     fun mapToEntityMapsData() {
-        val pet = PetFactory.makePet()
+        val pet = PetsFactory.makePet()
         val petEntity = petMapper.mapToEntity(pet)
 
         assertPetDataEquality(petEntity, pet)
@@ -46,7 +46,7 @@ class PetMapperTest {
         assertEquals(petEntity.description, pet.description)
         assertEquals(petEntity.id, pet.id)
         assertEquals(petEntity.lastUpdate, pet.lastUpdate)
-        assertEquals(petEntity.medias, pet.media)
+        assertEquals(petEntity.medias, pet.medias)
         assertEquals(petEntity.mix, pet.mix)
         assertEquals(petEntity.name, pet.name)
         assertEquals(petEntity.shelterId, pet.shelterId)

@@ -6,7 +6,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsCache
 import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
-import com.zackyzhang.petadoptable.data.test.factory.PetFactory
+import com.zackyzhang.petadoptable.data.test.factory.PetsFactory
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import org.junit.Before
@@ -45,13 +45,13 @@ class PetsCacheDataStoreTest {
     @Test
     fun savePetsCompletes() {
         stubPetsCacheSavePets(Completable.complete())
-        val testObserver = petsCacheDataStore.savePets(PetFactory.makePetEntityList(2)).test()
+        val testObserver = petsCacheDataStore.savePets(PetsFactory.makePetEntityList(2)).test()
         testObserver.assertComplete()
     }
 
     @Test
     fun getPetsCompletes() {
-        stubPetsCacheGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
+        stubPetsCacheGetPets(Flowable.just(PetsFactory.makePetEntityList(2)))
         val testObserver = petsCacheDataStore.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
     }

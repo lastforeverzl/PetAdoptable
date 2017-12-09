@@ -7,11 +7,10 @@ import com.zackyzhang.petadoptable.data.repository.PetsDataStore
 import com.zackyzhang.petadoptable.data.source.PetsCacheDataStore
 import com.zackyzhang.petadoptable.data.source.PetsDataStoreFactory
 import com.zackyzhang.petadoptable.data.source.PetsRemoteDataStore
-import com.zackyzhang.petadoptable.data.test.factory.PetFactory
+import com.zackyzhang.petadoptable.data.test.factory.PetsFactory
 import com.zackyzhang.petadoptable.domain.model.Pet
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -65,21 +64,21 @@ class PetsDataRepositoryTest {
     @Test
     fun savePetsCompletes() {
         stubPetsCacheSavePets(Completable.complete())
-        val testObserver = petsDataRepository.savePets(PetFactory.makePetList(2)).test()
+        val testObserver = petsDataRepository.savePets(PetsFactory.makePetList(2)).test()
         testObserver.assertComplete()
     }
 
     @Test
     fun savePetsCallsCacheDataStore() {
         stubPetsCacheSavePets(Completable.complete())
-        petsDataRepository.savePets(PetFactory.makePetList(2)).test()
+        petsDataRepository.savePets(PetsFactory.makePetList(2)).test()
         verify(petsCacheDataStore).savePets(any())
     }
 
     @Test
     fun savePetsNeverCallsRemoteDataStore() {
         stubPetsCacheSavePets(Completable.complete())
-        petsDataRepository.savePets(PetFactory.makePetList(2)).test()
+        petsDataRepository.savePets(PetsFactory.makePetList(2)).test()
         verify(petsRemoteDataStore, never()).savePets(any())
     }
     //</editor-fold>
@@ -87,9 +86,9 @@ class PetsDataRepositoryTest {
     //<editor-fold desc="Get Pets">
     @Test
     fun getPetsCompletes() {
-        stubPetsCacheDataStoreIsCached(Single.just(true))
+//        stubPetsCacheDataStoreIsCached(Single.just(true))
         stubPetsDataStoreFactoryRetrieveDataStore(petsCacheDataStore)
-        stubPetsCacheDataStoreGetPets(Flowable.just(PetFactory.makePetEntityList(2)))
+        stubPetsCacheDataStoreGetPets(Flowable.just(PetsFactory.makePetEntityList(2)))
         stubPetsCacheSavePets(Completable.complete())
         val testObserver = petsDataRepository.getPets(mutableMapOf()).test()
         testObserver.assertComplete()
@@ -97,11 +96,11 @@ class PetsDataRepositoryTest {
 
     @Test
     fun getPetsReturnsData() {
-        stubPetsCacheDataStoreIsCached(Single.just(true))
+//        stubPetsCacheDataStoreIsCached(Single.just(true))
         stubPetsDataStoreFactoryRetrieveDataStore(petsCacheDataStore)
         stubPetsCacheSavePets(Completable.complete())
-        val pets = PetFactory.makePetList(2)
-        val petEntities = PetFactory.makePetEntityList(2)
+        val pets = PetsFactory.makePetList(2)
+        val petEntities = PetsFactory.makePetEntityList(2)
         pets.forEachIndexed { index, pet ->
             stubPetMapperMapFromEntity(petEntities[index], pet)
         }
@@ -115,7 +114,7 @@ class PetsDataRepositoryTest {
     fun getPetsSavesPetsWhenFromCacheDataStore() {
         stubPetsDataStoreFactoryRetrieveDataStore(petsCacheDataStore)
         stubPetsCacheSavePets(Completable.complete())
-        petsDataRepository.savePets(PetFactory.makePetList(2)).test()
+        petsDataRepository.savePets(PetsFactory.makePetList(2)).test()
         verify(petsCacheDataStore).savePets(any())
     }
 
@@ -123,7 +122,7 @@ class PetsDataRepositoryTest {
     fun getPetsNeverSavesPetsWhenFromRemoteDataStore() {
         stubPetsDataStoreFactoryRetrieveDataStore(petsRemoteDataStore)
         stubPetsCacheSavePets(Completable.complete())
-        petsDataRepository.savePets(PetFactory.makePetList(2)).test()
+        petsDataRepository.savePets(PetsFactory.makePetList(2)).test()
         verify(petsRemoteDataStore, never()).savePets(any())
     }
 
@@ -150,10 +149,10 @@ class PetsDataRepositoryTest {
                 .thenReturn(completable)
     }
 
-    private fun stubPetsCacheDataStoreIsCached(single: Single<Boolean>) {
-        whenever(petsCacheDataStore.isCached())
-                .thenReturn(single)
-    }
+//    private fun stubPetsCacheDataStoreIsCached(single: Single<Boolean>) {
+//        whenever(petsCacheDataStore.isCached())
+//                .thenReturn(single)
+//    }
 
     private fun stubPetsCacheDataStoreGetPets(flowable: Flowable<List<PetEntity>>) {
         whenever(petsCacheDataStore.getPets(mutableMapOf()))

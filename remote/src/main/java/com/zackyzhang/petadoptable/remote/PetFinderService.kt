@@ -15,18 +15,18 @@ import retrofit2.http.QueryMap
 interface PetFinderService {
 
     @GET("pet.find?format=json")
-    fun getPets(@QueryMap options: Map<String, String>) : Flowable<GetPetsResponse>
+    fun getPets(@QueryMap options: Map<String, String>?) : Flowable<GetPetsResponse>
 
     @GET("shelter.get?format=json")
-    fun getShelterById(@QueryMap options: Map<String, String>) : Single<GetShelterResponse>
+    fun getShelterById(@QueryMap options: Map<String, String>?) : Single<GetShelterResponse>
 
     @GET("shelter.find?format=json")
-    fun getShelters(@QueryMap options: Map<String, String>) : Single<GetSheltersResponse>
+    fun getShelters(@QueryMap options: Map<String, String>?) : Single<GetSheltersResponse>
 
     @GET("shelter.getPets?format=json")
-    fun getShelterPets(@QueryMap options: Map<String, String>) :Single<GetPetsResponse>
+    fun getShelterPets(@QueryMap options: Map<String, String>?) :Single<GetPetsResponse>
 
     @GET("pet.get?format=json")
-    fun getPetById(@QueryMap options: Map<String, String>) : Single<GetPetResponse>
+    fun getPetById(@QueryMap options: Map<String, String>?) : Single<GetPetResponse>
 
 }

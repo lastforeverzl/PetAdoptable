@@ -1,5 +1,6 @@
 package com.zackyzhang.petadoptable.domain.usecase.pet
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -37,8 +38,10 @@ class GetPetsTest {
 
     @Test
     fun buildUseCaseObservableCallsRepository() {
+        getPets.currentOffset = 50
         getPets.buildUseCaseObservable(mutableMapOf())
-        verify(mockPetsRepository).getPets(mutableMapOf())
+        verify(mockPetsRepository)
+                .getPets(mapOf(Pair("offset", getPets.currentOffset.toString())))
     }
 
     @Test
@@ -57,7 +60,7 @@ class GetPetsTest {
     }
 
     private fun stubPetsRepositoryGetPets(flowable: Flowable<List<Pet>>) {
-        whenever(mockPetsRepository.getPets(mutableMapOf()))
+        whenever(mockPetsRepository.getPets(any()))
                 .thenReturn(flowable)
     }
 }

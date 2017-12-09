@@ -3,7 +3,8 @@ package com.zackyzhang.petadoptable.data.source
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import com.zackyzhang.petadoptable.data.repository.PetsCache
-import io.reactivex.Single
+import org.hamcrest.CoreMatchers.instanceOf
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,43 +31,51 @@ class PetsDataStoreFactoryTest {
     }
 
     @Test
-    fun retrieveDataStoreWhenNotCachedReturnssRemoteDataStore() {
-        stubPetsCacheIsCached(Single.just(false))
-        val petsDataStore = petsDataStoreFactory.retrieveDataStore(false)
-        assert(petsDataStore is PetsRemoteDataStore)
+    fun retrieveDataStoreWhenNotCachedReturnsRemoteDataStore() {
+        stubPetsCacheIsCached(false)
+        val petsDataStore = petsDataStoreFactory.retrieveDataStore("0")
+        assertThat(petsDataStore, instanceOf(PetsRemoteDataStore::class.java))
     }
 
     @Test
     fun retrieveDataStoreWhenCacheExpiredReturnsRemoteDataStore() {
-        stubPetsCacheIsCached(Single.just(true))
+        stubPetsCacheIsCached(true)
         stubPetsCacheIsExpired(true)
-        val petsDataStore = petsDataStoreFactory.retrieveDataStore(true)
-        assert(petsDataStore is PetsRemoteDataStore)
+        val petsDataStore = petsDataStoreFactory.retrieveDataStore("25")
+        assertThat(petsDataStore, instanceOf(PetsRemoteDataStore::class.java))
+    }
+
+    @Test
+    fun retrieveDataStoreWhenCacheExpireOffsetReturnsRemoteDataStore() {
+        stubPetsCacheIsCached(true)
+        stubPetsCacheIsExpired(false)
+        val petsDataStore = petsDataStoreFactory.retrieveDataStore("25")
+        assertThat(petsDataStore, instanceOf(PetsRemoteDataStore::class.java))
     }
 
     @Test
     fun retrieveDataStoreReturnsCacheDataStore() {
-        stubPetsCacheIsCached(Single.just(true))
+        stubPetsCacheIsCached(true)
         stubPetsCacheIsExpired(false)
-        val petsDataStore = petsDataStoreFactory.retrieveDataStore(true)
-        assert(petsDataStore is PetsCacheDataStore)
+        val petsDataStore = petsDataStoreFactory.retrieveDataStore("0")
+        assertThat(petsDataStore, instanceOf(PetsCacheDataStore::class.java))
     }
 
     @Test
     fun retrieveRemoteDataStoreReturnRemoteDataStore() {
         val petsDataStore = petsDataStoreFactory.retrieveRemoteDataStore()
-        assert(petsDataStore is PetsRemoteDataStore)
+        assertThat(petsDataStore, instanceOf(PetsRemoteDataStore::class.java))
     }
 
     @Test
     fun retrieveCacheDataStoreReturnsCacheDataStore() {
         val petsDataStore = petsDataStoreFactory.retrieveCacheDataStore()
-        assert(petsDataStore is PetsCacheDataStore)
+        assertThat(petsDataStore, instanceOf(PetsCacheDataStore::class.java))
     }
 
-    private fun stubPetsCacheIsCached(single: Single<Boolean>) {
+    private fun stubPetsCacheIsCached(isCached: Boolean) {
         whenever(petsCache.isCached())
-                .thenReturn(single)
+                .thenReturn(isCached)
     }
 
     private fun stubPetsCacheIsExpired(isExpired: Boolean) {

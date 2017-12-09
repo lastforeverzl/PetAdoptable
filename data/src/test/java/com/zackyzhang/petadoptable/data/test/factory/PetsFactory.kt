@@ -5,17 +5,18 @@ import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomU
 import com.zackyzhang.petadoptable.domain.model.Pet
 
 /**
- * Created by lei on 12/3/17.
+ * Created by lei on 12/8/17.
  */
-class PetFactory {
+class PetsFactory {
 
-    companion object factory {
+    companion object Factory {
 
         fun makePetEntity(): PetEntity {
             val medias = mutableListOf<String>()
             medias.add(randomUuid())
             medias.add(randomUuid())
             val breeds = mutableListOf<String>()
+            breeds.add(randomUuid())
             breeds.add(randomUuid())
 
             return PetEntity(randomUuid(), randomUuid(), randomUuid(), randomUuid(),
