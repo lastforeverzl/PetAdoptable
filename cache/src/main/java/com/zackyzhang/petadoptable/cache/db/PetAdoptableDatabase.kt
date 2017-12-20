@@ -28,6 +28,7 @@ abstract class PetAdoptableDatabase : RoomDatabase() {
         fun getInstance(context: Context): PetAdoptableDatabase =
                 Room.databaseBuilder(context,
                         PetAdoptableDatabase::class.java, "petadoptable-db")
+//                        .allowMainThreadQueries()
                         .build()
     }
 }

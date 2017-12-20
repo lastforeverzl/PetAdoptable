@@ -22,7 +22,7 @@ open class BrowsePetsViewModel @Inject internal constructor(
     private val petsLiveData: MutableLiveData<Resource<List<PetView>>> = MutableLiveData()
 
 //    init {
-//        fetchPets("1", "2")
+//        fetchPets("53e8b3b7be61b102e2fd238aedf46dd1", "94568")
 //    }
 
     override fun onCleared() {
@@ -34,12 +34,14 @@ open class BrowsePetsViewModel @Inject internal constructor(
         return petsLiveData
     }
 
-    fun fetchPets(key: String, zipCode: String) {
+    fun fetchPets(key: String, zipCode: String, offset: Int, animal: String) {
         val options = mutableMapOf<String, String>()
         options["key"] = key
         options["location"] = zipCode
+        options["offset"] = Integer.toString(offset)
+        options["animal"] = animal
         petsLiveData.postValue(Resource(ResourceState.LOADING, null, null))
-        return getPets.execute(PetSubscriber(), options) //todo: need to add Maps as second parameter.
+        return getPets.execute(PetSubscriber(), options)
     }
 
     inner class PetSubscriber: DisposableSubscriber<List<Pet>>() {

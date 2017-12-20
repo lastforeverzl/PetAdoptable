@@ -17,6 +17,8 @@ android {
         versionName "1.0"
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "PETFINDER_API_KEY", "\"${petfinder_api_key}\""
+        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${google_maps_api_key}\""
     }
 
     buildTypes {
@@ -89,8 +91,16 @@ dependencies {
     implementation mobileUiDependencies.dagger
     implementation mobileUiDependencies.daggerSupport
     implementation mobileUiDependencies.timber
+    implementation mobileUiDependencies.archRuntime
+    implementation mobileUiDependencies.archExtensions
+    kapt mobileUiDependencies.archCompiler
+    implementation mobileUiDependencies.roomRuntime
+    implementation mobileUiDependencies.roomRxJava
 
     kapt mobileUiDependencies.daggerCompiler
     kapt mobileUiDependencies.daggerProcessor
     compileOnly mobileUiDependencies.glassfishAnnotation
+
+    implementation "com.google.android.gms:play-services-location:11.6.0"
+    implementation "org.jetbrains.anko:anko-commons:0.10.3"
 }

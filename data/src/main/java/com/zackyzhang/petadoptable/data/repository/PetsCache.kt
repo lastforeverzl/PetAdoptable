@@ -23,12 +23,17 @@ interface PetsCache {
     /**
      * Retrive a list of Pets, from the cache
      */
-    fun getPets(): Flowable<List<PetEntity>>
+    fun getPets(animal: String): Flowable<List<PetEntity>>
 
     /**
      * Checks whether there are Pets exists in the cache.
      */
     fun isCached(): Boolean
+
+    /**
+     * Set IsCached to true when the cache was updated.
+     */
+    fun setCached()
 
     /**
      * Set a point in time at when the cache was last updated.

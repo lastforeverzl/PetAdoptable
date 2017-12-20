@@ -7,6 +7,7 @@ import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import com.zackyzhang.petadoptable.presentation.mapper.PetMapper
 import com.zackyzhang.petadoptable.presentation.model.PetView
+import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomInt
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.presentation.test.factory.PetsFactory
 import io.reactivex.subscribers.DisposableSubscriber
@@ -45,7 +46,7 @@ class BrowsePetsViewModelTest {
     @Test
     fun getPetsExecutesUseCase() {
         petsViewModel.getPets()
-        petsViewModel.fetchPets(randomUuid(), randomUuid())
+        petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt())
         verify(getPets, times(1)).execute(any(), any())
     }
 
@@ -56,12 +57,13 @@ class BrowsePetsViewModelTest {
         val viewList = PetsFactory.makePetViewList(2)
         val key = randomUuid()
         val location = randomUuid()
+        val offset = randomInt()
 
         stubPetMapperMapToView(viewList[0], list[0])
         stubPetMapperMapToView(viewList[1], list[1])
 
         petsViewModel.getPets()
-        petsViewModel.fetchPets(key, location)
+        petsViewModel.fetchPets(key, location, offset)
 
 //        verify(getPets).execute(captor.capture(), eq(mapOf(Pair("key", key), Pair("location", location))))
         verify(getPets).execute(captor.capture(), any())
@@ -79,7 +81,7 @@ class BrowsePetsViewModelTest {
         stubPetMapperMapToView(viewList[1], list[1])
 
         petsViewModel.getPets()
-        petsViewModel.fetchPets(randomUuid(), randomUuid())
+        petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onNext(list)
@@ -97,7 +99,7 @@ class BrowsePetsViewModelTest {
         stubPetMapperMapToView(viewList[1], list[1])
 
         petsViewModel.getPets()
-        petsViewModel.fetchPets(randomUuid(), randomUuid())
+        petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onNext(list)
@@ -110,7 +112,7 @@ class BrowsePetsViewModelTest {
     @Test
     fun getPetsReturnsError() {
         petsViewModel.getPets()
-        petsViewModel.fetchPets(randomUuid(), randomUuid())
+        petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onError(RuntimeException())
@@ -121,7 +123,7 @@ class BrowsePetsViewModelTest {
     @Test
     fun getPetsFailsAndContainsNoData() {
         petsViewModel.getPets()
-        petsViewModel.fetchPets(randomUuid(), randomUuid())
+        petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onError(RuntimeException())
@@ -133,7 +135,7 @@ class BrowsePetsViewModelTest {
     fun getPetsFailsAndContainsMessage() {
         val errorMessage = randomUuid()
         petsViewModel.getPets()
-        petsViewModel.fetchPets(randomUuid(), randomUuid())
+        petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onError(RuntimeException(errorMessage))

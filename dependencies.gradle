@@ -7,12 +7,12 @@ allprojects {
 ext {
     //Android
     androidBuildToolsVersion = "26.0.2"
-    androidMinSdkVersion = 15
+    androidMinSdkVersion = 19
     androidTargetSdkVersion = 27
     androidCompileSdkVersion = 27
 
     //Libraries
-    kotlinVersion = '1.2.0'
+    kotlinVersion = '1.2.10'
     butterKnifeVersion = '8.5.1'
     rxJavaVersion = '2.1.7'
     rxKotlinVersion = '2.2.0'
@@ -180,7 +180,13 @@ ext {
             timber:             "com.jakewharton.timber:timber:${timberVersion}",
             daggerSupport:      "com.google.dagger:dagger-android-support:${daggerVersion}",
             daggerProcessor:    "com.google.dagger:dagger-android-processor:${daggerVersion}",
-            glassfishAnnotation: "org.glassfish:javax.annotation:${glassfishAnnotationVersion}"
+            glassfishAnnotation: "org.glassfish:javax.annotation:${glassfishAnnotationVersion}",
+            roomRuntime:        "android.arch.persistence.room:runtime:${roomVersion}",
+            roomCompiler:       "android.arch.persistence.room:compiler:${roomVersion}",
+            roomRxJava:         "android.arch.persistence.room:rxjava2:${roomVersion}",
+            archRuntime:        "android.arch.lifecycle:runtime:${roomVersion}",
+            archExtensions:     "android.arch.lifecycle:extensions:${roomVersion}",
+            archCompiler:       "android.arch.lifecycle:compiler:${roomVersion}",
     ]
 
 }

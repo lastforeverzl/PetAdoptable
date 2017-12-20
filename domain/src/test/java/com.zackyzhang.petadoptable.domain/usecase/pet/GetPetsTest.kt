@@ -38,10 +38,9 @@ class GetPetsTest {
 
     @Test
     fun buildUseCaseObservableCallsRepository() {
-        getPets.currentOffset = 50
         getPets.buildUseCaseObservable(mutableMapOf())
         verify(mockPetsRepository)
-                .getPets(mapOf(Pair("offset", getPets.currentOffset.toString())))
+                .getPets(mutableMapOf())
     }
 
     @Test

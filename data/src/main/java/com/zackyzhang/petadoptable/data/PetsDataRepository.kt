@@ -17,6 +17,10 @@ import javax.inject.Inject
 class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreFactory,
                                              private val petsMapper: PetMapper) :
         PetsRepository {
+
+    /**
+     * todo: Need to implement Service for clear cached pets whenever the cache expired.
+     */
     override fun clearPets(): Completable {
         return factory.retrieveCacheDataStore().clearPets()
     }
@@ -37,6 +41,7 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
                 .flatMap {
                     if (dataStore is PetsRemoteDataStore) {
                         savePets(it).toSingle { it }.toFlowable()
+//                        clearPets().toFlowable()
                     } else {
                         Flowable.just(it)
                     }

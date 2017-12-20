@@ -19,6 +19,7 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
      */
     override fun clearPets(): Completable {
         return petsCache.clearPets()
+                .doOnComplete { println("pets in database cleared!") }
     }
 
     /**
@@ -28,6 +29,8 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
         return petsCache.savePets(pets)
                 .doOnComplete {
                     petsCache.setLastCacheTime(System.currentTimeMillis())
+                    petsCache.setCached()
+                    println("pets saved")
                 }
     }
 
@@ -36,7 +39,7 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
      */
     override fun getPets(options: Map<String, String>):
             Flowable<List<PetEntity>> {
-        return petsCache.getPets()
+        return petsCache.getPets(options["animal"].toString())
     }
 
 }

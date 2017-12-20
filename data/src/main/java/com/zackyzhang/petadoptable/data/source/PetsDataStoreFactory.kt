@@ -18,8 +18,13 @@ open class PetsDataStoreFactory @Inject constructor(
      */
     open fun retrieveDataStore(offset: String): PetsDataStore {
         if (petsCache.isCached() && !petsCache.isExpired() && offset.toInt() == 0) {
+            println("retrieveCacheDataStore")
             return retrieveCacheDataStore()
         }
+        if (petsCache.isCached() && petsCache.isExpired()) {
+            println("Cached but expired")
+        }
+        println("retrieveRemoteDataStore")
         return retrieveRemoteDataStore()
     }
 

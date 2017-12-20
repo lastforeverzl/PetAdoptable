@@ -31,6 +31,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
 //            val allPets = petAdoptableDatabase.getPetDao().getAllPets()
 //            allPets.forEach { pet -> petAdoptableDatabase.getPetDao().deletePet(pet) }
             petAdoptableDatabase.getPetDao().clearPets()
+            println("PetsCacheImpl clearPets")
             Completable.complete()
         }
     }
@@ -67,7 +68,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     /**
      * Retrieve a list of [PetEntity] instances from the database.
      */
-    override fun getPets(): Flowable<List<PetEntity>> {
+    override fun getPets(animal: String): Flowable<List<PetEntity>> {
 //        return Flowable.defer<List<PetEntity>> {
 //            val petEntities = mutableListOf<PetEntity>()
 //            val pets = petAdoptableDatabase.getPetDao().getAllPets()
@@ -82,7 +83,8 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
 //            Flowable.just<List<PetEntity>>(petEntities)
 //        }
         return Flowable.defer {
-            Flowable.just(petAdoptableDatabase.getPetDao().getAllPets())
+//            Flowable.just(petAdoptableDatabase.getPetDao().getAllPets())
+            Flowable.just(petAdoptableDatabase.getPetDao().getAllPetsByAnimal(animal))
         }.map {
             it.map {
                 val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(it.uid!!)
@@ -98,7 +100,12 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
      * Checked if there is any data in the cache
      */
     override fun isCached(): Boolean {
-        return petAdoptableDatabase.getPetDao().getAllPets().isNotEmpty()
+//        return petAdoptableDatabase.getPetDao().getAllPets().isNotEmpty()
+        return preferencesHelper.isCached
+    }
+
+    override fun setCached() {
+        preferencesHelper.isCached = true
     }
 
     override fun setLastCacheTime(lastCache: Long) {

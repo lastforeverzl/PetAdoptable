@@ -15,6 +15,7 @@ class PreferencesHelper @Inject constructor(context: Context) {
         private val PREF_PET_PACKAGE_NAME = "com.zackyzhang.petadoptable.preferences"
 
         private val PREF_KEY_LAST_CACHE = "last_cache"
+        private val PREF_KEY_IS_CACHED = "is_cached"
     }
 
     private val petPref: SharedPreferences
@@ -29,4 +30,8 @@ class PreferencesHelper @Inject constructor(context: Context) {
     var lastCacheTime: Long
         get() = petPref.getLong(PREF_KEY_LAST_CACHE, 0)
         set(lastCache) = petPref.edit().putLong(PREF_KEY_LAST_CACHE, lastCache).apply()
+
+    var isCached: Boolean
+        get() = petPref.getBoolean(PREF_KEY_IS_CACHED, false)
+        set(isCached) = petPref.edit().putBoolean(PREF_KEY_IS_CACHED, isCached).apply()
 }
