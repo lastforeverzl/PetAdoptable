@@ -9,6 +9,7 @@ import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsCache
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -21,7 +22,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
                                         private val preferencesHelper: PreferencesHelper) :
         PetsCache {
 
-    private val EXPIRATION_TIME = (60 * 10 * 100).toLong()
+    private val EXPIRATION_TIME = (60 * 10 * 1000).toLong()
 
     /**
      * Remove all the data related to pet from tables in the database.
@@ -84,7 +85,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
 //        }
         return Flowable.defer {
 //            Flowable.just(petAdoptableDatabase.getPetDao().getAllPets())
-            Flowable.just(petAdoptableDatabase.getPetDao().getAllPetsByAnimal(animal))
+            Flowable.just(petAdoptableDatabase.getPetDao().getAllPetsByAnimal(matchAnimalName(animal)))
         }.map {
             it.map {
                 val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(it.uid!!)
@@ -99,14 +100,17 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     /**
      * Checked if there is any data in the cache
      */
-    override fun isCached(): Boolean {
-//        return petAdoptableDatabase.getPetDao().getAllPets().isNotEmpty()
-        return preferencesHelper.isCached
+    override fun isCached(animal: String): Single<Boolean> {
+        return Single.defer {
+            println("<PetsCacheImpl>animal isCached: " + animal)
+            Single.just(petAdoptableDatabase.getPetDao()
+                    .getAllPetsByAnimal(matchAnimalName(animal)).isNotEmpty())
+        }
     }
 
-    override fun setCached() {
-        preferencesHelper.isCached = true
-    }
+//    override fun setCached() {
+//        preferencesHelper.isCached = true
+//    }
 
     override fun setLastCacheTime(lastCache: Long) {
         preferencesHelper.lastCacheTime = lastCache
@@ -126,5 +130,13 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
      */
     private fun getLastCacheUpdateTimeMillis(): Long {
         return preferencesHelper.lastCacheTime
+    }
+
+    private fun matchAnimalName(animal: String): String {
+        return when (animal) {
+            "smallfurry" -> "Small & Furry"
+            "reptile" -> "Scales, Fins & Other"
+            else -> animal
+        }
     }
 }

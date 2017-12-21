@@ -5,6 +5,7 @@ import com.zackyzhang.petadoptable.data.repository.PetsCache
 import com.zackyzhang.petadoptable.data.repository.PetsDataStore
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -29,7 +30,7 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
         return petsCache.savePets(pets)
                 .doOnComplete {
                     petsCache.setLastCacheTime(System.currentTimeMillis())
-                    petsCache.setCached()
+//                    petsCache.setCached()
                     println("pets saved")
                 }
     }
@@ -40,6 +41,13 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
     override fun getPets(options: Map<String, String>):
             Flowable<List<PetEntity>> {
         return petsCache.getPets(options["animal"].toString())
+    }
+
+    /**
+     * Check the cache status for given animal
+     */
+    override fun isCached(animal: String): Single<Boolean> {
+        return petsCache.isCached(animal)
     }
 
 }

@@ -3,7 +3,6 @@ package com.zackyzhang.petadoptable.data
 import com.zackyzhang.petadoptable.data.mapper.PetMapper
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.source.PetsDataStoreFactory
-import com.zackyzhang.petadoptable.data.source.PetsRemoteDataStore
 import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Completable
@@ -33,18 +32,29 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
 
     override fun getPets(options: Map<String, String>):
             Flowable<List<Pet>> {
-        val dataStore = factory.retrieveDataStore(options["offset"].toString())
-        return dataStore.getPets(options)
+//        val dataStore = factory.retrieveDataStore(options["offset"].toString())
+//        return dataStore.getPets(options)
+//                .flatMap {
+//                    Flowable.just(it.map { petsMapper.mapFromEntity(it) })
+//                }
+//                .flatMap {
+//                    if (dataStore is PetsRemoteDataStore) {
+//                        savePets(it).toSingle { it }.toFlowable()
+////                        clearPets().toFlowable()
+//                    } else {
+//                        Flowable.just(it)
+//                    }
+//                }
+
+        return factory.retrieveCacheDataStore().isCached(options["animal"].toString())
+                .flatMapPublisher {
+                    factory.retrieveDataStore(it, options["offset"].toString()).getPets(options)
+                }
                 .flatMap {
                     Flowable.just(it.map { petsMapper.mapFromEntity(it) })
                 }
                 .flatMap {
-                    if (dataStore is PetsRemoteDataStore) {
-                        savePets(it).toSingle { it }.toFlowable()
-//                        clearPets().toFlowable()
-                    } else {
-                        Flowable.just(it)
-                    }
+                    savePets(it).toSingle { it }.toFlowable()
                 }
     }
 

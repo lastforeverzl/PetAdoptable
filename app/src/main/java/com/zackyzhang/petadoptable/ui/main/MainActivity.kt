@@ -67,4 +67,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
                 }
                 false
             }
+
+    /**
+     * Avoid fragments overlapping
+     */
+    override fun onSaveInstanceState(outState: Bundle?) {
+//        super.onSaveInstanceState(outState)
+    }
 }

@@ -3,6 +3,7 @@ package com.zackyzhang.petadoptable.data.repository
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 
 /**
@@ -17,5 +18,7 @@ interface PetsDataStore {
     fun savePets(pets: List<PetEntity>): Completable
 
     fun getPets(options: Map<String, String>): Flowable<List<PetEntity>>
+
+    fun isCached(animal: String): Single<Boolean>
 
 }

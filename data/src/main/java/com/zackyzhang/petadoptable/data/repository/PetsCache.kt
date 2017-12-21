@@ -3,6 +3,7 @@ package com.zackyzhang.petadoptable.data.repository
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Interface defining methods for the caching of Pets. This is to be implemented by the
@@ -28,12 +29,7 @@ interface PetsCache {
     /**
      * Checks whether there are Pets exists in the cache.
      */
-    fun isCached(): Boolean
-
-    /**
-     * Set IsCached to true when the cache was updated.
-     */
-    fun setCached()
+    fun isCached(animal: String): Single<Boolean>
 
     /**
      * Set a point in time at when the cache was last updated.

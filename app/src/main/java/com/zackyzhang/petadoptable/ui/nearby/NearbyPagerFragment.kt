@@ -75,4 +75,6 @@ class NearbyPagerFragment : Fragment(), HasSupportFragmentInjector, AnkoLogger {
         info("onDestroy")
         super.onDestroy()
     }
+
+
 }

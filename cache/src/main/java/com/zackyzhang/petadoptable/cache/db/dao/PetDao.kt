@@ -15,7 +15,7 @@ interface PetDao {
     @Query(QUERY_PETS)
     fun getAllPets(): List<PetDbEntity>
 
-    @Query(QUERY_PETS_BY_ANIMAL + ":animal")
+    @Query(QUERY_PETS_BY_ANIMAL + ":animal COLLATE NOCASE")
     fun getAllPetsByAnimal(animal: String): List<PetDbEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

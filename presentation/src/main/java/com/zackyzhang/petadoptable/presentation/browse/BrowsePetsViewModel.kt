@@ -47,6 +47,7 @@ open class BrowsePetsViewModel @Inject internal constructor(
     inner class PetSubscriber: DisposableSubscriber<List<Pet>>() {
 
         override fun onError(exception: Throwable) {
+            exception.printStackTrace()
             petsLiveData.postValue(Resource(ResourceState.ERROR, null, exception.message))
         }
 

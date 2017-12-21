@@ -20,6 +20,7 @@ import com.zackyzhang.petadoptable.ui.mapper.PetMapper
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_animal.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
@@ -74,6 +75,7 @@ class AnimalFragment : Fragment(), AnkoLogger {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        info(animal + " onViewCreated")
         noPetsFound.visibility = View.VISIBLE
         noPetsFound.text = animal + " " + zipCode
 
@@ -128,5 +130,11 @@ class AnimalFragment : Fragment(), AnkoLogger {
         recyclerView.visibility = View.GONE
         viewEmpty.visibility = View.GONE
         viewError.visibility = View.VISIBLE
+        error(message)
+    }
+
+    override fun onDestroy() {
+        info(animal + " onDestroy")
+        super.onDestroy()
     }
 }
