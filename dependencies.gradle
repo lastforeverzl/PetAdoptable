@@ -8,8 +8,8 @@ ext {
     //Android
     androidBuildToolsVersion = "26.0.2"
     androidMinSdkVersion = 19
-    androidTargetSdkVersion = 27
-    androidCompileSdkVersion = 27
+    androidTargetSdkVersion = 26
+    androidCompileSdkVersion = 26
 
     //Libraries
     kotlinVersion = '1.2.10'

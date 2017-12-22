@@ -4,9 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.model.PetViewModel
+import com.zackyzhang.petadoptable.ui.widget.Utils
+import kotlinx.android.synthetic.main.item_pet.view.*
 import javax.inject.Inject
 
 /**
@@ -14,11 +18,11 @@ import javax.inject.Inject
  */
 class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.ViewHolder>() {
 
-    var pets: List<PetViewModel> = arrayListOf()
+    private var pets = mutableListOf<PetViewModel>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pet = pets[position]
-        holder.nameText.text = pet.name
+        holder.bind(pet)
     }
 
     override fun getItemCount(): Int {
@@ -32,11 +36,35 @@ class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.V
         return ViewHolder(itemView)
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var nameText: TextView
+    fun addPets(data: List<PetViewModel>) {
+        pets.addAll(data)
+    }
 
-        init {
-            nameText = view.findViewById(R.id.pet_name)
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        private val animalPhoto: ImageView = view.animalPhoto
+        private val animalName: TextView = view.animalName
+        private val animalLocation: TextView = view.animalLocation
+        private val animalInfo: TextView = view.animalInfo
+
+        fun bind(pet: PetViewModel) {
+            animalName.text = pet.name
+            animalInfo.text = Utils.getPetInfo(pet)
+            animalLocation.text = pet.cityState
+
+            if (pet.medias.isNotEmpty()) {
+                Glide.with(itemView.context)
+                        .asBitmap()
+                        .load(pet.medias[0])
+                        .thumbnail(0.2f)
+                        .into(animalPhoto)
+            } else {
+                Glide.with(itemView.context)
+                        .asBitmap()
+                        .load(R.drawable.no_image_placeholder)
+                        .thumbnail(0.2f)
+                        .into(animalPhoto)
+            }
         }
     }
 }
