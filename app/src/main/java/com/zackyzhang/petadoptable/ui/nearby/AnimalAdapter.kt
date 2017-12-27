@@ -11,17 +11,20 @@ import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.model.PetViewModel
 import com.zackyzhang.petadoptable.ui.widget.Utils
 import kotlinx.android.synthetic.main.item_pet.view.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import javax.inject.Inject
 
 /**
  * Created by lei on 12/20/17.
  */
-class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.ViewHolder>() {
+class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.ViewHolder>(), AnkoLogger {
 
     private var pets = mutableListOf<PetViewModel>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pet = pets[position]
+        info("${ pet.name } is favorite: ${ pet.isFavorite }")
         holder.bind(pet)
     }
 

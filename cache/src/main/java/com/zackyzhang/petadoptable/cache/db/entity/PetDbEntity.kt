@@ -22,5 +22,6 @@ data class PetDbEntity(
         var mix: String = "",
         @ColumnInfo(name = "shelter_id") var shelterId: String = "",
         var lastUpdate: String = "",
-        var animal: String = ""
+        var animal: String = "",
+        @ColumnInfo(name = "is_favorite") var isFavorite: Boolean = false
 )

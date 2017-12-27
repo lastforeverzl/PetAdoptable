@@ -14,8 +14,9 @@ open class PetMapper @Inject constructor(): Mapper<PetView, Pet> {
      * Map a [Pet] instance to a [PetView] instance
      */
     override fun mapToView(type: Pet): PetView {
-        return PetView(type.status, type.cityState, type.age, type.size, type.medias, type.id, type.breeds,
-                type.name, type.sex, type.description, type.mix, type.shelterId, type.lastUpdate, type.animal)
+        return PetView(type.status, type.cityState, type.age, type.size, type.medias, type.id,
+                type.breeds, type.name, type.sex, type.description, type.mix, type.shelterId,
+                type.lastUpdate, type.animal, type.isFavorite)
     }
 
 }

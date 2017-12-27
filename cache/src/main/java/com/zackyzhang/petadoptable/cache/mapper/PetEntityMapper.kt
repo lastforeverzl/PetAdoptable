@@ -16,13 +16,15 @@ class PetEntityMapper @Inject constructor(): EntityMapper<PetDbEntity, PetEntity
      * Map a [PetEntity] instance to a [CachedPet] instance
      */
     override fun mapToCached(type: PetEntity): PetDbEntity{
-        return PetDbEntity(null, type.status, type.cityState, type.age, type.size, type.medias, type.id,
-                type.breeds, type.name, type.sex, type.description, type.mix, type.shelterId, type.lastUpdate, type.animal)
+        return PetDbEntity(null, type.status, type.cityState, type.age, type.size, type.medias,
+                type.id, type.breeds, type.name, type.sex, type.description, type.mix, type.shelterId,
+                type.lastUpdate, type.animal, type.isFavorite)
     }
 
     override fun mapFromCached(type: PetDbEntity): PetEntity {
-        return PetEntity(type.status, type.cityState, type.age, type.size, type.medias, type.id, type.breeds,
-                type.name, type.sex, type.description, type.mix, type.shelterId, type.lastUpdate, type.animal)
+        return PetEntity(type.status, type.cityState, type.age, type.size, type.medias, type.id,
+                type.breeds, type.name, type.sex, type.description, type.mix, type.shelterId,
+                type.lastUpdate, type.animal, type.isFavorite)
     }
 
     fun mapToCachedMedia(type: List<String>, rowId: Long): List<MediaDbEntity> {

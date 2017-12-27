@@ -17,6 +17,8 @@ object DbConstans {
 
     const val QUERY_PETS_BY_ANIMAL = "SELECT * FROM $PET_TABLE_NAME WHERE animal = "
 
+    const val QUERY_FAVORITE_PETS = "SELECT * FROM $PET_TABLE_NAME WHERE is_favorite = 1"
+
     const val QUERY_MEDIAS = "SELECT * FROM $MEDIA_TABLE_NAME"
 
     const val QUERY_BREEDS = "SELECT * FROM $BREED_TABLE_NAME"
