@@ -4,7 +4,7 @@ import com.zackyzhang.petadoptable.data.model.PetEntity
 import io.reactivex.Flowable
 
 /**
- * Interface defining methods for the caching of Pets. This is to be implemented by the
+ * Interface defining methods for the remote of Pets. This is to be implemented by the
  * remote layer, using this interface as a way of communicating.
  */
 interface PetsRemote {

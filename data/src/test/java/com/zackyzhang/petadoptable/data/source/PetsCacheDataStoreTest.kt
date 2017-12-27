@@ -67,7 +67,7 @@ class PetsCacheDataStoreTest {
     }
 
     private fun stubPetsCacheGetPets(flowable: Flowable<List<PetEntity>>) {
-        whenever(petsCache.getPets())
+        whenever(petsCache.getPets(any()))
                 .thenReturn(flowable)
     }
 }

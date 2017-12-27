@@ -1,6 +1,7 @@
 package com.zackyzhang.petadoptable.cache
 
 import android.arch.persistence.room.Room
+import com.nhaarman.mockito_kotlin.any
 import com.zackyzhang.petadoptable.cache.db.PetAdoptableDatabase
 import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
 import com.zackyzhang.petadoptable.cache.mapper.PetEntityMapper
@@ -50,7 +51,7 @@ class PetsCacheImplTest {
 
     @Test
     fun getPetsCompletes() {
-        val testObserver = databaseHelper.getPets().test()
+        val testObserver = databaseHelper.getPets(any()).test()
         testObserver.assertComplete()
     }
 

@@ -3,6 +3,7 @@ package com.zackyzhang.petadoptable.remote
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import com.zackyzhang.petadoptable.data.model.PetEntity
+import com.zackyzhang.petadoptable.remote.impl.PetsRemoteImpl
 import com.zackyzhang.petadoptable.remote.mapper.PetEntityMapper
 import com.zackyzhang.petadoptable.remote.model.GetPetsResponse
 import com.zackyzhang.petadoptable.remote.test.factory.PetsFactory

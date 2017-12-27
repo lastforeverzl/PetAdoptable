@@ -14,7 +14,7 @@ import javax.inject.Inject
  * data sources
  */
 class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreFactory,
-                                             private val petsMapper: PetMapper) :
+                                             private val petMapper: PetMapper) :
         PetsRepository {
 
     /**
@@ -26,7 +26,7 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
 
     override fun savePets(pets: List<Pet>): Completable {
         val petEntities = mutableListOf<PetEntity>()
-        pets.map { petEntities.add(petsMapper.mapToEntity(it)) }
+        pets.map { petEntities.add(petMapper.mapToEntity(it)) }
         return factory.retrieveCacheDataStore().savePets(petEntities)
     }
 
@@ -51,7 +51,7 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
                     factory.retrieveDataStore(it, options["offset"].toString()).getPets(options)
                 }
                 .flatMap {
-                    Flowable.just(it.map { petsMapper.mapFromEntity(it) })
+                    Flowable.just(it.map { petMapper.mapFromEntity(it) })
                 }
                 .flatMap {
                     savePets(it).toSingle { it }.toFlowable()

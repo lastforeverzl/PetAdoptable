@@ -113,7 +113,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
 //    }
 
     override fun setLastCacheTime(lastCache: Long) {
-        preferencesHelper.lastCacheTime = lastCache
+        preferencesHelper.petsLastCacheTime = lastCache
     }
 
     /**
@@ -129,7 +129,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
      * Get in millis, the last time the cache was accessed.
      */
     private fun getLastCacheUpdateTimeMillis(): Long {
-        return preferencesHelper.lastCacheTime
+        return preferencesHelper.petsLastCacheTime
     }
 
     private fun matchAnimalName(animal: String): String {

@@ -11,6 +11,7 @@ import com.zackyzhang.petadoptable.data.test.factory.PetsFactory
 import com.zackyzhang.petadoptable.domain.model.Pet
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -86,7 +87,7 @@ class PetsDataRepositoryTest {
     //<editor-fold desc="Get Pets">
     @Test
     fun getPetsCompletes() {
-//        stubPetsCacheDataStoreIsCached(Single.just(true))
+        stubPetsCacheDataStoreIsCached(Single.just(true))
         stubPetsDataStoreFactoryRetrieveDataStore(petsCacheDataStore)
         stubPetsCacheDataStoreGetPets(Flowable.just(PetsFactory.makePetEntityList(2)))
         stubPetsCacheSavePets(Completable.complete())
@@ -96,7 +97,7 @@ class PetsDataRepositoryTest {
 
     @Test
     fun getPetsReturnsData() {
-//        stubPetsCacheDataStoreIsCached(Single.just(true))
+        stubPetsCacheDataStoreIsCached(Single.just(true))
         stubPetsDataStoreFactoryRetrieveDataStore(petsCacheDataStore)
         stubPetsCacheSavePets(Completable.complete())
         val pets = PetsFactory.makePetList(2)
@@ -149,10 +150,10 @@ class PetsDataRepositoryTest {
                 .thenReturn(completable)
     }
 
-//    private fun stubPetsCacheDataStoreIsCached(single: Single<Boolean>) {
-//        whenever(petsCacheDataStore.isCached())
-//                .thenReturn(single)
-//    }
+    private fun stubPetsCacheDataStoreIsCached(single: Single<Boolean>) {
+        whenever(petsCacheDataStore.isCached(any()))
+                .thenReturn(single)
+    }
 
     private fun stubPetsCacheDataStoreGetPets(flowable: Flowable<List<PetEntity>>) {
         whenever(petsCacheDataStore.getPets(mutableMapOf()))
@@ -170,7 +171,7 @@ class PetsDataRepositoryTest {
     }
 
     private fun stubPetsDataStoreFactoryRetrieveDataStore(dataStore: PetsDataStore) {
-        whenever(petsDataStoreFactory.retrieveDataStore(any()))
+        whenever(petsDataStoreFactory.retrieveDataStore(any(), any()))
                 .thenReturn(dataStore)
     }
     //</editor-fold>

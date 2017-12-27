@@ -54,7 +54,7 @@ class Navigator(private val mainActivity: MainActivity,
         val ft = fragmentManager.beginTransaction()
         shelterFragment ?:run {
             info("shelterFragment is null")
-            shelterFragment = SheltersFragment.newInstance()
+            shelterFragment = SheltersFragment.newInstance(zipCode)
             ft.add(R.id.contentContainer, shelterFragment, shelterFragment::class.java.simpleName)
         }
         shelterFragment?.let { if (it.isAdded) ft.show(it) }

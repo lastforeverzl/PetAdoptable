@@ -5,9 +5,6 @@ import android.arch.lifecycle.ViewModelProvider
 import com.zackyzhang.petadoptable.domain.interactor.browse.GetPets
 import com.zackyzhang.petadoptable.presentation.mapper.PetMapper
 
-/**
- * Created by lei on 12/8/17.
- */
 open class BrowsePetsViewModelFactory(private val getPets: GetPets,
                                       private val petMapper: PetMapper) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
