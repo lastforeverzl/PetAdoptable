@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="5">
+
+    <LinearLayout
+        android:id="@+id/shelterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/shelterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#14181a"
+            tools:text="Fresco"/>
+
+        <TextView
+            android:id="@+id/shelterAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#8f14181a"
+            tools:text="4595 Gleason Drive Dublin, CA 94568"/>
+
+        <TextView
+            android:id="@+id/shelterPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#8f14181a"
+            tools:text="925-479-9670"/>
+
+        <TextView
+            android:id="@+id/shelterEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#8f14181a"
+            tools:text="customer@gmail.com"/>
+
+        <TextView
+            android:id="@+id/shelterDirection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorGreen"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:text="@string/shelter_direction"
+            android:contentDescription="@string/cd_get_direction"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shelterCall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="4">
+
+        <ImageView
+            android:id="@+id/imShelterCall"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_local_phone_24dp"
+            android:contentDescription="@string/cd_call_shelter"/>
+
+        <TextView
+            android:id="@+id/tvShelterCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorGreen"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/shelter_call"
+            android:contentDescription="@string/cd_call_shelter"/>
+
+    </LinearLayout>
+
+</LinearLayout>
