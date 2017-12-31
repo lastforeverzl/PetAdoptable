@@ -72,8 +72,8 @@ class SheltersFragment : BaseFragment<ShelterView>(), AnkoLogger {
         browseSheltersViewModel.fetchShelters(BuildConfig.PETFINDER_API_KEY, zipCode, sheltersAdapter.itemCount)
     }
 
-    override fun updateListView(shelters: List<ShelterView>) {
-        sheltersAdapter.addShelters(shelters.map { mapper.mapToViewModel(it) })
+    override fun updateListView(data: List<ShelterView>) {
+        sheltersAdapter.addShelters(data.map { mapper.mapToViewModel(it) })
         sheltersAdapter.notifyDataSetChanged()
         info("Shelters adapter size: ${sheltersAdapter.itemCount}")
     }

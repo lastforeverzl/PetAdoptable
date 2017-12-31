@@ -45,7 +45,7 @@ class BrowsePetsViewModelTest {
 
     @Test
     fun getPetsExecutesUseCase() {
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt(), randomUuid())
         verify(getPets, times(1)).execute(any(), any())
     }
@@ -63,14 +63,14 @@ class BrowsePetsViewModelTest {
         stubPetMapperMapToView(viewList[0], list[0])
         stubPetMapperMapToView(viewList[1], list[1])
 
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(key, location, offset, animal)
 
-//        verify(getPets).execute(captor.capture(), eq(mapOf(Pair("key", key), Pair("location", location))))
+//        verify(getPetsLiveData).execute(captor.capture(), eq(mapOf(Pair("key", key), Pair("location", location))))
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onNext(list)
 
-        assert(petsViewModel.getPets().value?.status == ResourceState.SUCCESS)
+        assert(petsViewModel.getPetsLiveData().value?.status == ResourceState.SUCCESS)
     }
 
     @Test
@@ -81,13 +81,13 @@ class BrowsePetsViewModelTest {
         stubPetMapperMapToView(viewList[0], list[0])
         stubPetMapperMapToView(viewList[1], list[1])
 
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt(), randomUuid())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onNext(list)
 
-        assert(petsViewModel.getPets().value?.data == viewList)
+        assert(petsViewModel.getPetsLiveData().value?.data == viewList)
 
     }
 
@@ -99,72 +99,72 @@ class BrowsePetsViewModelTest {
         stubPetMapperMapToView(viewList[0], list[0])
         stubPetMapperMapToView(viewList[1], list[1])
 
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt(), randomUuid())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onNext(list)
 
-        assert(petsViewModel.getPets().value?.message == null)
+        assert(petsViewModel.getPetsLiveData().value?.message == null)
     }
     //</editor-fold>
 
     //<editor-fold desc="Error">
     @Test
     fun getPetsReturnsError() {
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt(), randomUuid())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onError(RuntimeException())
 
-        assert(petsViewModel.getPets().value?.status == ResourceState.ERROR)
+        assert(petsViewModel.getPetsLiveData().value?.status == ResourceState.ERROR)
     }
 
     @Test
     fun getPetsFailsAndContainsNoData() {
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt(), randomUuid())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onError(RuntimeException())
 
-        assert(petsViewModel.getPets().value?.data == null)
+        assert(petsViewModel.getPetsLiveData().value?.data == null)
     }
 
     @Test
     fun getPetsFailsAndContainsMessage() {
         val errorMessage = randomUuid()
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
         petsViewModel.fetchPets(randomUuid(), randomUuid(), randomInt(), randomUuid())
 
         verify(getPets).execute(captor.capture(), any())
         captor.firstValue.onError(RuntimeException(errorMessage))
 
-        assert(petsViewModel.getPets().value?.message == errorMessage)
+        assert(petsViewModel.getPetsLiveData().value?.message == errorMessage)
     }
     //</editor-fold>
 
     //<editor-fold desc="Loading">
     @Test
     fun getPetsReturnsLoading() {
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
 
-        assert(petsViewModel.getPets().value?.status == ResourceState.LOADING)
+        assert(petsViewModel.getPetsLiveData().value?.status == ResourceState.LOADING)
     }
 
     @Test
     fun getPetsContainsNoDataWhenLoading() {
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
 
-        assert(petsViewModel.getPets().value?.data == null)
+        assert(petsViewModel.getPetsLiveData().value?.data == null)
     }
 
     @Test
     fun getPetsContainsNoMessageWhenLoading() {
-        petsViewModel.getPets()
+        petsViewModel.getPetsLiveData()
 
-        assert(petsViewModel.getPets().value?.message == null)
+        assert(petsViewModel.getPetsLiveData().value?.message == null)
     }
     //</editor-fold>
 

@@ -1,5 +1,7 @@
 package com.zackyzhang.petadoptable.ui.di.module
 
+import com.zackyzhang.petadoptable.ui.detail.PetDetailActivity
+import com.zackyzhang.petadoptable.ui.detail.PetDetailActivityDiModule
 import com.zackyzhang.petadoptable.ui.di.scopes.PerActivity
 import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragmentModule
 import com.zackyzhang.petadoptable.ui.main.MainActivity
@@ -23,4 +25,7 @@ abstract class ActivityBuilder {
             NearbyPagerFragmentModule::class, SheltersFragmentModule::class, FavoritesFragmentModule::class))
     abstract fun mainActivityInjector(): MainActivity
 
+    @PerActivity
+    @ContributesAndroidInjector(modules = arrayOf(PetDetailActivityDiModule::class))
+    abstract fun petDetailActivityInjector(): PetDetailActivity
 }

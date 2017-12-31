@@ -41,4 +41,9 @@ interface SheltersCache {
      */
     fun isExpired(): Boolean
 
+    /**
+     * Retrieve a shelter by id
+     */
+    fun getShelterById(id: String): Flowable<ShelterEntity>
+
 }

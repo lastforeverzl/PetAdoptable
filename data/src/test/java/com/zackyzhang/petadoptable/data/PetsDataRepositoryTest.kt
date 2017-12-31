@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.ArgumentMatchers.anyString
 
 @RunWith(JUnit4::class)
 class PetsDataRepositoryTest {
@@ -129,6 +130,70 @@ class PetsDataRepositoryTest {
 
     //</editor-fold>
 
+    //<editor-fold desc="Get Favorite Pets">
+    @Test
+    fun getFavoritePetsCompletes() {
+        stubPetsCacheDataStoreGetFavoritePets(Flowable.just(PetsFactory.makePetEntityList(2)))
+        val testObserver = petsDataRepository.getFavoritePets().test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun getFavoritePetsReturnsData() {
+        val pets = PetsFactory.makePetList(2)
+        val petEntities = PetsFactory.makePetEntityList(2)
+        pets.forEachIndexed { index, pet ->
+            stubPetMapperMapFromEntity(petEntities[index], pet)
+        }
+        stubPetsCacheDataStoreGetFavoritePets(Flowable.just(petEntities))
+
+        val testObserver = petsDataRepository.getFavoritePets().test()
+        testObserver.assertValue(pets)
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Save Pet To Favorite">
+    @Test
+    fun saveToFavoriteCompletes() {
+        stubPetsCacheSaveToFavorite(Completable.complete())
+        val testObserver = petsCacheDataStore.saveToFavorite(PetsFactory.makePetEntity()).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun saveToFavoriteCallsCacheDataStore() {
+        stubPetsCacheSaveToFavorite(Completable.complete())
+        petsCacheDataStore.saveToFavorite(PetsFactory.makePetEntity()).test()
+        verify(petsCacheDataStore).saveToFavorite(any())
+    }
+
+    @Test
+    fun saveToFavoriteNeverCallsRemoteDataStore() {
+        stubPetsCacheSaveToFavorite(Completable.complete())
+        petsCacheDataStore.saveToFavorite(PetsFactory.makePetEntity()).test()
+        verify(petsRemoteDataStore, never()).saveToFavorite(any())
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Pet By Id">
+    @Test
+    fun getPetByIdCompletes() {
+        stubPetsCacheDataStoreGetPetById(Flowable.just(PetsFactory.makePetEntity()))
+        val testObserver = petsDataRepository.getPetById(any()).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun getPetByIdReturnsData() {
+        val petEntity = PetsFactory.makePetEntity()
+        val pet = PetsFactory.makePet()
+        stubPetsCacheDataStoreGetPetById(Flowable.just(petEntity))
+        stubPetMapperMapFromEntity(petEntity, pet)
+        val testObserver = petsDataRepository.getPetById(anyString()).test()
+        testObserver.assertValue(pet)
+    }
+    //</editor-fold>
+
     //<editor-fold desc="Stub helper methods">
     private fun stubPetsDataStoreFactoryRetrieveCacheDataStore() {
         whenever(petsDataStoreFactory.retrieveCacheDataStore())
@@ -174,5 +239,21 @@ class PetsDataRepositoryTest {
         whenever(petsDataStoreFactory.retrieveDataStore(any(), any()))
                 .thenReturn(dataStore)
     }
+
+    private fun stubPetsCacheDataStoreGetFavoritePets(flowable: Flowable<List<PetEntity>>) {
+        whenever(petsCacheDataStore.getFavoritePets())
+                .thenReturn(flowable)
+    }
+
+    private fun stubPetsCacheSaveToFavorite(completable: Completable) {
+        whenever(petsCacheDataStore.saveToFavorite(any()))
+                .thenReturn(completable)
+    }
+
+    private fun stubPetsCacheDataStoreGetPetById(single: Flowable<PetEntity>) {
+        whenever(petsCacheDataStore.getPetById(any()))
+                .thenReturn(single)
+    }
+
     //</editor-fold>
 }

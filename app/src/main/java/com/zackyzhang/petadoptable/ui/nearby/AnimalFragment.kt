@@ -12,6 +12,7 @@ import com.zackyzhang.petadoptable.ui.BaseFragment
 import com.zackyzhang.petadoptable.ui.BuildConfig
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.mapper.PetMapper
+import com.zackyzhang.petadoptable.ui.widget.PetOnClickListener
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_animal.*
 import org.jetbrains.anko.AnkoLogger
@@ -47,10 +48,16 @@ class AnimalFragment : BaseFragment<PetView>(), AnkoLogger {
     @Inject lateinit var mapper: PetMapper
     @Inject lateinit var viewModelFactory: BrowsePetsViewModelFactory
     private lateinit var browsePetsViewModel: BrowsePetsViewModel
+    private lateinit var listener: PetOnClickListener
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
+        if (context is PetOnClickListener) {
+            listener = context
+        } else {
+            throw ClassCastException("${ context.toString() } must implement PetOnClickListener.")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +73,7 @@ class AnimalFragment : BaseFragment<PetView>(), AnkoLogger {
     }
 
     override fun viewModelObserve() {
-        browsePetsViewModel.getPets().observe(this,
+        browsePetsViewModel.getPetsLiveData().observe(this,
                 Observer<Resource<List<PetView>>> {
                     if (it != null) this.handleDataState(it.status, it.data, it.message)
                 })
@@ -81,6 +88,10 @@ class AnimalFragment : BaseFragment<PetView>(), AnkoLogger {
     }
 
     override fun setupAdapter() {
+        animalAdapter.listener = {
+            info("animal click: ${ it.id } ${ it.name }")
+            listener.onPetClick(it)
+        }
         recyclerView.adapter = animalAdapter
     }
 

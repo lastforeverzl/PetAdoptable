@@ -31,6 +31,18 @@ open class PetsRemoteDataStore @Inject constructor(private val petsRemote: PetsR
         return petsRemote.getPets(options)
     }
 
+    override fun getFavoritePets(): Flowable<List<PetEntity>> {
+        throw UnsupportedOperationException()
+    }
+
+    override fun saveToFavorite(pet: PetEntity): Completable {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getPetById(id: String): Flowable<PetEntity> {
+        throw UnsupportedOperationException()
+    }
+
     override fun isCached(animal: String): Single<Boolean> {
         throw UnsupportedOperationException()
     }

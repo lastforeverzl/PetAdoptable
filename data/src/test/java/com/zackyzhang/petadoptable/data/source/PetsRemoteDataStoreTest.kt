@@ -43,6 +43,11 @@ class PetsRemoteDataStoreTest {
         petsRemoteDataStore.savePets(PetsFactory.makePetEntityList(2)).test()
     }
 
+    @Test(expected = UnsupportedOperationException::class)
+    fun getFavoritePetsThrowsException() {
+        petsRemoteDataStore.getFavoritePets().test()
+    }
+
     @Test
     fun getPetsCompletes() {
         stubPetsRemoteGetPets(Flowable.just(PetsFactory.makePetEntityList(2)))

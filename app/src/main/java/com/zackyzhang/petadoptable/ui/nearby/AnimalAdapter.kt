@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.model.PetViewModel
-import com.zackyzhang.petadoptable.ui.widget.Utils
 import kotlinx.android.synthetic.main.item_pet.view.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -18,9 +17,12 @@ import javax.inject.Inject
 /**
  * Created by lei on 12/20/17.
  */
-class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.ViewHolder>(), AnkoLogger {
+class AnimalAdapter @Inject constructor() :
+        RecyclerView.Adapter<AnimalAdapter.ViewHolder>(), AnkoLogger {
 
     private var pets = mutableListOf<PetViewModel>()
+
+    lateinit var listener: (PetViewModel) -> Unit
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pet = pets[position]
@@ -43,7 +45,8 @@ class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.V
         pets.addAll(data)
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) :
+            RecyclerView.ViewHolder(view) {
 
         private val animalPhoto: ImageView = view.animalPhoto
         private val animalName: TextView = view.animalName
@@ -51,22 +54,26 @@ class AnimalAdapter @Inject constructor() : RecyclerView.Adapter<AnimalAdapter.V
         private val animalInfo: TextView = view.animalInfo
 
         fun bind(pet: PetViewModel) {
-            animalName.text = pet.name
-            animalInfo.text = Utils.getPetInfo(pet)
-            animalLocation.text = pet.cityState
+            with(pet) {
+                animalName.text = pet.name
+                animalInfo.text = this.getPetInfo()
+                animalLocation.text = pet.cityState
 
-            if (pet.medias.isNotEmpty()) {
-                Glide.with(itemView.context)
-                        .asBitmap()
-                        .load(pet.medias[0])
-                        .thumbnail(0.2f)
-                        .into(animalPhoto)
-            } else {
-                Glide.with(itemView.context)
-                        .asBitmap()
-                        .load(R.drawable.no_image_placeholder)
-                        .thumbnail(0.2f)
-                        .into(animalPhoto)
+                //todo("try using kotlin extension function for Glide")
+                if (pet.medias.isNotEmpty()) {
+                    Glide.with(itemView.context)
+                            .asBitmap()
+                            .load(pet.medias[0])
+                            .thumbnail(0.2f)
+                            .into(animalPhoto)
+                } else {
+                    Glide.with(itemView.context)
+                            .asBitmap()
+                            .load(R.drawable.no_image_placeholder)
+                            .thumbnail(0.2f)
+                            .into(animalPhoto)
+                }
+                itemView.setOnClickListener{ listener(this) }
             }
         }
     }

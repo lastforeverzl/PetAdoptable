@@ -3,6 +3,7 @@ package com.zackyzhang.petadoptable.ui.main
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.zackyzhang.petadoptable.ui.R
+import com.zackyzhang.petadoptable.ui.detail.PetDetailActivity
 import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragment
 import com.zackyzhang.petadoptable.ui.nearby.NearbyPagerFragment
 import com.zackyzhang.petadoptable.ui.shelters.SheltersFragment
@@ -61,6 +62,11 @@ class Navigator(private val mainActivity: MainActivity,
         nearbyPagerFragment?.let { if (it.isAdded) ft.hide(it) }
         favoritesFragment?.let { if (it.isAdded) ft.hide(it) }
         ft.commit()
+    }
+
+    fun openDetailActivity(id: String) {
+        val intent = PetDetailActivity.newInstance(mainActivity, id)
+        mainActivity.startActivity(intent)
     }
 
     private fun replaceFragment(fragment: Fragment) {

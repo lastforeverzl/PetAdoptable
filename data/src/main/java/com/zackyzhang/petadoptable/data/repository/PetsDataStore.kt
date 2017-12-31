@@ -19,6 +19,12 @@ interface PetsDataStore {
 
     fun getPets(options: Map<String, String>): Flowable<List<PetEntity>>
 
+    fun getFavoritePets(): Flowable<List<PetEntity>>
+
+    fun saveToFavorite(pet: PetEntity): Completable
+
+    fun getPetById(id: String): Flowable<PetEntity>
+
     fun isCached(animal: String): Single<Boolean>
 
 }

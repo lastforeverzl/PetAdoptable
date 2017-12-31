@@ -22,9 +22,24 @@ interface PetsCache {
     fun savePets(pets: List<PetEntity>): Completable
 
     /**
-     * Retrive a list of Pets, from the cache
+     * Retrieve a list of Pets, from the cache
      */
     fun getPets(animal: String): Flowable<List<PetEntity>>
+
+    /**
+     * Update pet
+     */
+    fun updatePet(pet: PetEntity): Completable
+
+    /**
+     * Retrieve a list of Favorite pets from the DB
+     */
+    fun getFavoritePets(): Flowable<List<PetEntity>>
+
+    /**
+     * Retrieve a pet by id
+     */
+    fun getPetById(id: String): Flowable<PetEntity>
 
     /**
      * Checks whether there are Pets exists in the cache.

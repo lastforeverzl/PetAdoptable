@@ -12,7 +12,7 @@ object Utils {
         val age = pet.age
         val sex = Constants.petSexMap[pet.sex]
         val breed = getBreedString(pet)
-        return String.format("%s - %s - %s - %s", size, age, sex, breed)
+        return "$size - $age - $sex - $breed"
     }
 
     fun getBreedString(pet: PetViewModel): String {

@@ -16,4 +16,10 @@ interface PetsRepository {
     fun savePets(pets: List<Pet>): Completable
 
     fun getPets(options: Map<String, String>): Flowable<List<Pet>>
+
+    fun getFavoritePets(): Flowable<List<Pet>>
+
+    fun saveToFavorite(pet: Pet): Completable
+
+    fun getPetById(id: String): Flowable<Pet>
 }

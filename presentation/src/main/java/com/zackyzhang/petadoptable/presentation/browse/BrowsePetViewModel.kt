@@ -3,7 +3,7 @@ package com.zackyzhang.petadoptable.presentation.browse
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.zackyzhang.petadoptable.domain.interactor.browse.GetPets
+import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetById
 import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.presentation.data.Resource
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
@@ -13,38 +13,28 @@ import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
 
 /**
- * Created by lei on 12/7/17.
+ * Created by lei on 12/29/17.
  */
-open class BrowsePetsViewModel @Inject internal constructor(
-        private val getPets: GetPets,
-        private val petMapper: PetMapper) : ViewModel() {
+open class BrowsePetViewModel @Inject constructor(private val getPetById: GetPetById,
+                                                  private val petMapper: PetMapper) : ViewModel() {
 
-    private val petsLiveData: MutableLiveData<Resource<List<PetView>>> = MutableLiveData()
-
-//    init {
-//        fetchPets("53e8b3b7be61b102e2fd238aedf46dd1", "94568")
-//    }
+    private val petsLiveData: MutableLiveData<Resource<PetView>> = MutableLiveData()
 
     override fun onCleared() {
-        getPets.dispose()
+        getPetById.dispose()
         super.onCleared()
     }
 
-    fun getPetsLiveData():LiveData<Resource<List<PetView>>> {
+    fun getPetLiveData(): LiveData<Resource<PetView>> {
         return petsLiveData
     }
 
-    fun fetchPets(key: String, zipCode: String, offset: Int, animal: String) {
-        val options = mutableMapOf<String, String>()
-        options["key"] = key
-        options["location"] = zipCode
-        options["offset"] = Integer.toString(offset)
-        options["animal"] = animal
+    fun fetchPetById(id: String) {
         petsLiveData.postValue(Resource(ResourceState.LOADING, null, null))
-        return getPets.execute(PetSubscriber(), options)
+        return getPetById.execute(PetSubscriber(), id)
     }
 
-    inner class PetSubscriber: DisposableSubscriber<List<Pet>>() {
+    inner class PetSubscriber: DisposableSubscriber<Pet>() {
 
         override fun onError(exception: Throwable) {
             exception.printStackTrace()
@@ -53,9 +43,9 @@ open class BrowsePetsViewModel @Inject internal constructor(
 
         override fun onComplete() {}
 
-        override fun onNext(t: List<Pet>) {
+        override fun onNext(t: Pet) {
             petsLiveData.postValue(Resource(ResourceState.SUCCESS,
-                    t.map { petMapper.mapToView(it) }, null))
+                    petMapper.mapToView(t), null))
         }
 
     }

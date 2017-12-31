@@ -58,4 +58,20 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
                 }
     }
 
+    override fun getFavoritePets(): Flowable<List<Pet>> {
+        return factory.retrieveCacheDataStore().getFavoritePets()
+                .flatMap {
+                    Flowable.just(it.map { petMapper.mapFromEntity(it) })
+                }
+    }
+
+    override fun saveToFavorite(pet: Pet): Completable {
+        return factory.retrieveCacheDataStore().saveToFavorite(petMapper.mapToEntity(pet))
+    }
+
+    override fun getPetById(id: String): Flowable<Pet> {
+        return factory.retrieveCacheDataStore().getPetById(id)
+                .map { petMapper.mapFromEntity(it) }
+    }
+
 }

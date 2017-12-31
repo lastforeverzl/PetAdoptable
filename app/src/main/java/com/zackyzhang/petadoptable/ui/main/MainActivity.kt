@@ -5,6 +5,8 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.zackyzhang.petadoptable.ui.R
+import com.zackyzhang.petadoptable.ui.model.PetViewModel
+import com.zackyzhang.petadoptable.ui.widget.PetOnClickListener
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -17,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by lei on 12/16/17.
  */
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger, PetOnClickListener {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -67,6 +69,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
                 }
                 false
             }
+
+    override fun onPetClick(pet: PetViewModel) {
+        info("animal click: ${ pet.id } ${ pet.name }")
+        navigator.openDetailActivity(pet.id)
+    }
 
     /**
      * Avoid fragments overlapping

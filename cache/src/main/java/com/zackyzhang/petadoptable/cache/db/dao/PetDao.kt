@@ -5,6 +5,7 @@ import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.DELETE_ALL_PETS
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_PETS
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PETS
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PETS_BY_ANIMAL
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PET_BY_ID
 import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
 
 /**
@@ -24,6 +25,12 @@ interface PetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPet(pet: PetDbEntity): Long
+
+    @Update
+    fun updatePet(pet: PetDbEntity): Int
+
+    @Query(QUERY_PET_BY_ID + ":id")
+    fun getPetById(id: String): PetDbEntity
 
     @Delete
     fun deletePet(pet: PetDbEntity)

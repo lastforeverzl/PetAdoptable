@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.ArgumentMatchers.anyString
 
 /**
  * Created by lei on 12/6/17.
@@ -56,6 +57,27 @@ class PetsCacheDataStoreTest {
         testObserver.assertComplete()
     }
 
+    @Test
+    fun getFavoritePetsCompletes() {
+        stubPetsCacheGetFavoritePets(Flowable.just(PetsFactory.makePetEntityList(2)))
+        val testObserver = petsCacheDataStore.getFavoritePets().test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun saveToFavoriteCompletes() {
+        stubPetsCacheSaveToFavorite(Completable.complete())
+        val testObserver = petsCacheDataStore.saveToFavorite(PetsFactory.makePetEntity()).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun getPetByIdCompletes() {
+        stubPetsCacheGetPetById(Flowable.just(PetsFactory.makePetEntity()))
+        val testObserver = petsCacheDataStore.getPetById(anyString()).test()
+        testObserver.assertComplete()
+    }
+
     private fun stubPetsCacheClearPets(completable: Completable) {
         whenever(petsCache.clearPets())
                 .thenReturn(completable)
@@ -68,6 +90,21 @@ class PetsCacheDataStoreTest {
 
     private fun stubPetsCacheGetPets(flowable: Flowable<List<PetEntity>>) {
         whenever(petsCache.getPets(any()))
+                .thenReturn(flowable)
+    }
+
+    private fun stubPetsCacheGetFavoritePets(flowable: Flowable<List<PetEntity>>) {
+        whenever(petsCache.getFavoritePets())
+                .thenReturn(flowable)
+    }
+
+    private fun stubPetsCacheSaveToFavorite(completable: Completable) {
+        whenever(petsCache.updatePet(any()))
+                .thenReturn(completable)
+    }
+
+    private fun stubPetsCacheGetPetById(flowable: Flowable<PetEntity>) {
+        whenever(petsCache.getPetById(any()))
                 .thenReturn(flowable)
     }
 }

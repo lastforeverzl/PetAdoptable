@@ -38,9 +38,21 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
     /**
      * Retrieve a list of [PetEntity] instance from the cache
      */
-    override fun getPets(options: Map<String, String>):
-            Flowable<List<PetEntity>> {
+    override fun getPets(options: Map<String, String>): Flowable<List<PetEntity>> {
         return petsCache.getPets(options["animal"].toString())
+    }
+
+    override fun getFavoritePets(): Flowable<List<PetEntity>> {
+        return petsCache.getFavoritePets()
+    }
+
+    override fun saveToFavorite(pet: PetEntity): Completable {
+        return petsCache.updatePet(pet)
+                .doOnComplete { println("pet set to favorite!") }
+    }
+
+    override fun getPetById(id: String): Flowable<PetEntity> {
+        return petsCache.getPetById(id)
     }
 
     /**

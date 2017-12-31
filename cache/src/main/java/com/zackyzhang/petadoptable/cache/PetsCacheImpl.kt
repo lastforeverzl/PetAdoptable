@@ -98,11 +98,59 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     }
 
     /**
+     * Retrieve a list of [PetEntity] instances for favorite pets from the database
+     */
+    override fun getFavoritePets(): Flowable<List<PetEntity>> {
+        return Flowable.defer {
+            Flowable.just(petAdoptableDatabase.getPetDao().getFavoritePets())
+        }.map {
+            it.map {
+                val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(it.uid!!)
+                val breedsForPet = petAdoptableDatabase.getBreedDao().getBreedsForPet(it.uid!!)
+                it.medias = entityMapper.mapFromCachedMedia(mediasForPet)
+                it.breeds = entityMapper.mapFromCachedBreed(breedsForPet)
+                entityMapper.mapFromCached(it)
+            }
+        }
+    }
+
+    /**
+     * Update pet
+     */
+    // todo(" update will need uid to identified the pet in database, how to get uid for pet??????")
+    override fun updatePet(pet: PetEntity): Completable {
+        return Completable.defer {
+            val uid = petAdoptableDatabase.getPetDao().getPetById(pet.id).uid
+            println("updatePet uid: $uid")
+            val petDbEntity = entityMapper.mapToCached(pet)
+            petDbEntity.uid = uid
+            println("petDbEntity: $petDbEntity")
+            petAdoptableDatabase.getPetDao().updatePet(petDbEntity)
+            Completable.complete()
+        }
+    }
+
+    /**
+     * Retrieve a pet by id
+     */
+    override fun getPetById(id: String): Flowable<PetEntity> {
+        return Flowable.defer {
+            Flowable.just(petAdoptableDatabase.getPetDao().getPetById(id))
+        }.map {
+            val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(it.uid!!)
+            val breedsForPet = petAdoptableDatabase.getBreedDao().getBreedsForPet(it.uid!!)
+            it.medias = entityMapper.mapFromCachedMedia(mediasForPet)
+            it.breeds = entityMapper.mapFromCachedBreed(breedsForPet)
+            entityMapper.mapFromCached(it)
+        }
+    }
+
+    /**
      * Checked if there is any data in the cache
      */
     override fun isCached(animal: String): Single<Boolean> {
         return Single.defer {
-            println("<PetsCacheImpl>animal isCached: " + animal)
+            println("<PetsCacheImpl>animal isCached: $animal")
             Single.just(petAdoptableDatabase.getPetDao()
                     .getAllPetsByAnimal(matchAnimalName(animal)).isNotEmpty())
         }

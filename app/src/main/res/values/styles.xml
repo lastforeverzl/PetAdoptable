@@ -12,4 +12,9 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <style name="CollapseTitle">
+        <item name="android:textSize">@dimen/abc_text_size_title_material</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
 </resources>
