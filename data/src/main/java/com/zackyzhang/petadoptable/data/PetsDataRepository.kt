@@ -7,6 +7,7 @@ import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -69,7 +70,7 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
         return factory.retrieveCacheDataStore().saveToFavorite(petMapper.mapToEntity(pet))
     }
 
-    override fun getPetById(id: String): Flowable<Pet> {
+    override fun getPetById(id: String): Single<Pet> {
         return factory.retrieveCacheDataStore().getPetById(id)
                 .map { petMapper.mapFromEntity(it) }
     }

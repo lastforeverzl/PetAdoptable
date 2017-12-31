@@ -10,7 +10,7 @@ import com.zackyzhang.petadoptable.domain.executor.ThreadExecutor
 import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetById
 import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.domain.repository.PetsRepository
-import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,7 +46,7 @@ class GetPetByIdTest {
 
     @Test
     fun buildUseCaseObservableCompletes() {
-        stubPetsRepositoryGetPets(Flowable.just(PetFactory.makePet()))
+        stubPetsRepositoryGetPets(Single.just(PetFactory.makePet()))
         val testObserver = getPetById.buildUseCaseObservable(anyString()).test()
         testObserver.assertComplete()
     }
@@ -54,13 +54,13 @@ class GetPetByIdTest {
     @Test
     fun buildUseCaseObservableReturnsData() {
         val pet = PetFactory.makePet()
-        stubPetsRepositoryGetPets(Flowable.just(pet))
+        stubPetsRepositoryGetPets(Single.just(pet))
         val testObserver = getPetById.buildUseCaseObservable(anyString()).test()
         testObserver.assertValue(pet)
     }
 
-    private fun stubPetsRepositoryGetPets(flowable: Flowable<Pet>) {
+    private fun stubPetsRepositoryGetPets(single: Single<Pet>) {
         whenever(mockPetsRepository.getPetById(any()))
-                .thenReturn(flowable)
+                .thenReturn(single)
     }
 }

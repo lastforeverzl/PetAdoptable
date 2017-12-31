@@ -9,7 +9,7 @@ import com.zackyzhang.petadoptable.presentation.data.Resource
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import com.zackyzhang.petadoptable.presentation.mapper.PetMapper
 import com.zackyzhang.petadoptable.presentation.model.PetView
-import io.reactivex.subscribers.DisposableSubscriber
+import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 /**
@@ -34,19 +34,23 @@ open class BrowsePetViewModel @Inject constructor(private val getPetById: GetPet
         return getPetById.execute(PetSubscriber(), id)
     }
 
-    inner class PetSubscriber: DisposableSubscriber<Pet>() {
+    inner class PetSubscriber: DisposableSingleObserver<Pet>() {
+        override fun onSuccess(t: Pet) {
+            petsLiveData.postValue(Resource(ResourceState.SUCCESS,
+                    petMapper.mapToView(t), null))
+        }
 
         override fun onError(exception: Throwable) {
             exception.printStackTrace()
             petsLiveData.postValue(Resource(ResourceState.ERROR, null, exception.message))
         }
 
-        override fun onComplete() {}
-
-        override fun onNext(t: Pet) {
-            petsLiveData.postValue(Resource(ResourceState.SUCCESS,
-                    petMapper.mapToView(t), null))
-        }
+//        override fun onComplete() {}
+//
+//        override fun onNext(t: Pet) {
+//            petsLiveData.postValue(Resource(ResourceState.SUCCESS,
+//                    petMapper.mapToView(t), null))
+//        }
 
     }
 }

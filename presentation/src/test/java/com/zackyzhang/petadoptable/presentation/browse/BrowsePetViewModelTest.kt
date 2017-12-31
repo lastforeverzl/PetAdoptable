@@ -9,7 +9,7 @@ import com.zackyzhang.petadoptable.presentation.mapper.PetMapper
 import com.zackyzhang.petadoptable.presentation.model.PetView
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory
 import com.zackyzhang.petadoptable.presentation.test.factory.PetsFactory
-import io.reactivex.subscribers.DisposableSubscriber
+import io.reactivex.observers.DisposableSingleObserver
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +31,7 @@ class BrowsePetViewModelTest {
     @Mock lateinit var petMapper: PetMapper
 
     @Captor
-    private lateinit var captor: KArgumentCaptor<DisposableSubscriber<Pet>>
+    private lateinit var captor: KArgumentCaptor<DisposableSingleObserver<Pet>>
 
     private lateinit var petViewModel: BrowsePetViewModel
 
@@ -62,7 +62,7 @@ class BrowsePetViewModelTest {
         petViewModel.fetchPetById(DataFactory.randomUuid())
 
         verify(getPetById).execute(captor.capture(), any())
-        captor.firstValue.onNext(pet)
+        captor.firstValue.onSuccess(pet)
 
         assert(petViewModel.getPetLiveData().value?.status == ResourceState.SUCCESS)
     }
@@ -78,7 +78,7 @@ class BrowsePetViewModelTest {
         petViewModel.fetchPetById(DataFactory.randomUuid())
 
         verify(getPetById).execute(captor.capture(), any())
-        captor.firstValue.onNext(pet)
+        captor.firstValue.onSuccess(pet)
 
         assert(petViewModel.getPetLiveData().value?.data == petView)
 
@@ -95,7 +95,7 @@ class BrowsePetViewModelTest {
         petViewModel.fetchPetById(DataFactory.randomUuid())
 
         verify(getPetById).execute(captor.capture(), any())
-        captor.firstValue.onNext(pet)
+        captor.firstValue.onSuccess(pet)
 
         assert(petViewModel.getPetLiveData().value?.message == null)
     }

@@ -51,7 +51,7 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
                 .doOnComplete { println("pet set to favorite!") }
     }
 
-    override fun getPetById(id: String): Flowable<PetEntity> {
+    override fun getPetById(id: String): Single<PetEntity> {
         return petsCache.getPetById(id)
     }
 

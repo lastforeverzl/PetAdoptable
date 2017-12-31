@@ -39,7 +39,7 @@ open class PetsRemoteDataStore @Inject constructor(private val petsRemote: PetsR
         throw UnsupportedOperationException()
     }
 
-    override fun getPetById(id: String): Flowable<PetEntity> {
+    override fun getPetById(id: String): Single<PetEntity> {
         throw UnsupportedOperationException()
     }
 

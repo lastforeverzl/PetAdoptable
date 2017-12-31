@@ -9,6 +9,7 @@ import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomU
 import com.zackyzhang.petadoptable.data.test.factory.PetsFactory
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -73,7 +74,7 @@ class PetsCacheDataStoreTest {
 
     @Test
     fun getPetByIdCompletes() {
-        stubPetsCacheGetPetById(Flowable.just(PetsFactory.makePetEntity()))
+        stubPetsCacheGetPetById(Single.just(PetsFactory.makePetEntity()))
         val testObserver = petsCacheDataStore.getPetById(anyString()).test()
         testObserver.assertComplete()
     }
@@ -103,8 +104,8 @@ class PetsCacheDataStoreTest {
                 .thenReturn(completable)
     }
 
-    private fun stubPetsCacheGetPetById(flowable: Flowable<PetEntity>) {
+    private fun stubPetsCacheGetPetById(single: Single<PetEntity>) {
         whenever(petsCache.getPetById(any()))
-                .thenReturn(flowable)
+                .thenReturn(single)
     }
 }

@@ -39,7 +39,7 @@ interface PetsCache {
     /**
      * Retrieve a pet by id
      */
-    fun getPetById(id: String): Flowable<PetEntity>
+    fun getPetById(id: String): Single<PetEntity>
 
     /**
      * Checks whether there are Pets exists in the cache.

@@ -2,10 +2,10 @@ package com.zackyzhang.petadoptable.domain.interactor.browse
 
 import com.zackyzhang.petadoptable.domain.executor.PostExecutionThread
 import com.zackyzhang.petadoptable.domain.executor.ThreadExecutor
-import com.zackyzhang.petadoptable.domain.interactor.FlowableUseCase
+import com.zackyzhang.petadoptable.domain.interactor.SingleUseCase
 import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.domain.repository.PetsRepository
-import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -14,9 +14,9 @@ import javax.inject.Inject
 open class GetPetById @Inject constructor(val petsRepository: PetsRepository,
                                                threadExecutor: ThreadExecutor,
                                                postExecutionThread: PostExecutionThread) :
-        FlowableUseCase<Pet, String>(threadExecutor, postExecutionThread) {
+        SingleUseCase<Pet, String>(threadExecutor, postExecutionThread) {
 
-    public override fun buildUseCaseObservable(params: String?): Flowable<Pet> {
+    public override fun buildUseCaseObservable(params: String?): Single<Pet> {
         return petsRepository.getPetById(params!!)
     }
 

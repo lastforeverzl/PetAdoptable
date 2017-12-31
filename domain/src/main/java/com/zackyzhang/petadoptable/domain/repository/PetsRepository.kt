@@ -3,6 +3,7 @@ package com.zackyzhang.petadoptable.domain.repository
 import com.zackyzhang.petadoptable.domain.model.Pet
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Interface defining methods for how the Data layer can pass data to and from the Domain layer.
@@ -21,5 +22,5 @@ interface PetsRepository {
 
     fun saveToFavorite(pet: Pet): Completable
 
-    fun getPetById(id: String): Flowable<Pet>
+    fun getPetById(id: String): Single<Pet>
 }

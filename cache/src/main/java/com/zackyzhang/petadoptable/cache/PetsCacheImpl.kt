@@ -133,9 +133,9 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     /**
      * Retrieve a pet by id
      */
-    override fun getPetById(id: String): Flowable<PetEntity> {
-        return Flowable.defer {
-            Flowable.just(petAdoptableDatabase.getPetDao().getPetById(id))
+    override fun getPetById(id: String): Single<PetEntity> {
+        return Single.defer {
+            Single.just(petAdoptableDatabase.getPetDao().getPetById(id))
         }.map {
             val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(it.uid!!)
             val breedsForPet = petAdoptableDatabase.getBreedDao().getBreedsForPet(it.uid!!)
