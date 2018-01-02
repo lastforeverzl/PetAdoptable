@@ -21,10 +21,6 @@ open class BrowsePetsViewModel @Inject internal constructor(
 
     private val petsLiveData: MutableLiveData<Resource<List<PetView>>> = MutableLiveData()
 
-//    init {
-//        fetchPets("53e8b3b7be61b102e2fd238aedf46dd1", "94568")
-//    }
-
     override fun onCleared() {
         getPets.dispose()
         super.onCleared()

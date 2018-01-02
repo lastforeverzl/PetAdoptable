@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_petdetail.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -92,7 +93,6 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
                 true
             }
             R.id.favoritePet -> {
-                //todo("implement update favorite pet status")
                 if (petDetail.petIsFavorite) {
                     changeFavoriteStatus(false)
                 } else {
@@ -106,30 +106,28 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
 
     private fun handleDataState(resourceState: ResourceState, data: PetDetailView?, message: String?) {
         when (resourceState) {
-            ResourceState.LOADING -> setupScreenForLoadingState()
             ResourceState.SUCCESS -> setupScreenForSuccess(data)
             ResourceState.ERROR -> setupScreenForError(message)
+            ResourceState.UPDATE_FINISH -> setupScreenForUpdateFinished(message)
         }
-    }
-
-    private fun setupScreenForLoadingState() {
-
     }
 
     private fun setupScreenForSuccess(data: PetDetailView?) {
-        if (data != null) {
-            updateView(data)
-        } else {
-
-        }
+        viewError.visibility = View.GONE
+        data?.let { updateView(data) }
     }
 
     private fun setupScreenForError(message: String?) {
+        activityPetDetail.visibility = View.GONE
+        viewError.visibility = View.VISIBLE
         error(message)
     }
 
+    private fun setupScreenForUpdateFinished(message: String?) {
+        message?.let { toast(it) }
+    }
+
     private fun updateView(data: PetDetailView) {
-        info("pet: ${data.petName} ${data.petId} ${data.petIsFavorite} ${data.shelterAddress}")
         petDetail = mapper.mapToViewModel(data)
         if (petDetail.petIsFavorite) {
             favoriteIcon.setIcon(R.drawable.ic_favorite_white_24px)

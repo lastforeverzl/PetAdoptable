@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import com.zackyzhang.petadoptable.presentation.browse.BrowseSheltersViewModel
 import com.zackyzhang.petadoptable.presentation.browse.BrowseSheltersViewModelFactory
 import com.zackyzhang.petadoptable.presentation.data.Resource
@@ -80,6 +81,11 @@ class SheltersFragment : BaseFragment<ShelterView>(), AnkoLogger {
 
     override fun getLayout(): Int {
         return R.layout.fragment_shelters
+    }
+
+    override fun setupBrowseRecycler() {
+        super.setupBrowseRecycler()
+        recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
     }
 
     override fun setupAdapter() {

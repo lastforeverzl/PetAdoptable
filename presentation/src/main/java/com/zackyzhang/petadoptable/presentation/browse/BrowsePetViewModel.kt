@@ -40,7 +40,6 @@ open class BrowsePetViewModel @Inject constructor(private val getPetDetailInfo: 
         val options = mutableMapOf<String, String>()
         options["key"] = key
         options["id"] = shelterId
-        petLiveData.postValue(Resource(ResourceState.LOADING, null, null))
         return getPetDetailInfo.execute(PetSubscriber(), petId, options)
     }
 
@@ -63,11 +62,11 @@ open class BrowsePetViewModel @Inject constructor(private val getPetDetailInfo: 
 
     inner class UpdateSubscriber : DisposableCompletableObserver() {
         override fun onComplete() {
-            println("UpdateSubscriber onComplete")
+            petLiveData.postValue(Resource(ResourceState.UPDATE_FINISH, null, "Update Success"))
         }
 
         override fun onError(e: Throwable) {
-
+            petLiveData.postValue(Resource(ResourceState.UPDATE_FINISH, null, "Update Error"))
         }
 
     }

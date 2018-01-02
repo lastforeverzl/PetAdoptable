@@ -16,4 +16,9 @@ open class Resource<out T> constructor(val status: ResourceState, val data: T?, 
     fun <T> loading(): Resource<T> {
         return Resource(ResourceState.LOADING, null, null)
     }
+
+    fun <T> updateFinish(): Resource<T> {
+        return Resource(ResourceState.UPDATE_FINISH, null, null)
+    }
+
 }

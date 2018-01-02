@@ -1,195 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_layout"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/activityPetDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:background="@color/colorWhite"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/CollapsingToolbarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/collapse_toolbar_height"
-            app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMarginEnd="10dp"
-            app:expandedTitleMarginStart="10dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleGravity="bottom|center_horizontal"
-            app:collapsedTitleTextAppearance="@style/CollapseTitle">
-
-            <com.glide.slider.library.SliderLayout
-                android:id="@+id/photoSlider"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways"/>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
-
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            >
+            android:fitsSystemWindows="true"
+            android:background="@color/colorWhite"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <TextView
-                android:id="@+id/animalName"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/CollapsingToolbarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="24sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#14181a"
-                tools:text="Kipper"/>
+                android:layout_height="@dimen/collapse_toolbar_height"
+                app:contentScrim="@color/colorPrimary"
+                app:expandedTitleMarginEnd="10dp"
+                app:expandedTitleMarginStart="10dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:expandedTitleGravity="bottom|center_horizontal"
+                app:collapsedTitleTextAppearance="@style/CollapseTitle">
 
-            <TextView
-                android:id="@+id/animalInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="12dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                tools:text="Young - Female - Terrier &amp; Chihuahua"/>
+                <com.glide.slider.library.SliderLayout
+                    android:id="@+id/photoSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax"
+                    app:layout_scrollFlags="scroll|enterAlways"/>
 
-            <TextView
-                android:id="@+id/animalAdoptable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                tools:text="Adoptable at East Bay SPCA "
-                />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin">
 
-            <TextView
-                android:id="@+id/animalUpdateDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                tools:text="Intake date 1/8/2017"
-                />
+                </android.support.v7.widget.Toolbar>
 
-            <TextView
-                android:id="@+id/animalDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                android:lineSpacingExtra="2.8sp"
-                tools:text="@string/pet_description_text"/>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
-            <TextView
-                android:id="@+id/shelterName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                tools:text="East Bay SPCA "/>
+        </android.support.design.widget.AppBarLayout>
 
-            <TextView
-                android:id="@+id/shelterAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#8f14181a"
-                tools:text="4651 Gleason Dr, Dublin, CA 94568 "/>
-
-            <TextView
-                android:id="@+id/shelterPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-medium"
-                android:textStyle="normal"
-                android:textColor="#0097a7"
-                tools:text="(925) 479-9670"/>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:orientation="vertical"
+                android:padding="16dp"
+                >
 
-                <Button
-                    android:id="@+id/btEmail"
+                <TextView
+                    android:id="@+id/animalName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="24sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#14181a"
+                    tools:text="Kipper"/>
+
+                <TextView
+                    android:id="@+id/animalInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#8f14181a"
+                    tools:text="Young - Female - Terrier &amp; Chihuahua"/>
+
+                <TextView
+                    android:id="@+id/animalAdoptable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#8f14181a"
+                    tools:text="Adoptable at East Bay SPCA "
+                    />
+
+                <TextView
+                    android:id="@+id/animalUpdateDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/pet_detail_button_green"
-                    android:padding="16dp"
+                    android:layout_marginTop="8dp"
                     android:textSize="14sp"
-                    android:textColor="@color/colorWhite"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="sans-serif"
                     android:textStyle="normal"
-                    android:text="@string/shelter_email">
-                </Button>
+                    android:textColor="#8f14181a"
+                    tools:text="Intake date 1/8/2017"
+                    />
 
-                <Button
-                    android:id="@+id/btGetDirection"
+                <TextView
+                    android:id="@+id/animalDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#8f14181a"
+                    android:lineSpacingExtra="2.8sp"
+                    tools:text="@string/pet_description_text"/>
+
+                <TextView
+                    android:id="@+id/shelterName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#8f14181a"
+                    tools:text="East Bay SPCA "/>
+
+                <TextView
+                    android:id="@+id/shelterAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#8f14181a"
+                    tools:text="4651 Gleason Dr, Dublin, CA 94568 "/>
+
+                <TextView
+                    android:id="@+id/shelterPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/pet_detail_button_green"
-                    android:layout_marginStart="8dp"
-                    android:padding="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:textSize="14sp"
-                    android:textColor="@color/colorWhite"
                     android:fontFamily="sans-serif-medium"
                     android:textStyle="normal"
-                    android:text="@string/shelter_direction"
-                    android:contentDescription="@string/cd_get_direction"
-                    android:focusable="true"
-                    android:nextFocusLeft="@id/btEmail">
-                </Button>
+                    android:textColor="#0097a7"
+                    tools:text="(925) 479-9670"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/btEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/pet_detail_button_green"
+                        android:padding="16dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="normal"
+                        android:text="@string/shelter_email">
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btGetDirection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/pet_detail_button_green"
+                        android:layout_marginStart="8dp"
+                        android:padding="16dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="normal"
+                        android:text="@string/shelter_direction"
+                        android:contentDescription="@string/cd_get_direction"
+                        android:focusable="true"
+                        android:nextFocusLeft="@id/btEmail">
+                    </Button>
+
+                </LinearLayout>
+
 
             </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
+    </android.support.design.widget.CoordinatorLayout>
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    <com.zackyzhang.petadoptable.ui.widget.error.ErrorView
+        android:id="@+id/viewError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
