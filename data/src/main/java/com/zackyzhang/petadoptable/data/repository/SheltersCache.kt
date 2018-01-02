@@ -44,6 +44,6 @@ interface SheltersCache {
     /**
      * Retrieve a shelter by id
      */
-//    fun getShelterById(id: String): Flowable<ShelterEntity>
+//    fun getShelterById(id: String): Single<ShelterEntity>
 
 }

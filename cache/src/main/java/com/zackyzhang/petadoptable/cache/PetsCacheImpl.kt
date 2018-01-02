@@ -52,9 +52,14 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     }
 
     /**
-     * Helpter method for saving a [PetDbEntity] instance to the database.
+     * Helpter method for saving a [PetDbEntity] instance to the database. Retrieve the favorite
+     * status first then update
      */
     private fun savePet(cachedPet: PetDbEntity): Long {
+        petAdoptableDatabase.getPetDao().getPetById(cachedPet.id)?.let {
+            val isFavorite = petAdoptableDatabase.getPetDao().getPetById(cachedPet.id).isFavorite
+            cachedPet.isFavorite = isFavorite
+        }
         return petAdoptableDatabase.getPetDao().insertPet(cachedPet)
     }
 
@@ -117,7 +122,6 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     /**
      * Update pet
      */
-    // todo(" update will need uid to identified the pet in database, how to get uid for pet??????")
     override fun updatePet(pet: PetEntity): Completable {
         return Completable.defer {
             val uid = petAdoptableDatabase.getPetDao().getPetById(pet.id).uid

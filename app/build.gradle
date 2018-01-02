@@ -15,10 +15,11 @@ android {
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         versionCode 1
         versionName "1.0"
-        multiDexEnabled = true
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "PETFINDER_API_KEY", "\"${petfinder_api_key}\""
         buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${google_maps_api_key}\""
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -108,5 +109,6 @@ dependencies {
 //    compile 'com.squareup.picasso:picasso:2.3.2'
 //    compile 'com.nineoldandroids:library:2.4.0'
 //    compile 'com.daimajia.slider:library:1.1.5@aar'
-    compile 'com.github.firdausmaulan:GlideSlider:1.0.2'
+    implementation 'com.github.firdausmaulan:GlideSlider:1.0.2'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }

@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
 
     override fun onPetClick(pet: PetViewModel) {
         info("animal click: ${ pet.id } ${ pet.name }")
-        navigator.openDetailActivity(pet.id)
+        navigator.openDetailActivity(pet.id, pet.shelterId)
     }
 
     /**

@@ -64,8 +64,8 @@ class Navigator(private val mainActivity: MainActivity,
         ft.commit()
     }
 
-    fun openDetailActivity(id: String) {
-        val intent = PetDetailActivity.newInstance(mainActivity, id)
+    fun openDetailActivity(petId: String, shelterId: String) {
+        val intent = PetDetailActivity.newInstance(mainActivity, petId, shelterId)
         mainActivity.startActivity(intent)
     }
 

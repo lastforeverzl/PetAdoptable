@@ -40,7 +40,7 @@ abstract class BaseFragment<in T> : Fragment(), AnkoLogger {
         fetchData()
     }
 
-    private fun setupBrowseRecycler() {
+    open fun setupBrowseRecycler() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         setupAdapter()

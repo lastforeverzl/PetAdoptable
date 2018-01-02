@@ -3,8 +3,9 @@ package com.zackyzhang.petadoptable.domain.interactor
 import com.zackyzhang.petadoptable.domain.executor.PostExecutionThread
 import com.zackyzhang.petadoptable.domain.executor.ThreadExecutor
 import io.reactivex.Completable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.disposables.Disposables
+import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -14,7 +15,7 @@ abstract class CompletableUseCase<in Params> protected constructor(
         private val threadExecutor: ThreadExecutor,
         private val postExecutionThread: PostExecutionThread) {
 
-    private val subscription = Disposables.empty()
+    private val disposables = CompositeDisposable()
 
     /**
      * Builds a [Completable] which will be used when the current [CompletableUseCase] is executed.
@@ -24,18 +25,18 @@ abstract class CompletableUseCase<in Params> protected constructor(
     /**
      * Executes the current use case
      */
-    fun execute(params: Params): Completable {
-        return this.buildUseCaseObservable(params)
+    fun execute(observer: DisposableCompletableObserver, params: Params) {
+        val completable = this.buildUseCaseObservable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
-                .observeOn(postExecutionThread.scheduler)
+                .observeOn(postExecutionThread.scheduler) as Completable
+        addDisposable(completable.subscribeWith(observer))
     }
 
-    /**
-     * Unsubscribes from current [Disposable].
-     */
-    fun unsubscribe() {
-        if (!subscription.isDisposed) {
-            subscription.dispose()
-        }
+    fun dispose() {
+        if (!disposables.isDisposed) disposables.dispose()
+    }
+
+    protected fun addDisposable(disposable: Disposable) {
+        disposables.add(disposable)
     }
 }

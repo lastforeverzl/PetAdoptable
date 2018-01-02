@@ -20,4 +20,6 @@ interface SheltersDataStore {
 
     fun isCached(): Single<Boolean>
 
+    fun getShelterById(options: Map<String, String>): Single<ShelterEntity>
+
 }

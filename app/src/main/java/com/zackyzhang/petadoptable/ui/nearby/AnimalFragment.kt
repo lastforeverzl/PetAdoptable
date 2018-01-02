@@ -95,9 +95,9 @@ class AnimalFragment : BaseFragment<PetView>(), AnkoLogger {
         recyclerView.adapter = animalAdapter
     }
 
-    override fun updateListView(pets: List<PetView>) {
+    override fun updateListView(data: List<PetView>) {
 //        animalAdapter.pets = pets.map { mapper.mapToViewModel(it) }
-        animalAdapter.addPets(pets.map { mapper.mapToViewModel(it) })
+        animalAdapter.addPets(data.map { mapper.mapToViewModel(it) })
         animalAdapter.notifyDataSetChanged()
         info(animal + " adapter size: " + animalAdapter.itemCount)
         if (!isLoadingMore) recyclerView.scrollToPosition(rvPosition)

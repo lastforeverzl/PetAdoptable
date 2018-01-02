@@ -48,4 +48,9 @@ open class SheltersCacheDataStore @Inject constructor(private val sheltersCache:
         return sheltersCache.isCached()
     }
 
+    // TODO("Disable getShelterById from cache just for now")
+    override fun getShelterById(options: Map<String, String>): Single<ShelterEntity> {
+        throw UnsupportedOperationException()
+    }
+
 }

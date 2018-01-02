@@ -7,8 +7,10 @@ package com.zackyzhang.petadoptable.ui.mapper
  * @param <V> the view input type
  * @param <D> the view model output type
  */
-interface Mapper<out V, in D> {
+interface Mapper<V, D> {
 
     fun mapToViewModel(type: D): V
+
+    fun mapFromViewModel(type: V): D
 
 }

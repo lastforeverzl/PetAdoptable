@@ -31,4 +31,7 @@ open class SheltersRemoteDataStore @Inject constructor(private val sheltersRemot
         throw UnsupportedOperationException()
     }
 
+    override fun getShelterById(options: Map<String, String>): Single<ShelterEntity> {
+        return sheltersRemote.getShelterById(options)
+    }
 }

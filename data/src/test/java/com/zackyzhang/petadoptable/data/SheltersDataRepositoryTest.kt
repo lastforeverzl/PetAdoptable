@@ -133,6 +133,31 @@ class SheltersDataRepositoryTest {
 
     //</editor-fold>
 
+    //<editor-fold desc="Get Shelter By Id">
+    @Test
+    fun getShelterByIdCompletes() {
+        val shelterEntity = SheltersFactory.makeShelterEntity()
+        val shelter = SheltersFactory.makeShelter()
+        stubSheltersDataStoreFactoryRetrieveDataStore(sheltersRemoteDataStore)
+        stubSheltersRemoteDataStoreGetShelterById(Single.just(shelterEntity))
+        stubShelterMapperMapFromEntity(shelterEntity, shelter)
+        val testObserver = sheltersDataRepository.getShelterById(mutableMapOf()).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun getShelterByIdReturnData() {
+        val shelterEntity = SheltersFactory.makeShelterEntity()
+        val shelter = SheltersFactory.makeShelter()
+        stubSheltersDataStoreFactoryRetrieveDataStore(sheltersRemoteDataStore)
+        stubSheltersRemoteDataStoreGetShelterById(Single.just(shelterEntity))
+        stubShelterMapperMapFromEntity(shelterEntity, shelter)
+        val testObserver = sheltersDataRepository.getShelterById(mutableMapOf()).test()
+        testObserver.assertValue(shelter)
+
+    }
+    //</editor-fold>
+
     //<editor-fold desc="Stub helper methods">
     private fun stubSheltersDataStoreFactoryRetrieveCacheDataStore() {
         whenever(sheltersDataStoreFactory.retrieveCacheDataStore())
@@ -177,6 +202,11 @@ class SheltersDataRepositoryTest {
     private fun stubSheltersDataStoreFactoryRetrieveDataStore(dataStore: SheltersDataStore) {
         whenever(sheltersDataStoreFactory.retrieveDataStore(any(), any()))
                 .thenReturn(dataStore)
+    }
+
+    private fun stubSheltersRemoteDataStoreGetShelterById(single: Single<ShelterEntity>) {
+        whenever(sheltersRemoteDataStore.getShelterById(mutableMapOf()))
+                .thenReturn(single)
     }
     //</editor-fold>
 }

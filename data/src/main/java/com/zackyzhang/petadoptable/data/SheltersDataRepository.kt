@@ -7,6 +7,7 @@ import com.zackyzhang.petadoptable.domain.model.Shelter
 import com.zackyzhang.petadoptable.domain.repository.SheltersRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -45,5 +46,9 @@ class SheltersDataRepository @Inject constructor(private val factory: SheltersDa
 //                }
     }
 
+    override fun getShelterById(options: Map<String, String>): Single<Shelter> {
+        return factory.retrieveRemoteDataStore().getShelterById(options)
+                .map { shelterMapper.mapFromEntity(it) }
+    }
 }
 

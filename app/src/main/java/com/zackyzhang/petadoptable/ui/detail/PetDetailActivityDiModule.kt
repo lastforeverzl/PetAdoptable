@@ -1,8 +1,10 @@
 package com.zackyzhang.petadoptable.ui.detail
 
-import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetById
+import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetDetailInfo
+import com.zackyzhang.petadoptable.domain.interactor.update.UpdateFavoritePet
 import com.zackyzhang.petadoptable.presentation.browse.BrowsePetViewModelFactory
-import com.zackyzhang.petadoptable.presentation.mapper.PetMapper
+import com.zackyzhang.petadoptable.presentation.mapper.PetDetailMapper
+import com.zackyzhang.petadoptable.presentation.mapper.PetDetailToPetMapper
 import com.zackyzhang.petadoptable.ui.di.scopes.PerActivity
 import dagger.Module
 import dagger.Provides
@@ -15,7 +17,10 @@ class PetDetailActivityDiModule {
 
     @Provides
     @PerActivity
-    fun providePetViewModel(getPetById: GetPetById, petMapper: PetMapper): BrowsePetViewModelFactory{
-        return BrowsePetViewModelFactory(getPetById, petMapper)
+    fun providePetViewModel(getPetDetailInfo: GetPetDetailInfo,
+                            updateFavoritePet: UpdateFavoritePet,
+                            petDetailMapper: PetDetailMapper,
+                            petDetailToPetMapper: PetDetailToPetMapper): BrowsePetViewModelFactory{
+        return BrowsePetViewModelFactory(getPetDetailInfo, updateFavoritePet, petDetailMapper, petDetailToPetMapper)
     }
 }

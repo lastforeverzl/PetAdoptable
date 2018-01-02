@@ -11,6 +11,7 @@ import com.zackyzhang.petadoptable.ui.BaseFragment
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.mapper.PetMapper
 import com.zackyzhang.petadoptable.ui.nearby.AnimalAdapter
+import com.zackyzhang.petadoptable.ui.widget.PetOnClickListener
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import org.jetbrains.anko.AnkoLogger
@@ -33,9 +34,16 @@ class FavoritesFragment : BaseFragment<PetView>(), AnkoLogger {
     @Inject lateinit var viewModelFactory: BrowseFavoritePetsViewModelFactory
     private lateinit var browseFavoritePetsViewModel: BrowseFavoritePetsViewModel
 
+    private lateinit var listener: PetOnClickListener
+
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
+        if (context is PetOnClickListener) {
+            listener = context
+        } else {
+            throw ClassCastException("${ context.toString() } must implement PetOnClickListener.")
+        }
     }
 
     override fun provideViewModel() {
@@ -48,6 +56,12 @@ class FavoritesFragment : BaseFragment<PetView>(), AnkoLogger {
                 Observer<Resource<List<PetView>>>{
                     if (it != null) this.handleDataState(it.status, it.data, it.message)
                 })
+    }
+
+    override fun setupBrowseRecycler() {
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = linearLayoutManager
+        setupAdapter()
     }
 
     override fun fetchData() {
@@ -64,6 +78,10 @@ class FavoritesFragment : BaseFragment<PetView>(), AnkoLogger {
     }
 
     override fun setupAdapter() {
+        favoritePetsAdapter.listener = {
+            info("animal click: ${ it.id } ${ it.name }")
+            listener.onPetClick(it)
+        }
         recyclerView.adapter = favoritePetsAdapter
     }
 

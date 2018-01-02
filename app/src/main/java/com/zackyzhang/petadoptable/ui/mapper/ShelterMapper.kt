@@ -20,4 +20,8 @@ open class ShelterMapper @Inject constructor() : Mapper<ShelterViewModel, Shelte
                 type.longitude, type.fax, address)
     }
 
+    override fun mapFromViewModel(type: ShelterViewModel): ShelterView {
+        throw UnsupportedOperationException()
+    }
+
 }

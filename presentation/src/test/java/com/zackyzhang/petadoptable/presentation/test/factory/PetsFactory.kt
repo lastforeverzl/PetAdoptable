@@ -1,6 +1,8 @@
 package com.zackyzhang.petadoptable.presentation.test.factory
 
 import com.zackyzhang.petadoptable.domain.model.Pet
+import com.zackyzhang.petadoptable.domain.model.PetDetail
+import com.zackyzhang.petadoptable.presentation.model.PetDetailView
 import com.zackyzhang.petadoptable.presentation.model.PetView
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomUuid
 
@@ -50,6 +52,33 @@ class PetsFactory {
             return PetView(randomUuid(), randomUuid(), randomUuid(), randomUuid(),
                     medias, randomUuid(), breeds, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
                     randomUuid(), randomUuid(), randomUuid())
+        }
+
+        fun makePetDetail(): PetDetail {
+            val medias = mutableListOf<String>()
+            medias.add(randomUuid())
+            medias.add(randomUuid())
+            val breeds = mutableListOf<String>()
+            breeds.add(randomUuid())
+
+            return PetDetail(randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    medias, randomUuid(), breeds, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid(), true, randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid())
+        }
+
+        fun makePetDetailView(): PetDetailView {
+            val medias = mutableListOf<String>()
+            medias.add(randomUuid())
+            medias.add(randomUuid())
+            val breeds = mutableListOf<String>()
+            breeds.add(randomUuid())
+
+            return PetDetailView(randomUuid(), randomUuid(), randomUuid(), randomUuid(), medias,
+                    randomUuid(), breeds, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid(), true, randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid())
         }
 
     }

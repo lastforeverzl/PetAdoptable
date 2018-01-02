@@ -1,5 +1,6 @@
 package com.zackyzhang.shelteradoptable.remote.test.factory
 
+import com.zackyzhang.petadoptable.data.model.ShelterEntity
 import com.zackyzhang.petadoptable.remote.model.*
 import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomUuid
 
@@ -10,12 +11,19 @@ class SheltersFactory {
 
     companion object {
         fun makeSheltersResposne(): GetSheltersResponse {
-            val sheltersResposne = GetSheltersResponse(makeGetShelters())
-            return sheltersResposne
+            return GetSheltersResponse(makeGetShelters())
+        }
+
+        fun makeShelterResponse(): GetShelterResponse {
+            return GetShelterResponse(makeGetShelter())
         }
 
         fun makeGetShelters(): GetShelters {
             return GetShelters(makeLastOffset(), makeShelters(), makeHeader())
+        }
+
+        fun makeGetShelter(): GetShelter {
+            return GetShelter(makeShelterModel(), makeHeader())
         }
 
         fun makeLastOffset(): LastOffset {
@@ -54,6 +62,12 @@ class SheltersFactory {
             val address1 = Address1(randomUuid())
             return Shelter(country, longitude, name, phone, state, address2, email, city, zip, fax,
                     latitude, id, address1)
+        }
+
+        fun makeShelterEntity(): ShelterEntity {
+            return ShelterEntity(randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid())
         }
     }
 

@@ -2,12 +2,13 @@ package com.zackyzhang.petadoptable.presentation.browse
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.*
-import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetById
-import com.zackyzhang.petadoptable.domain.model.Pet
+import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetDetailInfo
+import com.zackyzhang.petadoptable.domain.model.PetDetail
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
-import com.zackyzhang.petadoptable.presentation.mapper.PetMapper
-import com.zackyzhang.petadoptable.presentation.model.PetView
+import com.zackyzhang.petadoptable.presentation.mapper.PetDetailMapper
+import com.zackyzhang.petadoptable.presentation.model.PetDetailView
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory
+import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.presentation.test.factory.PetsFactory
 import io.reactivex.observers.DisposableSingleObserver
 import org.junit.Before
@@ -27,75 +28,75 @@ class BrowsePetViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Mock lateinit var getPetById: GetPetById
-    @Mock lateinit var petMapper: PetMapper
+    @Mock lateinit var getPetDetailInfo: GetPetDetailInfo
+    @Mock lateinit var petDetailMapper: PetDetailMapper
 
     @Captor
-    private lateinit var captor: KArgumentCaptor<DisposableSingleObserver<Pet>>
+    private lateinit var captor: KArgumentCaptor<DisposableSingleObserver<PetDetail>>
 
     private lateinit var petViewModel: BrowsePetViewModel
 
     @Before
     fun setUp() {
         captor = argumentCaptor()
-        getPetById = mock()
-        petMapper = mock()
-        petViewModel = BrowsePetViewModel(getPetById, petMapper)
+        getPetDetailInfo = mock()
+        petDetailMapper = mock()
+        petViewModel = BrowsePetViewModel(getPetDetailInfo, petDetailMapper)
     }
 
     @Test
     fun getPetByIdExecutesUseCase() {
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById(DataFactory.randomUuid())
-        verify(getPetById, times(1)).execute(any(), any())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
+        verify(getPetDetailInfo, times(1)).execute(any(), any(), any())
     }
 
     //<editor-fold desc="Success">
     @Test
     fun getPetByIdReturnsSuccess() {
-        val pet = PetsFactory.makePet()
-        val petView = PetsFactory.makePetView()
+        val petDetail = PetsFactory.makePetDetail()
+        val petDetailView = PetsFactory.makePetDetailView()
 
-        stubPetMapperMapToView(petView, pet)
+        stubPetDetailMapperMapToView(petDetailView, petDetail)
 
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById(DataFactory.randomUuid())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
 
-        verify(getPetById).execute(captor.capture(), any())
-        captor.firstValue.onSuccess(pet)
+        verify(getPetDetailInfo).execute(captor.capture(), any(), any())
+        captor.firstValue.onSuccess(petDetail)
 
         assert(petViewModel.getPetLiveData().value?.status == ResourceState.SUCCESS)
     }
 
     @Test
     fun getPetsReturnsDataOnSuccess() {
-        val pet = PetsFactory.makePet()
-        val petView = PetsFactory.makePetView()
+        val petDetail = PetsFactory.makePetDetail()
+        val petDetailView = PetsFactory.makePetDetailView()
 
-        stubPetMapperMapToView(petView, pet)
+        stubPetDetailMapperMapToView(petDetailView, petDetail)
 
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById(DataFactory.randomUuid())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
 
-        verify(getPetById).execute(captor.capture(), any())
-        captor.firstValue.onSuccess(pet)
+        verify(getPetDetailInfo).execute(captor.capture(), any(), any())
+        captor.firstValue.onSuccess(petDetail)
 
-        assert(petViewModel.getPetLiveData().value?.data == petView)
+        assert(petViewModel.getPetLiveData().value?.data == petDetailView)
 
     }
 
     @Test
     fun getPetsReturnsNoMessageOnSuccess() {
-        val pet = PetsFactory.makePet()
-        val petView = PetsFactory.makePetView()
+        val petDetail = PetsFactory.makePetDetail()
+        val petDetailView = PetsFactory.makePetDetailView()
 
-        stubPetMapperMapToView(petView, pet)
+        stubPetDetailMapperMapToView(petDetailView, petDetail)
 
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById(DataFactory.randomUuid())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
 
-        verify(getPetById).execute(captor.capture(), any())
-        captor.firstValue.onSuccess(pet)
+        verify(getPetDetailInfo).execute(captor.capture(), any(), any())
+        captor.firstValue.onSuccess(petDetail)
 
         assert(petViewModel.getPetLiveData().value?.message == null)
     }
@@ -105,9 +106,9 @@ class BrowsePetViewModelTest {
     @Test
     fun getPetsReturnsError() {
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById(DataFactory.randomUuid())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
 
-        verify(getPetById).execute(captor.capture(), any())
+        verify(getPetDetailInfo).execute(captor.capture(), any(), any())
         captor.firstValue.onError(RuntimeException())
 
         assert(petViewModel.getPetLiveData().value?.status == ResourceState.ERROR)
@@ -116,9 +117,9 @@ class BrowsePetViewModelTest {
     @Test
     fun getPetsFailsAndContainsNoData() {
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById( DataFactory.randomUuid())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
 
-        verify(getPetById).execute(captor.capture(), any())
+        verify(getPetDetailInfo).execute(captor.capture(), any(), any())
         captor.firstValue.onError(RuntimeException())
 
         assert(petViewModel.getPetLiveData().value?.data == null)
@@ -128,9 +129,9 @@ class BrowsePetViewModelTest {
     fun getPetsFailsAndContainsMessage() {
         val errorMessage = DataFactory.randomUuid()
         petViewModel.getPetLiveData()
-        petViewModel.fetchPetById(DataFactory.randomUuid())
+        petViewModel.fetchPetById(randomUuid(), randomUuid(), randomUuid())
 
-        verify(getPetById).execute(captor.capture(), any())
+        verify(getPetDetailInfo).execute(captor.capture(), any(), any())
         captor.firstValue.onError(RuntimeException(errorMessage))
 
         assert(petViewModel.getPetLiveData().value?.message == errorMessage)
@@ -160,8 +161,8 @@ class BrowsePetViewModelTest {
     }
     //</editor-fold>
 
-    private fun stubPetMapperMapToView(petView: PetView, pet: Pet) {
-        whenever(petMapper.mapToView(pet))
-                .thenReturn(petView)
+    private fun stubPetDetailMapperMapToView(petDetailView: PetDetailView, petDetail: PetDetail) {
+        whenever(petDetailMapper.mapToView(petDetail))
+                .thenReturn(petDetailView)
     }
 }
