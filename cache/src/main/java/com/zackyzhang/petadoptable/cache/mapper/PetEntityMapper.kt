@@ -1,8 +1,8 @@
 package com.zackyzhang.petadoptable.cache.mapper
 
-import com.zackyzhang.petadoptable.cache.db.entity.BreedDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.MediaDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.BreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.MediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class PetEntityMapper @Inject constructor(): EntityMapper<PetDbEntity, PetEntity
     /**
      * Map a [PetEntity] instance to a [CachedPet] instance
      */
-    override fun mapToCached(type: PetEntity): PetDbEntity{
+    override fun mapToCached(type: PetEntity): PetDbEntity {
         return PetDbEntity(null, type.status, type.cityState, type.age, type.size, type.medias,
                 type.id, type.breeds, type.name, type.sex, type.description, type.mix, type.shelterId,
                 type.lastUpdate, type.animal, type.isFavorite)

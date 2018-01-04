@@ -7,7 +7,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyLong
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 
@@ -43,6 +42,15 @@ open class PetDaoTest {
     }
 
     @Test
+    fun insertFavoritePetSavesData() {
+        val favoritePetDbEntity = PetFactory.makeFavoritePetEntity()
+        petAdoptableDatabase.getPetDao().insertFavoritePet(favoritePetDbEntity)
+
+        val favoritePets = petAdoptableDatabase.getPetDao().getFavoritePets()
+        assert(favoritePets.isNotEmpty())
+    }
+
+    @Test
     fun getAllPetsRetrievesData() {
         val cachedPets = PetFactory.makeCachedPetList(5)
 
@@ -55,36 +63,51 @@ open class PetDaoTest {
     }
 
     @Test
-    fun updatePetSavesData() {
-        val petDbEntity = PetFactory.makeCachedPet()
-
-        val uid = petAdoptableDatabase.getPetDao().insertPet(petDbEntity)
-
-        val updated = PetFactory.makeFavoritePet(uid)
-        val count = petAdoptableDatabase.getPetDao().updatePet(updated)
-        println("updated rows: $count")
-        val pets = petAdoptableDatabase.getPetDao().getFavoritePets()
-
-        assert(pets.isNotEmpty())
+    fun getAllPetsByAnimalRetrievesData() {
+        val cachedPets = PetFactory.makeCachedPetList(5)
+        cachedPets.forEach {
+            petAdoptableDatabase.getPetDao().insertPet(it)
+        }
+        val animal = cachedPets[0].animal
+        val retrievePets = petAdoptableDatabase.getPetDao().getAllPetsByAnimal(animal)
+        assert(retrievePets[0] == cachedPets[0])
     }
 
     @Test
     fun getFavoritePetsRetrievesData() {
-        val cachedPets = PetFactory.makeFavoritePetList(5)
+        val favoritePets = PetFactory.makeFavoritePetEntityList(5)
 
-        cachedPets.forEach {
-            petAdoptableDatabase.getPetDao().insertPet(it)
+        favoritePets.forEach {
+            petAdoptableDatabase.getPetDao().insertFavoritePet(it)
         }
 
-        val retrievePets = petAdoptableDatabase.getPetDao().getFavoritePets()
-        assert(retrievePets == cachedPets.sortedWith(compareBy({ it.uid }, { it.uid })))
+        val retrieveFavoritePets = petAdoptableDatabase.getPetDao().getFavoritePets()
+        assert(retrieveFavoritePets == favoritePets.sortedWith(compareBy({ it.uid }, { it.uid })))
     }
 
     @Test
     fun getPetByIdRetrievesData() {
-        val petDbEntity = PetFactory.makeFavoritePet(anyLong())
+        val petDbEntity = PetFactory.makeCachedPet()
         petAdoptableDatabase.getPetDao().insertPet(petDbEntity)
         val retrievePet = petAdoptableDatabase.getPetDao().getPetById(petDbEntity.id)
         assert(retrievePet == petDbEntity)
+    }
+
+    @Test
+    fun getFavoritePetByIdRetrievesData() {
+        val favoritePetDbEntity = PetFactory.makeFavoritePetEntity()
+        petAdoptableDatabase.getPetDao().insertFavoritePet(favoritePetDbEntity)
+        val retrieveFavoritePet = petAdoptableDatabase.getPetDao().getFavoritePetById(favoritePetDbEntity.id)
+        assert(retrieveFavoritePet == favoritePetDbEntity)
+    }
+
+    @Test
+    fun removeFavoritePetCompletes() {
+        val favoritePetDbEntity = PetFactory.makeFavoritePetEntity()
+        val uid = petAdoptableDatabase.getPetDao().insertFavoritePet(favoritePetDbEntity)
+        favoritePetDbEntity.uid = uid
+        petAdoptableDatabase.getPetDao().removeFavoritePet(favoritePetDbEntity)
+        val retrieveFavoritePet = petAdoptableDatabase.getPetDao().getFavoritePetById(favoritePetDbEntity.id)
+        assert(retrieveFavoritePet == null)
     }
 }

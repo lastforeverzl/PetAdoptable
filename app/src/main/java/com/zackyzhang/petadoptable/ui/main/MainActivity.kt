@@ -1,10 +1,12 @@
 package com.zackyzhang.petadoptable.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.zackyzhang.petadoptable.ui.R
+import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragment
 import com.zackyzhang.petadoptable.ui.model.PetViewModel
 import com.zackyzhang.petadoptable.ui.widget.PetOnClickListener
 import dagger.android.AndroidInjection
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
 
     companion object {
         val ZIP_CODE = "MainActivity:zipCode"
+        const val PET_DETAIL_ACTIVITY_REQUEST = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,5 +83,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
      */
     override fun onSaveInstanceState(outState: Bundle?) {
 //        super.onSaveInstanceState(outState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PET_DETAIL_ACTIVITY_REQUEST) {
+            val fragment = supportFragmentManager
+                    .findFragmentByTag(FavoritesFragment::class.java.simpleName) as FavoritesFragment
+            fragment?.let { it.fetchData() }
+        }
     }
 }

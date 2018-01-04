@@ -1,8 +1,6 @@
 package com.zackyzhang.petadoptable.cache.test.factory
 
-import com.zackyzhang.petadoptable.cache.db.entity.BreedDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.MediaDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.*
 import com.zackyzhang.petadoptable.cache.test.factory.DataFactory.Factory.randomLong
 import com.zackyzhang.petadoptable.cache.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.data.model.PetEntity
@@ -14,6 +12,7 @@ class PetFactory {
 
     companion object Factory {
 
+        //<editor-fold desc="create PetDbEntity">
         fun makeCachedPet(): PetDbEntity {
             val medias = mutableListOf<String>()
             medias.add(DataFactory.randomUuid())
@@ -22,78 +21,15 @@ class PetFactory {
             breeds.add(DataFactory.randomUuid())
             breeds.add(DataFactory.randomUuid())
 
-            return PetDbEntity(null, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    medias, DataFactory.randomUuid(), breeds, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid())
-        }
-
-        fun makeFavoritePet(uid: Long?): PetDbEntity {
-            val medias = mutableListOf<String>()
-            medias.add(DataFactory.randomUuid())
-            medias.add(DataFactory.randomUuid())
-            val breeds = mutableListOf<String>()
-            breeds.add(DataFactory.randomUuid())
-            breeds.add(DataFactory.randomUuid())
-
-            return PetDbEntity(uid, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    medias, DataFactory.randomUuid(), breeds, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), true)
-        }
-
-        fun makePetEntity(): PetEntity {
-            val medias = mutableListOf<String>()
-            medias.add(DataFactory.randomUuid())
-            medias.add(DataFactory.randomUuid())
-            val breeds = mutableListOf<String>()
-            breeds.add(DataFactory.randomUuid())
-            breeds.add(DataFactory.randomUuid())
-
-            return PetEntity(DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    medias, DataFactory.randomUuid(), breeds, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid())
-        }
-
-        fun makeFavoritePetEntity(): PetEntity {
-            val medias = mutableListOf<String>()
-            medias.add(DataFactory.randomUuid())
-            medias.add(DataFactory.randomUuid())
-            val breeds = mutableListOf<String>()
-            breeds.add(DataFactory.randomUuid())
-            breeds.add(DataFactory.randomUuid())
-
-            return PetEntity(DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    medias, DataFactory.randomUuid(), breeds, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
-                    DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), true)
-        }
-
-        fun makePetEntityList(count: Int): List<PetEntity> {
-            val petEntities = mutableListOf<PetEntity>()
-            repeat(count) {
-                petEntities.add(makePetEntity())
-            }
-            return petEntities
-        }
-
-        fun makeFavoritePetEntityList(count: Int): List<PetEntity> {
-            val petEntities = mutableListOf<PetEntity>()
-            repeat(count) {
-                petEntities.add(makeFavoritePetEntity())
-            }
-            return petEntities
+            return PetDbEntity(null, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    medias, randomUuid(), breeds, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid())
         }
 
         fun makeCachedPetList(count: Int): List<PetDbEntity> {
             val cachedPets = mutableListOf<PetDbEntity>()
             repeat(count) {
                 cachedPets.add(makeCachedPet())
-            }
-            return cachedPets
-        }
-
-        fun makeFavoritePetList(count: Int): List<PetDbEntity> {
-            val cachedPets = mutableListOf<PetDbEntity>()
-            repeat(count) {
-                cachedPets.add(makeFavoritePet(null))
             }
             return cachedPets
         }
@@ -114,6 +50,87 @@ class PetFactory {
             return mediaEntities
         }
 
+        fun makeMediaDbEntity(): MediaDbEntity {
+            return MediaDbEntity(null, randomLong(), randomUuid())
+        }
+
+        fun makeBreedDbEntity(): BreedDbEntity {
+            return BreedDbEntity(null, randomLong(), randomUuid())
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="create FavoritePetDbEntity">
+        fun makeFavoritePetEntity(): FavoritePetDbEntity {
+            val medias = mutableListOf<String>()
+            medias.add(DataFactory.randomUuid())
+            medias.add(DataFactory.randomUuid())
+            val breeds = mutableListOf<String>()
+            breeds.add(DataFactory.randomUuid())
+            breeds.add(DataFactory.randomUuid())
+
+            return FavoritePetDbEntity(null, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    medias, randomUuid(), breeds, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid())
+
+        }
+
+        fun makeFavoritePetEntityList(count: Int): List<FavoritePetDbEntity> {
+            val favoritePets = mutableListOf<FavoritePetDbEntity>()
+            repeat(count) {
+                favoritePets.add(makeFavoritePetEntity())
+            }
+            return favoritePets
+        }
+
+        fun makeFavoriteMediaDbEntityList(count: Int): List<FavoriteMediaDbEntity> {
+            val mediaEntities = mutableListOf<FavoriteMediaDbEntity>()
+            repeat(count) {
+                mediaEntities.add(makeFavoriteMediaDbEntity())
+            }
+            return mediaEntities
+        }
+
+        fun makeFavoriteBreedDbEntityList(count: Int): List<FavoriteBreedDbEntity> {
+            val mediaEntities = mutableListOf<FavoriteBreedDbEntity>()
+            repeat(count) {
+                mediaEntities.add(makeFavoriteBreedDbEntity())
+            }
+            return mediaEntities
+        }
+
+        fun makeFavoriteMediaDbEntity(): FavoriteMediaDbEntity {
+            return FavoriteMediaDbEntity(null, randomLong(), randomUuid())
+        }
+
+        fun makeFavoriteBreedDbEntity(): FavoriteBreedDbEntity {
+            return FavoriteBreedDbEntity(null, randomLong(), randomUuid())
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="create PetEntity">
+        fun makePetEntity(): PetEntity {
+            val medias = mutableListOf<String>()
+            medias.add(DataFactory.randomUuid())
+            medias.add(DataFactory.randomUuid())
+            val breeds = mutableListOf<String>()
+            breeds.add(DataFactory.randomUuid())
+            breeds.add(DataFactory.randomUuid())
+
+            return PetEntity(DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
+                    medias, DataFactory.randomUuid(), breeds, DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid(),
+                    DataFactory.randomUuid(), DataFactory.randomUuid(), DataFactory.randomUuid())
+        }
+
+        fun makePetEntityList(count: Int): List<PetEntity> {
+            val petEntities = mutableListOf<PetEntity>()
+            repeat(count) {
+                petEntities.add(makePetEntity())
+            }
+            return petEntities
+        }
+
+        //</editor-fold>
+
         fun makeStringList(count: Int): List<String> {
             val list = mutableListOf<String>()
             repeat(count) {
@@ -122,13 +139,7 @@ class PetFactory {
             return list
         }
 
-        fun makeMediaDbEntity(): MediaDbEntity {
-            return MediaDbEntity(null, randomLong(), randomUuid())
-        }
 
-        fun makeBreedDbEntity(): BreedDbEntity {
-            return BreedDbEntity(null, randomLong(), randomUuid())
-        }
 
     }
 }

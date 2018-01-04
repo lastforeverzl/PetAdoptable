@@ -1,8 +1,5 @@
 package com.zackyzhang.petadoptable.presentation.data
 
-/**
- * Created by lei on 12/7/17.
- */
 open class Resource<out T> constructor(val status: ResourceState, val data: T?, val message:String?) {
 
     fun <T> success(data: T): Resource<T> {

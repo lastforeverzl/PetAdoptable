@@ -47,12 +47,21 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
     }
 
     override fun saveToFavorite(pet: PetEntity): Completable {
-        return petsCache.updatePet(pet)
-                .doOnComplete { println("pet set to favorite!") }
+        return petsCache.saveFavoritePet(pet)
+                .doOnComplete { println("pet save to favorite!") }
     }
 
-    override fun getPetById(id: String): Single<PetEntity> {
-        return petsCache.getPetById(id)
+    override fun removeFromFavorite(pet: PetEntity): Completable {
+        return petsCache.removeFavoritePet(pet)
+                .doOnComplete { println("pet remove from favorite!") }
+    }
+
+    override fun isFavoritePet(id: String): Single<Boolean> {
+        return petsCache.isFavoritePet(id)
+    }
+
+    override fun getPetById(options: Map<String, String>): Single<PetEntity> {
+        return petsCache.getPetById(options["id"]!!)
     }
 
     /**

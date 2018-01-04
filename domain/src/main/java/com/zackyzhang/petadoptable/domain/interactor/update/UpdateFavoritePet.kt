@@ -16,7 +16,10 @@ open class UpdateFavoritePet @Inject constructor(val petsRepository: PetsReposit
                                                  postExecutionThread: PostExecutionThread) :
         CompletableUseCase<Pet>(threadExecutor, postExecutionThread) {
     public override fun buildUseCaseObservable(params: Pet): Completable {
-        return petsRepository.saveToFavorite(params)
+        if (params.isFavorite) {
+            return petsRepository.saveToFavorite(params)
+        }
+        return petsRepository.removeFromFavorite(params)
     }
 
 }

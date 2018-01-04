@@ -5,6 +5,7 @@ import com.zackyzhang.petadoptable.data.repository.PetsRemote
 import com.zackyzhang.petadoptable.remote.PetFinderService
 import com.zackyzhang.petadoptable.remote.mapper.PetEntityMapper
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**
@@ -20,6 +21,13 @@ class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinder
                     result.petfinder.pets.petList.map { listItem ->
                         entityMapper.mapFromRemote(listItem)
                     }
+                }
+    }
+
+    override fun getPetById(options: Map<String, String>): Single<PetEntity> {
+        return petFinderService.getPetById(options)
+                .map { result ->
+                    entityMapper.mapFromRemote(result.petfinder.pet)
                 }
     }
 

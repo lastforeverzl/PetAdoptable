@@ -45,6 +45,10 @@ class AnimalAdapter @Inject constructor() :
         pets.addAll(data)
     }
 
+    fun clearAdapter() {
+        pets.clear()
+    }
+
     inner class ViewHolder(view: View) :
             RecyclerView.ViewHolder(view) {
 

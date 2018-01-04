@@ -66,7 +66,7 @@ class Navigator(private val mainActivity: MainActivity,
 
     fun openDetailActivity(petId: String, shelterId: String) {
         val intent = PetDetailActivity.newInstance(mainActivity, petId, shelterId)
-        mainActivity.startActivity(intent)
+        mainActivity.startActivityForResult(intent, MainActivity.PET_DETAIL_ACTIVITY_REQUEST)
     }
 
     private fun replaceFragment(fragment: Fragment) {

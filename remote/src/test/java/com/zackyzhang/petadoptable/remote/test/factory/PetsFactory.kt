@@ -1,5 +1,6 @@
 package com.zackyzhang.petadoptable.remote.test.factory
 
+import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.remote.model.*
 import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomIntInString
 import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomUuid
@@ -66,6 +67,23 @@ class PetsFactory {
                     sex, description, mix, shelterId, lastUpdate, animal)
         }
 
+        fun makeGetPetResponse(): GetPetResponse {
+            return GetPetResponse(makeGetPet())
+        }
+
+        fun makeGetPet(): GetPet {
+            return GetPet(makePetModel())
+        }
+
+        fun makePetEntity(): PetEntity {
+            val medias = mutableListOf<String>()
+            medias.add(randomUuid())
+            val breeds = mutableListOf<String>()
+            breeds.add(randomUuid())
+            return PetEntity(randomUuid(), randomUuid(), randomUuid(), randomUuid(), medias,
+                    randomUuid(), breeds, randomUuid(), randomUuid(), randomUuid(), randomUuid(),
+                    randomUuid(), randomUuid(), randomUuid())
+        }
     }
 
 }

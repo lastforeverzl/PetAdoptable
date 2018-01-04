@@ -1,8 +1,8 @@
 package com.zackyzhang.petadoptable.cache.mapper
 
-import com.zackyzhang.petadoptable.cache.db.entity.BreedDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.MediaDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.BreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.MediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 import com.zackyzhang.petadoptable.cache.test.factory.DataFactory.Factory.randomLong
 import com.zackyzhang.petadoptable.cache.test.factory.PetFactory
 import com.zackyzhang.petadoptable.data.model.PetEntity

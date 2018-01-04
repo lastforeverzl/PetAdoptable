@@ -15,6 +15,8 @@ import com.glide.slider.library.SliderTypes.BaseSliderView
 import com.glide.slider.library.SliderTypes.DefaultSliderView
 import com.zackyzhang.petadoptable.presentation.browse.BrowsePetViewModel
 import com.zackyzhang.petadoptable.presentation.browse.BrowsePetViewModelFactory
+import com.zackyzhang.petadoptable.presentation.browse.CheckFavoriteStatusViewModel
+import com.zackyzhang.petadoptable.presentation.browse.CheckFavoriteStatusViewModelFactory
 import com.zackyzhang.petadoptable.presentation.data.Resource
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import com.zackyzhang.petadoptable.presentation.model.PetDetailView
@@ -53,10 +55,13 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
     lateinit var petDetail: PetDetailViewModel
     lateinit var urls: List<String>
     lateinit var favoriteIcon: MenuItem
+    var isFavoritePet: Boolean = false
 
     @Inject lateinit var mapper: PetDetailMapper
-    @Inject lateinit var viewModelFactory: BrowsePetViewModelFactory
+    @Inject lateinit var browsePetViewModelFactory: BrowsePetViewModelFactory
+    @Inject lateinit var checkFavoriteStatusViewModelFactory: CheckFavoriteStatusViewModelFactory
     private lateinit var browsePetViewModel: BrowsePetViewModel
+    private lateinit var checkFavoriteStatusViewModel: CheckFavoriteStatusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -70,19 +75,26 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
         shelterId = intent.getStringExtra(SHELTER_ID)
         info("petId: $petId")
 
-        browsePetViewModel = ViewModelProviders.of(this, viewModelFactory)
+        browsePetViewModel = ViewModelProviders.of(this, browsePetViewModelFactory)
                 .get(BrowsePetViewModel::class.java)
+        checkFavoriteStatusViewModel = ViewModelProviders.of(this, checkFavoriteStatusViewModelFactory)
+                .get(CheckFavoriteStatusViewModel::class.java)
         browsePetViewModel.fetchPetById(BuildConfig.PETFINDER_API_KEY, petId, shelterId)
         browsePetViewModel.getPetLiveData().observe(this,
                 Observer<Resource<PetDetailView>> {
                     if (it != null) this.handleDataState(it.status, it.data, it.message)
                 })
-
+        checkFavoriteStatusViewModel.getStatusLiveData().observe(this,
+                Observer<Resource<Boolean>> {
+                    if (it != null) this.handleStatusState(it.status, it.data, it.message)
+                })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_pet_detail, menu)
         favoriteIcon = menu!!.findItem(R.id.favoritePet)
+        checkFavoriteStatusViewModel.fetchFavoriteStatus(petId)
         return true
     }
 
@@ -93,7 +105,7 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
                 true
             }
             R.id.favoritePet -> {
-                if (petDetail.petIsFavorite) {
+                if (isFavoritePet) {
                     changeFavoriteStatus(false)
                 } else {
                     changeFavoriteStatus(true)
@@ -129,11 +141,6 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
 
     private fun updateView(data: PetDetailView) {
         petDetail = mapper.mapToViewModel(data)
-        if (petDetail.petIsFavorite) {
-            favoriteIcon.setIcon(R.drawable.ic_favorite_white_24px)
-        } else {
-            favoriteIcon.setIcon(R.drawable.ic_favorite_border_24dp)
-        }
         setupSlider()
         setupPetInfo()
         setupShelterInfo()
@@ -228,6 +235,32 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
         } else {
             favoriteIcon.setIcon(R.drawable.ic_favorite_border_24dp)
         }
+        isFavoritePet = isFavorite
+    }
+
+    private fun handleStatusState(resourceState: ResourceState, data: Boolean?, message: String?) {
+        when (resourceState) {
+            ResourceState.SUCCESS -> setupFavoriteIconForSuccess(data)
+            ResourceState.ERROR -> setupFavoriteIconForError(message)
+        }
+    }
+
+    private fun setupFavoriteIconForSuccess(data: Boolean?) {
+        info("data boolean: $data")
+        data?.let {
+            if (it) {
+                isFavoritePet = true
+                favoriteIcon.setIcon(R.drawable.ic_favorite_white_24px)
+            } else {
+                isFavoritePet = false
+                favoriteIcon.setIcon(R.drawable.ic_favorite_border_24dp)
+            }
+        }
+    }
+
+    private fun setupFavoriteIconForError(message: String?) {
+        favoriteIcon.isVisible = false
+        error(message)
     }
 
     override fun onSliderClick(slider: BaseSliderView?) {

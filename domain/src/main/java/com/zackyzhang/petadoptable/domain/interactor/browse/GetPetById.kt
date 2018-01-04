@@ -14,9 +14,9 @@ import javax.inject.Inject
 open class GetPetById @Inject constructor(val petsRepository: PetsRepository,
                                                threadExecutor: ThreadExecutor,
                                                postExecutionThread: PostExecutionThread) :
-        SingleUseCase<Pet, String>(threadExecutor, postExecutionThread) {
+        SingleUseCase<Pet, Map<String, String>>(threadExecutor, postExecutionThread) {
 
-    public override fun buildUseCaseObservable(params: String?): Single<Pet> {
+    public override fun buildUseCaseObservable(params: Map<String, String>?): Single<Pet> {
         return petsRepository.getPetById(params!!)
     }
 

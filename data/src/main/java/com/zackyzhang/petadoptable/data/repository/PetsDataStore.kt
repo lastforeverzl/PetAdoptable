@@ -23,7 +23,11 @@ interface PetsDataStore {
 
     fun saveToFavorite(pet: PetEntity): Completable
 
-    fun getPetById(id: String): Single<PetEntity>
+    fun removeFromFavorite(pet: PetEntity): Completable
+
+    fun isFavoritePet(id: String): Single<Boolean>
+
+    fun getPetById(options: Map<String, String>): Single<PetEntity>
 
     fun isCached(animal: String): Single<Boolean>
 

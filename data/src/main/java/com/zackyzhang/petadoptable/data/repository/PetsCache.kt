@@ -29,7 +29,7 @@ interface PetsCache {
     /**
      * Update pet
      */
-    fun updatePet(pet: PetEntity): Completable
+//    fun updatePet(pet: PetEntity): Completable
 
     /**
      * Retrieve a list of Favorite pets from the DB
@@ -55,4 +55,10 @@ interface PetsCache {
      * Checks if the cache is expired
      */
     fun isExpired(): Boolean
+
+    fun saveFavoritePet(pet: PetEntity): Completable
+
+    fun removeFavoritePet(pet: PetEntity): Completable
+
+    fun isFavoritePet(id: String): Single<Boolean>
 }

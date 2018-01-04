@@ -33,20 +33,6 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
 
     override fun getPets(options: Map<String, String>):
             Flowable<List<Pet>> {
-//        val dataStore = factory.retrieveDataStore(options["offset"].toString())
-//        return dataStore.getPets(options)
-//                .flatMap {
-//                    Flowable.just(it.map { petsMapper.mapFromEntity(it) })
-//                }
-//                .flatMap {
-//                    if (dataStore is PetsRemoteDataStore) {
-//                        savePets(it).toSingle { it }.toFlowable()
-////                        clearPets().toFlowable()
-//                    } else {
-//                        Flowable.just(it)
-//                    }
-//                }
-
         return factory.retrieveCacheDataStore().isCached(options["animal"].toString())
                 .flatMapPublisher {
                     factory.retrieveDataStore(it, options["offset"].toString()).getPets(options)
@@ -70,8 +56,16 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
         return factory.retrieveCacheDataStore().saveToFavorite(petMapper.mapToEntity(pet))
     }
 
-    override fun getPetById(id: String): Single<Pet> {
-        return factory.retrieveCacheDataStore().getPetById(id)
+    override fun removeFromFavorite(pet: Pet): Completable {
+        return factory.retrieveCacheDataStore().removeFromFavorite(petMapper.mapToEntity(pet))
+    }
+
+    override fun isFavoritePet(id: String): Single<Boolean> {
+        return factory.retrieveCacheDataStore().isFavoritePet(id)
+    }
+
+    override fun getPetById(options: Map<String, String>): Single<Pet> {
+        return factory.retrieveRemoteDataStore().getPetById(options)
                 .map { petMapper.mapFromEntity(it) }
     }
 

@@ -7,6 +7,7 @@ import com.zackyzhang.petadoptable.cache.PetsCacheImpl
 import com.zackyzhang.petadoptable.cache.PreferencesHelper
 import com.zackyzhang.petadoptable.cache.SheltersCacheImpl
 import com.zackyzhang.petadoptable.cache.db.PetAdoptableDatabase
+import com.zackyzhang.petadoptable.cache.mapper.FavoriteEntityMapper
 import com.zackyzhang.petadoptable.cache.mapper.PetEntityMapper
 import com.zackyzhang.petadoptable.cache.mapper.ShelterEntityMapper
 import com.zackyzhang.petadoptable.data.PetsDataRepository
@@ -70,8 +71,9 @@ open class ApplicationModule {
     @PerApplication
     internal fun providePetCache(database: PetAdoptableDatabase,
                                  entityMapper: PetEntityMapper,
+                                 favoriteEntityMapper: FavoriteEntityMapper,
                                  helper: PreferencesHelper): PetsCache {
-        return PetsCacheImpl(database, entityMapper, helper)
+        return PetsCacheImpl(database, entityMapper, favoriteEntityMapper, helper)
     }
 
     @Provides

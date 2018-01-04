@@ -1,9 +1,8 @@
 package com.zackyzhang.petadoptable.cache
 
 import com.zackyzhang.petadoptable.cache.db.PetAdoptableDatabase
-import com.zackyzhang.petadoptable.cache.db.entity.BreedDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.MediaDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.*
+import com.zackyzhang.petadoptable.cache.mapper.FavoriteEntityMapper
 import com.zackyzhang.petadoptable.cache.mapper.PetEntityMapper
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import com.zackyzhang.petadoptable.data.repository.PetsCache
@@ -19,6 +18,7 @@ import javax.inject.Inject
  */
 class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdoptableDatabase,
                                         private val entityMapper: PetEntityMapper,
+                                        private val favoriteMapper: FavoriteEntityMapper,
                                         private val preferencesHelper: PreferencesHelper) :
         PetsCache {
 
@@ -29,8 +29,6 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
      */
     override fun clearPets(): Completable {
         return Completable.defer {
-//            val allPets = petAdoptableDatabase.getPetDao().getAllPets()
-//            allPets.forEach { pet -> petAdoptableDatabase.getPetDao().deletePet(pet) }
             petAdoptableDatabase.getPetDao().clearPets()
             println("PetsCacheImpl clearPets")
             Completable.complete()
@@ -52,14 +50,9 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     }
 
     /**
-     * Helpter method for saving a [PetDbEntity] instance to the database. Retrieve the favorite
-     * status first then update
+     * Helper method for saving a [PetDbEntity] instance to the database.
      */
     private fun savePet(cachedPet: PetDbEntity): Long {
-        petAdoptableDatabase.getPetDao().getPetById(cachedPet.id)?.let {
-            val isFavorite = petAdoptableDatabase.getPetDao().getPetById(cachedPet.id).isFavorite
-            cachedPet.isFavorite = isFavorite
-        }
         return petAdoptableDatabase.getPetDao().insertPet(cachedPet)
     }
 
@@ -75,21 +68,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
      * Retrieve a list of [PetEntity] instances from the database.
      */
     override fun getPets(animal: String): Flowable<List<PetEntity>> {
-//        return Flowable.defer<List<PetEntity>> {
-//            val petEntities = mutableListOf<PetEntity>()
-//            val pets = petAdoptableDatabase.getPetDao().getAllPets()
-//            pets.forEach { pet ->
-//                val petEntity = entityMapper.mapFromCached(pet)
-//                val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(pet.uid!!)
-//                val breedsForPet = petAdoptableDatabase.getBreedDao().getBreedsForPet(pet.uid!!)
-//                petEntity.medias = entityMapper.mapFromCachedMedia(mediasForPet)
-//                petEntity.breeds = entityMapper.mapFromCachedBreed(breedsForPet)
-//                petEntities.add(petEntity)
-//            }
-//            Flowable.just<List<PetEntity>>(petEntities)
-//        }
         return Flowable.defer {
-//            Flowable.just(petAdoptableDatabase.getPetDao().getAllPets())
             Flowable.just(petAdoptableDatabase.getPetDao().getAllPetsByAnimal(matchAnimalName(animal)))
         }.map {
             it.map {
@@ -110,29 +89,78 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
             Flowable.just(petAdoptableDatabase.getPetDao().getFavoritePets())
         }.map {
             it.map {
-                val mediasForPet = petAdoptableDatabase.getMediaDao().getMediasForPet(it.uid!!)
-                val breedsForPet = petAdoptableDatabase.getBreedDao().getBreedsForPet(it.uid!!)
-                it.medias = entityMapper.mapFromCachedMedia(mediasForPet)
-                it.breeds = entityMapper.mapFromCachedBreed(breedsForPet)
-                entityMapper.mapFromCached(it)
+                val mediasForPet = petAdoptableDatabase.getMediaDao().getFavoriteMediasForPet(it.uid!!)
+                val breedsForPet = petAdoptableDatabase.getBreedDao().getFavoriteBreedsForPet(it.uid!!)
+                it.medias = favoriteMapper.mapFromCachedMedia(mediasForPet)
+                it.breeds = favoriteMapper.mapFromCachedBreed(breedsForPet)
+                favoriteMapper.mapFromCached(it)
+            }
+        }
+    }
+
+    override fun saveFavoritePet(pet: PetEntity): Completable {
+        return Completable.defer {
+            val id = saveFavoritePet(favoriteMapper.mapToCached(pet))
+            saveFavoriteMedia(favoriteMapper.mapToCachedMedia(pet.medias, id))
+            saveFavoriteBreed(favoriteMapper.mapToCachedBreed(pet.breeds, id))
+            Completable.complete()
+        }
+    }
+
+    override fun removeFavoritePet(pet: PetEntity): Completable {
+        return Completable.defer {
+            val favoritePetDbEntity = favoriteMapper.mapToCached(pet)
+            val uid = petAdoptableDatabase.getPetDao().getFavoritePetById(pet.id).uid
+            favoritePetDbEntity.uid = uid
+            petAdoptableDatabase.getPetDao().removeFavoritePet(favoritePetDbEntity)
+            val test = petAdoptableDatabase.getPetDao().getFavoritePetById(pet.id)
+            println("test after remove favorite: $test")
+            Completable.complete()
+        }
+    }
+
+    override fun isFavoritePet(id: String): Single<Boolean> {
+        return Single.defer {
+            val pet = petAdoptableDatabase.getPetDao().getFavoritePetById(id)
+            pet?.let {
+                println("isFavoritePet: $pet")
+                Single.just(true)
+            } ?:run {
+                println("isFavoritePet: is null")
+                Single.just(false)
             }
         }
     }
 
     /**
+     * Helper method for saving a [FavoritePetDbEntity] instance to the database.
+     */
+    private fun saveFavoritePet(cachedPet: FavoritePetDbEntity): Long {
+        return petAdoptableDatabase.getPetDao().insertFavoritePet(cachedPet)
+    }
+
+    private fun saveFavoriteMedia(cachedMedias: List<FavoriteMediaDbEntity>) {
+        petAdoptableDatabase.getMediaDao().insertFavoriteMedias(cachedMedias)
+    }
+
+    private fun saveFavoriteBreed(cachedBreeds: List<FavoriteBreedDbEntity>) {
+        petAdoptableDatabase.getBreedDao().insertFavoriteBreeds(cachedBreeds)
+    }
+
+    /**
      * Update pet
      */
-    override fun updatePet(pet: PetEntity): Completable {
-        return Completable.defer {
-            val uid = petAdoptableDatabase.getPetDao().getPetById(pet.id).uid
-            println("updatePet uid: $uid")
-            val petDbEntity = entityMapper.mapToCached(pet)
-            petDbEntity.uid = uid
-            println("petDbEntity: $petDbEntity")
-            petAdoptableDatabase.getPetDao().updatePet(petDbEntity)
-            Completable.complete()
-        }
-    }
+//    override fun updatePet(pet: PetEntity): Completable {
+//        return Completable.defer {
+//            val uid = petAdoptableDatabase.getPetDao().getPetById(pet.id).uid
+//            println("updatePet uid: $uid")
+//            val petDbEntity = entityMapper.mapToCached(pet)
+//            petDbEntity.uid = uid
+//            println("petDbEntity: $petDbEntity")
+//            petAdoptableDatabase.getPetDao().updatePet(petDbEntity)
+//            Completable.complete()
+//        }
+//    }
 
     /**
      * Retrieve a pet by id
@@ -159,10 +187,6 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
                     .getAllPetsByAnimal(matchAnimalName(animal)).isNotEmpty())
         }
     }
-
-//    override fun setCached() {
-//        preferencesHelper.isCached = true
-//    }
 
     override fun setLastCacheTime(lastCache: Long) {
         preferencesHelper.petsLastCacheTime = lastCache

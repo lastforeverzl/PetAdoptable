@@ -37,10 +37,13 @@ open class BrowsePetViewModel @Inject constructor(private val getPetDetailInfo: 
     }
 
     fun fetchPetById(key: String, petId: String, shelterId: String) {
-        val options = mutableMapOf<String, String>()
-        options["key"] = key
-        options["id"] = shelterId
-        return getPetDetailInfo.execute(PetSubscriber(), petId, options)
+        val shelterOptions = mutableMapOf<String, String>()
+        val petOptions = mutableMapOf<String, String>()
+        shelterOptions["key"] = key
+        shelterOptions["id"] = shelterId
+        petOptions["key"] = key
+        petOptions["id"] = petId
+        return getPetDetailInfo.execute(PetSubscriber(), petOptions, shelterOptions)
     }
 
     fun updateFavoriteStatus(petDetailView: PetDetailView) {

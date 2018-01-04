@@ -22,5 +22,9 @@ interface PetsRepository {
 
     fun saveToFavorite(pet: Pet): Completable
 
-    fun getPetById(id: String): Single<Pet>
+    fun removeFromFavorite(pet: Pet): Completable
+
+    fun isFavoritePet(id: String): Single<Boolean>
+
+    fun getPetById(options: Map<String, String>): Single<Pet>
 }

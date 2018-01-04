@@ -69,6 +69,7 @@ class FavoritesFragment : BaseFragment<PetView>(), AnkoLogger {
     }
 
     override fun updateListView(data: List<PetView>) {
+        favoritePetsAdapter.clearAdapter()
         favoritePetsAdapter.addPets(data.map { mapper.mapToViewModel(it) })
         favoritePetsAdapter.notifyDataSetChanged()
     }

@@ -3,10 +3,12 @@ package com.zackyzhang.petadoptable.cache.db.dao
 import android.arch.persistence.room.*
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.DELETE_ALL_PETS
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_PETS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_PET_BY_ID
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PETS
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PETS_BY_ANIMAL
 import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PET_BY_ID
-import com.zackyzhang.petadoptable.cache.db.entity.PetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 
 /**
  * Created by lei on 12/6/17.
@@ -21,13 +23,13 @@ interface PetDao {
     fun getAllPetsByAnimal(animal: String): List<PetDbEntity>
 
     @Query(QUERY_FAVORITE_PETS)
-    fun getFavoritePets(): List<PetDbEntity>
+    fun getFavoritePets(): List<FavoritePetDbEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPet(pet: PetDbEntity): Long
 
-    @Update
-    fun updatePet(pet: PetDbEntity): Int
+//    @Update
+//    fun updatePet(pet: PetDbEntity): Int
 
     @Query(QUERY_PET_BY_ID + ":id")
     fun getPetById(id: String): PetDbEntity
@@ -37,5 +39,14 @@ interface PetDao {
 
     @Query(DELETE_ALL_PETS)
     fun clearPets()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavoritePet(favoritePet: FavoritePetDbEntity): Long
+
+    @Query(QUERY_FAVORITE_PET_BY_ID + ":id")
+    fun getFavoritePetById(id: String): FavoritePetDbEntity
+
+    @Delete
+    fun removeFavoritePet(favoritePet: FavoritePetDbEntity)
 
 }

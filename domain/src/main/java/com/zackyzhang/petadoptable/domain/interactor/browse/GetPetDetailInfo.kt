@@ -26,10 +26,12 @@ open class GetPetDetailInfo @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    open fun execute(singleObserver: DisposableSingleObserver<PetDetail>, petId: String, options: Map<String, String>) {
+    open fun execute(singleObserver: DisposableSingleObserver<PetDetail>,
+                     petOptions: Map<String, String>,
+                     shelterOptions: Map<String, String>) {
 
-        val petSingle = getPetById.buildUseCaseObservable(petId)
-        val shelterSingle = getShelterById.buildUseCaseObservable(options)
+        val petSingle = getPetById.buildUseCaseObservable(petOptions)
+        val shelterSingle = getShelterById.buildUseCaseObservable(shelterOptions)
 
         val observable = Single.zip(petSingle, shelterSingle,
                 BiFunction<Pet, Shelter, PetDetail> { pet, shelter ->
