@@ -55,8 +55,20 @@ class PetsRemoteDataStoreTest {
         testObserver.assertComplete()
     }
 
+    @Test
+    fun getShelterPetsCompletes() {
+        stubPetsRemoteGetShelterPets(Flowable.just(PetsFactory.makePetEntityList(2)))
+        val testObserver = petsRemote.getShelterPets(mutableMapOf()).test()
+        testObserver.assertComplete()
+    }
+
     private fun stubPetsRemoteGetPets(flowable: Flowable<List<PetEntity>>) {
         whenever(petsRemote.getPets(mutableMapOf()))
+                .thenReturn(flowable)
+    }
+
+    private fun stubPetsRemoteGetShelterPets(flowable: Flowable<List<PetEntity>>) {
+        whenever(petsRemote.getShelterPets(mutableMapOf()))
                 .thenReturn(flowable)
     }
 

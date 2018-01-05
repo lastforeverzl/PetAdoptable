@@ -78,6 +78,11 @@ class PetsCacheDataStoreTest {
 //        testObserver.assertComplete()
     }
 
+    @Test(expected = UnsupportedOperationException::class)
+    fun getShelterPetsCompletes() {
+        petsCacheDataStore.getShelterPets(mutableMapOf()).test()
+    }
+
     private fun stubPetsCacheClearPets(completable: Completable) {
         whenever(petsCache.clearPets())
                 .thenReturn(completable)

@@ -71,4 +71,8 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
         return petsCache.isCached(animal)
     }
 
+    override fun getShelterPets(options: Map<String, String>): Flowable<List<PetEntity>> {
+        throw UnsupportedOperationException()
+    }
+
 }

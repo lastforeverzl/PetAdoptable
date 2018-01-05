@@ -31,4 +31,6 @@ interface PetsDataStore {
 
     fun isCached(animal: String): Single<Boolean>
 
+    fun getShelterPets(options: Map<String, String>): Flowable<List<PetEntity>>
+
 }

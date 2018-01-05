@@ -193,6 +193,31 @@ class PetsDataRepositoryTest {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Get Shelter Pets">
+    @Test
+    fun getShelterPetsCompletes() {
+        stubPetsDataStoreFactoryRetrieveDataStore(petsRemoteDataStore)
+        stubPetsRemoteDataStoreGetShelterPets(Flowable.just(PetsFactory.makePetEntityList(2)))
+        val testObserver = petsDataRepository.getShelterPets(mutableMapOf()).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun getShelterPetsReturnsData() {
+        stubPetsDataStoreFactoryRetrieveDataStore(petsRemoteDataStore)
+        val pets = PetsFactory.makePetList(2)
+        val petEntities = PetsFactory.makePetEntityList(2)
+        pets.forEachIndexed { index, pet ->
+            stubPetMapperMapFromEntity(petEntities[index], pet)
+        }
+        stubPetsRemoteDataStoreGetShelterPets(Flowable.just(petEntities))
+
+        val testObserver = petsDataRepository.getShelterPets(mutableMapOf()).test()
+        testObserver.assertValue(pets)
+    }
+
+    //</editor-fold>
+
     //<editor-fold desc="Stub helper methods">
     private fun stubPetsDataStoreFactoryRetrieveCacheDataStore() {
         whenever(petsDataStoreFactory.retrieveCacheDataStore())
@@ -252,6 +277,11 @@ class PetsDataRepositoryTest {
     private fun stubPetsCacheDataStoreGetPetById(single: Single<PetEntity>) {
         whenever(petsCacheDataStore.getPetById(any()))
                 .thenReturn(single)
+    }
+
+    private fun stubPetsRemoteDataStoreGetShelterPets(flowable: Flowable<List<PetEntity>>) {
+        whenever(petsRemoteDataStore.getShelterPets(any()))
+                .thenReturn(flowable)
     }
 
     //</editor-fold>

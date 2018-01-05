@@ -69,4 +69,11 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
                 .map { petMapper.mapFromEntity(it) }
     }
 
+    override fun getShelterPets(options: Map<String, String>): Flowable<List<Pet>> {
+        return factory.retrieveRemoteDataStore().getShelterPets(options)
+                .flatMap {
+                    Flowable.just(it.map { petMapper.mapFromEntity(it) })
+                }
+    }
+
 }

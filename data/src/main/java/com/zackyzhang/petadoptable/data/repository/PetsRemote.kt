@@ -16,4 +16,10 @@ interface PetsRemote {
      * Retrieve a pet by id
      */
     fun getPetById(options: Map<String, String>): Single<PetEntity>
+
+    /**
+     * Retrieve pets based on shelter id
+     */
+    fun getShelterPets(options: Map<String, String>): Flowable<List<PetEntity>>
+
 }

@@ -21,8 +21,8 @@ import com.zackyzhang.petadoptable.presentation.data.Resource
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import com.zackyzhang.petadoptable.presentation.model.PetDetailView
 import com.zackyzhang.petadoptable.ui.BuildConfig
-import com.zackyzhang.petadoptable.ui.GalleryActivity.GalleryActivity
 import com.zackyzhang.petadoptable.ui.R
+import com.zackyzhang.petadoptable.ui.gallery.GalleryActivity
 import com.zackyzhang.petadoptable.ui.mapper.PetDetailMapper
 import com.zackyzhang.petadoptable.ui.model.PetDetailViewModel
 import dagger.android.AndroidInjection
@@ -246,7 +246,6 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
     }
 
     private fun setupFavoriteIconForSuccess(data: Boolean?) {
-        info("data boolean: $data")
         data?.let {
             if (it) {
                 isFavoritePet = true

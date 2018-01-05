@@ -31,4 +31,13 @@ class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinder
                 }
     }
 
+    override fun getShelterPets(options: Map<String, String>): Flowable<List<PetEntity>> {
+        return petFinderService.getShelterPets(options)
+                .map { result ->
+                    result.petfinder.pets.petList.map { listItem ->
+                        entityMapper.mapFromRemote(listItem)
+                    }
+                }
+    }
+
 }

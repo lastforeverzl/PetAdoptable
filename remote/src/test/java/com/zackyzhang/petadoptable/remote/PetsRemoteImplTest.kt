@@ -72,6 +72,25 @@ class PetsRemoteImplTest {
         testObserver.assertValue(petEntity)
     }
 
+    @Test
+    fun getShelterPetsComplete() {
+        stubPetsServiceGetShelterPets(Flowable.just(PetsFactory.makePetsResposne()))
+        val testObserver = petsRemoteImpl.getShelterPets(mutableMapOf()).test()
+        testObserver.assertComplete()
+    }
+
+    @Test
+    fun getShelterPetsReturnData() {
+        val getPetsResponse = PetsFactory.makePetsResposne()
+        stubPetsServiceGetShelterPets(Flowable.just(getPetsResponse))
+        val petEntities = mutableListOf<PetEntity>()
+        getPetsResponse.petfinder.pets.petList.forEach {
+            petEntities.add(entityMapper.mapFromRemote(it))
+        }
+        val testObserver = petsRemoteImpl.getShelterPets(mutableMapOf()).test()
+        testObserver.assertValue(petEntities)
+    }
+
     private fun stubPetsServiceGetPets(observer: Flowable<GetPetsResponse>) {
         whenever(petFinderService.getPets(mutableMapOf()))
                 .thenReturn(observer)
@@ -85,5 +104,10 @@ class PetsRemoteImplTest {
     private fun stubPetsServiceMapFromRemote(petEntity: PetEntity) {
         whenever(entityMapper.mapFromRemote(any()))
                 .thenReturn(petEntity)
+    }
+
+    private fun stubPetsServiceGetShelterPets(flowable: Flowable<GetPetsResponse>) {
+        whenever(petFinderService.getShelterPets(mutableMapOf()))
+                .thenReturn(flowable)
     }
 }

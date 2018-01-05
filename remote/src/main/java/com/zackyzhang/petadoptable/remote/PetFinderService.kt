@@ -24,7 +24,7 @@ interface PetFinderService {
     fun getShelters(@QueryMap options: Map<String, String>?) : Flowable<GetSheltersResponse>
 
     @GET("shelter.getPets?format=json")
-    fun getShelterPets(@QueryMap options: Map<String, String>?) :Single<GetPetsResponse>
+    fun getShelterPets(@QueryMap options: Map<String, String>?) :Flowable<GetPetsResponse>
 
     @GET("pet.get?format=json")
     fun getPetById(@QueryMap options: Map<String, String>?) : Single<GetPetResponse>

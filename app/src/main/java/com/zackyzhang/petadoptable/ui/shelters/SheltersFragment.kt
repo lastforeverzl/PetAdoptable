@@ -13,6 +13,7 @@ import com.zackyzhang.petadoptable.ui.BaseFragment
 import com.zackyzhang.petadoptable.ui.BuildConfig
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.main.MainActivity
+import com.zackyzhang.petadoptable.ui.widget.ShelterOnClickListener
 import com.zackyzhang.shelteradoptable.ui.mapper.ShelterMapper
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_shelters.*
@@ -45,10 +46,16 @@ class SheltersFragment : BaseFragment<ShelterView>(), AnkoLogger {
     @Inject lateinit var mapper: ShelterMapper
     @Inject lateinit var viewModelFactory: BrowseSheltersViewModelFactory
     private lateinit var browseSheltersViewModel: BrowseSheltersViewModel
+    private lateinit var listener: ShelterOnClickListener
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
+        if (context is ShelterOnClickListener) {
+            listener = context
+        } else {
+            throw ClassCastException("${ context.toString() } must implement ShelterOnClickListener.")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +96,16 @@ class SheltersFragment : BaseFragment<ShelterView>(), AnkoLogger {
     }
 
     override fun setupAdapter() {
+        sheltersAdapter.shelterOnClicklistener = {
+            info("shelter click: ${ it.id } ${ it.name }")
+            listener.onClickShelter(it)
+        }
+        sheltersAdapter.shelterDirectionListener = { lat: String, lng: String, address: String ->
+            listener.directToShelter(lat, lng, address)
+        }
+        sheltersAdapter.shelterCallListener = {
+            listener.callShelter(it)
+        }
         recyclerView.adapter = sheltersAdapter
     }
 

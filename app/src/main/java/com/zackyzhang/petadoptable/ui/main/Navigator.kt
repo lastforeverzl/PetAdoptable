@@ -1,11 +1,13 @@
 package com.zackyzhang.petadoptable.ui.main
 
-import android.support.v4.app.Fragment
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.FragmentManager
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.detail.PetDetailActivity
 import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragment
 import com.zackyzhang.petadoptable.ui.nearby.NearbyPagerFragment
+import com.zackyzhang.petadoptable.ui.shelterpets.ShelterPetsActivity
 import com.zackyzhang.petadoptable.ui.shelters.SheltersFragment
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -69,10 +71,25 @@ class Navigator(private val mainActivity: MainActivity,
         mainActivity.startActivityForResult(intent, MainActivity.PET_DETAIL_ACTIVITY_REQUEST)
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        info("fragment: " + fragment.toString())
-        fragmentManager.beginTransaction()
-                .replace(R.id.contentContainer, fragment, fragment::class.java.simpleName)
-                .commit()
+    fun openShelterPetsActivity(shelterId: String, shelterName: String, shelterPhone: String,
+                                shelterEmail: String, shelterLat: String, shelterLng: String,
+                                shelterAddress: String) {
+        val intent = ShelterPetsActivity.newInstance(mainActivity, shelterId, shelterName,
+                shelterPhone, shelterEmail, shelterLat, shelterLng, shelterAddress)
+        mainActivity.startActivityForResult(intent, MainActivity.SHELTER_PETS_ACTIVITY_REQUEST)
     }
+
+    fun openActionDialIntent(number: String) {
+        val call = Uri.parse("tel: ${ number.trim() }")
+        val intent = Intent(Intent.ACTION_DIAL, call)
+        mainActivity.startActivity(intent)
+    }
+
+    fun openDirectionIntent(lat: String, lng: String, address: String) {
+        val gmmIntentUri = Uri.parse("geo:$lat,$lng?q=$address")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.`package` = "com.google.android.apps.maps"
+        mainActivity.startActivity(mapIntent)
+    }
+
 }

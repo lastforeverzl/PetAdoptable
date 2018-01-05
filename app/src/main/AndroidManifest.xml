@@ -33,7 +33,13 @@
 
         </activity>
 
-        <activity android:name=".GalleryActivity.GalleryActivity"></activity>
+        <activity android:name=".gallery.GalleryActivity">
+
+        </activity>
+
+        <activity android:name=".shelterpets.ShelterPetsActivity">
+
+        </activity>
 
     </application>
 

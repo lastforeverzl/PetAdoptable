@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.main.MainActivity
@@ -22,6 +23,10 @@ class SheltersAdapter @Inject constructor() : RecyclerView.Adapter<SheltersAdapt
 
     @Inject lateinit var activity: MainActivity
     private var shelters = mutableListOf<ShelterViewModel>()
+
+    lateinit var shelterOnClicklistener: (ShelterViewModel) -> Unit
+    lateinit var shelterDirectionListener: (String, String, String) -> Unit
+    lateinit var shelterCallListener: (String) -> Unit
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val shelter = shelters[position]
@@ -45,12 +50,15 @@ class SheltersAdapter @Inject constructor() : RecyclerView.Adapter<SheltersAdapt
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        private val shelterLayout: LinearLayout = view.shelterLayout
         private val shelterName: TextView = view.shelterName
         private val shelterAddress: TextView = view.shelterAddress
         private val shelterPhone: TextView = view.shelterPhone
         private val shelterCallIcon: ImageView = view.imShelterCall
         private val shelterCallText: TextView = view.tvShelterCall
         private val shelterEmail: TextView = view.shelterEmail
+        private val shelterDirection: TextView = view.shelterDirection
+        private val shelterCall: LinearLayout = view.shelterCall
 
         fun bind(shelter: ShelterViewModel) {
             shelterName.text = shelter.name
@@ -65,6 +73,13 @@ class SheltersAdapter @Inject constructor() : RecyclerView.Adapter<SheltersAdapt
                 shelterCallText.setTextColor(ContextCompat.getColor(activity, R.color.colorGrayInactive))
             }
             shelterEmail.text = shelter.email
+            shelterLayout.setOnClickListener { shelterOnClicklistener(shelter) }
+            shelterDirection.setOnClickListener {
+                shelterDirectionListener(shelter.latitude, shelter.longitude, shelter.address)
+            }
+            shelterCall.setOnClickListener {
+                shelterCallListener(shelter.phone)
+            }
         }
     }
 }

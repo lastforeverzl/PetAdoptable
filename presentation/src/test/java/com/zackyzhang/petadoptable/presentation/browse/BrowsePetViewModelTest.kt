@@ -3,9 +3,11 @@ package com.zackyzhang.petadoptable.presentation.browse
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.*
 import com.zackyzhang.petadoptable.domain.interactor.browse.GetPetDetailInfo
+import com.zackyzhang.petadoptable.domain.interactor.update.UpdateFavoritePet
 import com.zackyzhang.petadoptable.domain.model.PetDetail
 import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import com.zackyzhang.petadoptable.presentation.mapper.PetDetailMapper
+import com.zackyzhang.petadoptable.presentation.mapper.PetDetailToPetMapper
 import com.zackyzhang.petadoptable.presentation.model.PetDetailView
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomUuid
@@ -30,6 +32,8 @@ class BrowsePetViewModelTest {
 
     @Mock lateinit var getPetDetailInfo: GetPetDetailInfo
     @Mock lateinit var petDetailMapper: PetDetailMapper
+    @Mock lateinit var updateFavoritePet: UpdateFavoritePet
+    @Mock lateinit var petDetailToPetMapper: PetDetailToPetMapper
 
     @Captor
     private lateinit var captor: KArgumentCaptor<DisposableSingleObserver<PetDetail>>
@@ -41,7 +45,9 @@ class BrowsePetViewModelTest {
         captor = argumentCaptor()
         getPetDetailInfo = mock()
         petDetailMapper = mock()
-        petViewModel = BrowsePetViewModel(getPetDetailInfo, petDetailMapper)
+        updateFavoritePet = mock()
+        petDetailToPetMapper = mock()
+        petViewModel = BrowsePetViewModel(getPetDetailInfo, updateFavoritePet, petDetailMapper, petDetailToPetMapper)
     }
 
     @Test

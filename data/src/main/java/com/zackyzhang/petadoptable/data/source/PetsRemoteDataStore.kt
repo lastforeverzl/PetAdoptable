@@ -54,4 +54,9 @@ open class PetsRemoteDataStore @Inject constructor(private val petsRemote: PetsR
     override fun isCached(animal: String): Single<Boolean> {
         throw UnsupportedOperationException()
     }
+
+    override fun getShelterPets(options: Map<String, String>): Flowable<List<PetEntity>> {
+        return petsRemote.getShelterPets(options)
+    }
+
 }

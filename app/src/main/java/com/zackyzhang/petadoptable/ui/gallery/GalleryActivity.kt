@@ -1,4 +1,4 @@
-package com.zackyzhang.petadoptable.ui.GalleryActivity
+package com.zackyzhang.petadoptable.ui.gallery
 
 import android.content.Context
 import android.content.Intent
