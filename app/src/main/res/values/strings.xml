@@ -8,6 +8,13 @@
     <string name="shelter_email">EMAIL</string>
     <string name="shelter_head_direction">DIRECTION</string>
     <string name="search">Search</string>
+    <string name="reset">RESET</string>
+    <string name="search_apply">APPLY</string>
+    <string name="search_animal_title">Pick an Animal</string>
+    <string name="search_breed_title">Pick a Breed</string>
+    <string name="search_sex_title">Pick a Sex</string>
+    <string name="search_age_title">Pick an Age</string>
+    <string name="search_size_title">Pick a Size</string>
     <string name="transition_search_back">transition_search_back</string>
     <string name="recent_search">Recent Search</string>
     <string name="no_adoptable_pets">No adoptable pets found</string>
@@ -25,6 +32,7 @@
     <string name="search_empty_message">No result from search!</string>
     <string name="search_failed_message">Place selection failed: %s</string>
     <string name="search_country">US</string>
+    <string name="select_animal_filter_first">Please select Animal first!</string>>
 
     <!-- - - - - - - - - - - - - - - -
       - Used by SearchFilterPreferences  -

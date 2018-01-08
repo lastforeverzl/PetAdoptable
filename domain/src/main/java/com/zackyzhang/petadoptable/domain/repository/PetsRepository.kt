@@ -29,4 +29,6 @@ interface PetsRepository {
     fun getPetById(options: Map<String, String>): Single<Pet>
 
     fun getShelterPets(options: Map<String, String>): Flowable<List<Pet>>
+
+    fun getSearchPets(options: Map<String, String>): Flowable<List<Pet>>
 }

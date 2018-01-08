@@ -7,6 +7,10 @@ import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragmentModule
 import com.zackyzhang.petadoptable.ui.main.MainActivity
 import com.zackyzhang.petadoptable.ui.main.MainActivityDiModule
 import com.zackyzhang.petadoptable.ui.nearby.NearbyPagerFragmentModule
+import com.zackyzhang.petadoptable.ui.search.SearchActivity
+import com.zackyzhang.petadoptable.ui.search.SearchActivityDiModule
+import com.zackyzhang.petadoptable.ui.search.SearchResultActivity
+import com.zackyzhang.petadoptable.ui.search.SearchResultActivityDiModule
 import com.zackyzhang.petadoptable.ui.shelterpets.ShelterPetsActivity
 import com.zackyzhang.petadoptable.ui.shelterpets.ShelterPetsActivityDiModule
 import com.zackyzhang.petadoptable.ui.shelters.SheltersFragmentModule
@@ -19,9 +23,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
-    //    @PerActivity
-//    @ContributesAndroidInjector(modules = arrayOf(BrowseActivityModule::class))
-//    abstract fun bindMainActivity(): MainActivityBackup
     @PerActivity
     @ContributesAndroidInjector(modules = arrayOf(MainActivityDiModule::class,
             NearbyPagerFragmentModule::class, SheltersFragmentModule::class, FavoritesFragmentModule::class))
@@ -35,4 +36,11 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = arrayOf(ShelterPetsActivityDiModule::class))
     abstract fun shelterPetsActivityInjector(): ShelterPetsActivity
 
+    @PerActivity
+    @ContributesAndroidInjector(modules = arrayOf(SearchActivityDiModule::class))
+    abstract fun searchActivityInjector(): SearchActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = arrayOf(SearchResultActivityDiModule::class))
+    abstract fun searchResultActivityInjector(): SearchResultActivity
 }

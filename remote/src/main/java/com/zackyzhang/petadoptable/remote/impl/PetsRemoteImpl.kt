@@ -12,14 +12,14 @@ import javax.inject.Inject
  * Created by lei on 12/1/17.
  */
 class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinderService,
-                                         private val entityMapper: PetEntityMapper) :
+                                         private val petEntityMapper: PetEntityMapper) :
         PetsRemote {
 
     override fun getPets(options: Map<String, String>): Flowable<List<PetEntity>> {
         return petFinderService.getPets(options)
                 .map { result ->
                     result.petfinder.pets.petList.map { listItem ->
-                        entityMapper.mapFromRemote(listItem)
+                        petEntityMapper.mapFromRemote(listItem)
                     }
                 }
     }
@@ -27,7 +27,7 @@ class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinder
     override fun getPetById(options: Map<String, String>): Single<PetEntity> {
         return petFinderService.getPetById(options)
                 .map { result ->
-                    entityMapper.mapFromRemote(result.petfinder.pet)
+                    petEntityMapper.mapFromRemote(result.petfinder.pet)
                 }
     }
 
@@ -35,7 +35,7 @@ class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinder
         return petFinderService.getShelterPets(options)
                 .map { result ->
                     result.petfinder.pets.petList.map { listItem ->
-                        entityMapper.mapFromRemote(listItem)
+                        petEntityMapper.mapFromRemote(listItem)
                     }
                 }
     }

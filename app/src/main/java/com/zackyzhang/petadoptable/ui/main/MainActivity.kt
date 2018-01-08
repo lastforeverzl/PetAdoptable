@@ -1,16 +1,17 @@
 package com.zackyzhang.petadoptable.ui.main
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragment
 import com.zackyzhang.petadoptable.ui.model.PetViewModel
 import com.zackyzhang.petadoptable.ui.model.ShelterViewModel
-import com.zackyzhang.petadoptable.ui.shelterpets.ShelterPetsActivity
 import com.zackyzhang.petadoptable.ui.widget.PetOnClickListener
 import com.zackyzhang.petadoptable.ui.widget.ShelterOnClickListener
 import dagger.android.AndroidInjection
@@ -43,12 +44,33 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
         zipCode = intent.getStringExtra(ZIP_CODE)
         info("zipCode: " + zipCode)
         navigator.zipCode = zipCode
         bottomNavigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigator.openNearbyPagerFragment()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item!!.itemId) {
+            R.id.home -> {
+                finish()
+                true
+            }
+            R.id.menu_search -> {
+                val searchMenuView = toolbar.findViewById<View>(R.id.menu_search)
+                navigator.openSearchActivity(searchMenuView, zipCode)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {

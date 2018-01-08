@@ -1,12 +1,17 @@
 package com.zackyzhang.petadoptable.ui.main
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.os.Bundle
 import android.support.v4.app.FragmentManager
+import android.view.View
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.detail.PetDetailActivity
 import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragment
 import com.zackyzhang.petadoptable.ui.nearby.NearbyPagerFragment
+import com.zackyzhang.petadoptable.ui.search.SearchActivity
 import com.zackyzhang.petadoptable.ui.shelterpets.ShelterPetsActivity
 import com.zackyzhang.petadoptable.ui.shelters.SheltersFragment
 import org.jetbrains.anko.AnkoLogger
@@ -77,6 +82,18 @@ class Navigator(private val mainActivity: MainActivity,
         val intent = ShelterPetsActivity.newInstance(mainActivity, shelterId, shelterName,
                 shelterPhone, shelterEmail, shelterLat, shelterLng, shelterAddress)
         mainActivity.startActivityForResult(intent, MainActivity.SHELTER_PETS_ACTIVITY_REQUEST)
+    }
+
+    fun openSearchActivity(searchView: View, zipCode: String) {
+        val intent = SearchActivity.newInstance(mainActivity, zipCode)
+        val bundle: Bundle
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bundle = ActivityOptions.makeSceneTransitionAnimation(mainActivity, searchView,
+                    mainActivity.getString(R.string.transition_search_back)).toBundle()
+            mainActivity.startActivity(intent, bundle)
+        } else {
+            mainActivity.startActivity(intent)
+        }
     }
 
     fun openActionDialIntent(number: String) {

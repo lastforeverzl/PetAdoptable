@@ -22,16 +22,16 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class PetsRemoteImplTest {
 
-    private lateinit var entityMapper: PetEntityMapper
+    private lateinit var petEntityMapper: PetEntityMapper
     private lateinit var petFinderService: PetFinderService
 
     private lateinit var petsRemoteImpl: PetsRemoteImpl
 
     @Before
     fun setup() {
-        entityMapper = mock()
+        petEntityMapper = mock()
         petFinderService = mock()
-        petsRemoteImpl = PetsRemoteImpl(petFinderService, entityMapper)
+        petsRemoteImpl = PetsRemoteImpl(petFinderService, petEntityMapper)
     }
 
     @Test
@@ -47,7 +47,7 @@ class PetsRemoteImplTest {
         stubPetsServiceGetPets(Flowable.just(getPetsResposne))
         val petEntities = mutableListOf<PetEntity>()
         getPetsResposne.petfinder.pets.petList.forEach {
-            petEntities.add(entityMapper.mapFromRemote(it))
+            petEntities.add(petEntityMapper.mapFromRemote(it))
         }
         val testObserver = petsRemoteImpl.getPets(mutableMapOf()).test()
         testObserver.assertValue(petEntities)
@@ -85,7 +85,7 @@ class PetsRemoteImplTest {
         stubPetsServiceGetShelterPets(Flowable.just(getPetsResponse))
         val petEntities = mutableListOf<PetEntity>()
         getPetsResponse.petfinder.pets.petList.forEach {
-            petEntities.add(entityMapper.mapFromRemote(it))
+            petEntities.add(petEntityMapper.mapFromRemote(it))
         }
         val testObserver = petsRemoteImpl.getShelterPets(mutableMapOf()).test()
         testObserver.assertValue(petEntities)
@@ -102,7 +102,7 @@ class PetsRemoteImplTest {
     }
 
     private fun stubPetsServiceMapFromRemote(petEntity: PetEntity) {
-        whenever(entityMapper.mapFromRemote(any()))
+        whenever(petEntityMapper.mapFromRemote(any()))
                 .thenReturn(petEntity)
     }
 
