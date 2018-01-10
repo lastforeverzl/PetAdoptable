@@ -19,8 +19,12 @@ open class PetsCacheDataStore @Inject constructor(private val petsCache: PetsCac
      * Clear all Pets from the cache
      */
     override fun clearPets(): Completable {
-        return petsCache.clearPets()
-                .doOnComplete { println("pets in database cleared!") }
+        return if (petsCache.isExpired()) {
+            petsCache.clearPets().doOnComplete { println("pets in database cleared!") }
+        } else {
+            println("PetsCacheDataStore clearPets: cache is not expired")
+            Completable.complete()
+        }
     }
 
     /**

@@ -31,4 +31,10 @@
         android:layout_height="match_parent"
         android:visibility="gone"/>
 
+    <com.zackyzhang.petadoptable.ui.widget.error.ErrorView
+        android:id="@+id/viewError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
 </FrameLayout>

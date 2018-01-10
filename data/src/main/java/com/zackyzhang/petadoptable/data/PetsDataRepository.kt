@@ -18,9 +18,6 @@ class PetsDataRepository @Inject constructor(private val factory: PetsDataStoreF
                                              private val petMapper: PetMapper) :
         PetsRepository {
 
-    /**
-     * todo: Need to implement Service for clear cached pets whenever the cache expired.
-     */
     override fun clearPets(): Completable {
         return factory.retrieveCacheDataStore().clearPets()
     }

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.favorites.FavoritesFragment
+import com.zackyzhang.petadoptable.ui.job.ClearCacheJobDispatcher
 import com.zackyzhang.petadoptable.ui.model.PetViewModel
 import com.zackyzhang.petadoptable.ui.model.ShelterViewModel
 import com.zackyzhang.petadoptable.ui.widget.PetOnClickListener
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        ClearCacheJobDispatcher.scheduleFirebaseJobDispatcher(this)
 
         zipCode = intent.getStringExtra(ZIP_CODE)
         info("zipCode: " + zipCode)

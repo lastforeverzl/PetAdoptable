@@ -1,5 +1,6 @@
 package com.zackyzhang.petadoptable.ui.main
 
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
@@ -84,15 +85,16 @@ class Navigator(private val mainActivity: MainActivity,
         mainActivity.startActivityForResult(intent, MainActivity.SHELTER_PETS_ACTIVITY_REQUEST)
     }
 
+    @SuppressLint("RestrictedApi")
     fun openSearchActivity(searchView: View, zipCode: String) {
         val intent = SearchActivity.newInstance(mainActivity, zipCode)
         val bundle: Bundle
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             bundle = ActivityOptions.makeSceneTransitionAnimation(mainActivity, searchView,
                     mainActivity.getString(R.string.transition_search_back)).toBundle()
-            mainActivity.startActivity(intent, bundle)
+            mainActivity.startActivityForResult(intent, MainActivity.PET_DETAIL_ACTIVITY_REQUEST, bundle)
         } else {
-            mainActivity.startActivity(intent)
+            mainActivity.startActivityForResult(intent, MainActivity.PET_DETAIL_ACTIVITY_REQUEST)
         }
     }
 

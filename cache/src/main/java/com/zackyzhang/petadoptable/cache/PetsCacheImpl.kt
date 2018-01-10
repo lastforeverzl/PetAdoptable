@@ -198,6 +198,7 @@ class PetsCacheImpl @Inject constructor(private val petAdoptableDatabase: PetAdo
     override fun isExpired(): Boolean {
         val currentTime = System.currentTimeMillis()
         val lastUpdateTime = this.getLastCacheUpdateTimeMillis()
+        println("$currentTime - $lastUpdateTime = ${currentTime - lastUpdateTime}, EXPIRATION_TIME = $EXPIRATION_TIME")
         return currentTime - lastUpdateTime > EXPIRATION_TIME
     }
 
