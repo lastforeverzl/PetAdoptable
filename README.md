@@ -1,4 +1,6 @@
 # PetAdoptable
-kotlin
-clean architecture
-Rxjava
+* kotlin
+* clean architecture
+* Rxjava
+* dagger
+* Android Architecture Components
