@@ -25,7 +25,6 @@ ext {
     retrofitVersion = '2.3.0'
     roomVersion = '1.0.0'
     supportLibraryVersion = '27.0.2'
-    timberVersion = '4.6.0'
     glideVersion = '4.3.1'
     daggerVersion = '2.13'
     glassfishAnnotationVersion = '10.0-b28'
@@ -177,7 +176,6 @@ ext {
             appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
             supportRecyclerView:"com.android.support:recyclerview-v7:${supportLibraryVersion}",
             supportDesign:      "com.android.support:design:${supportLibraryVersion}",
-            timber:             "com.jakewharton.timber:timber:${timberVersion}",
             daggerSupport:      "com.google.dagger:dagger-android-support:${daggerVersion}",
             daggerProcessor:    "com.google.dagger:dagger-android-processor:${daggerVersion}",
             glassfishAnnotation: "org.glassfish:javax.annotation:${glassfishAnnotationVersion}",

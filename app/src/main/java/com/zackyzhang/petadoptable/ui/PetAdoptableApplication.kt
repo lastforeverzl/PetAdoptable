@@ -8,7 +8,6 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
-import timber.log.Timber
 import javax.inject.Inject
 
 class PetAdoptableApplication : Application(), HasActivityInjector, HasServiceInjector {
@@ -23,13 +22,6 @@ class PetAdoptableApplication : Application(), HasActivityInjector, HasServiceIn
                 .application(this)
                 .build()
                 .inject(this)
-        setupTimber()
-    }
-
-    private fun setupTimber() {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

@@ -18,7 +18,6 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "PETFINDER_API_KEY", "\"${petfinder_api_key}\""
-        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${google_maps_api_key}\""
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -91,7 +90,6 @@ dependencies {
     implementation mobileUiDependencies.glide
     implementation mobileUiDependencies.dagger
     implementation mobileUiDependencies.daggerSupport
-    implementation mobileUiDependencies.timber
     implementation mobileUiDependencies.archRuntime
     implementation mobileUiDependencies.archExtensions
     kapt mobileUiDependencies.archCompiler

@@ -7,3 +7,8 @@
 .externalNativeBuild
 .idea
 /gradle.properties
+libs/
+release/
+src/main/res/values-xxxhdpi/
+/app/release
+/app/build
