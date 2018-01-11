@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlack"
+            android:text="@string/enter_zipcode"/>
+
+        <EditText
+            android:id="@+id/zipCodeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorGreen"
+            android:textCursorDrawable="@drawable/edit_cursor"
+            android:inputType="number"
+            android:maxLength="5"
+            android:ems="5"
+            android:textSize="16sp"
+            android:hint="@string/enter_zipcode_hint"
+            android:textColorHint="@color/colorGreen"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/applyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorGreen"
+        android:textSize="16sp"
+        android:textColor="@color/colorWhite"
+        android:text="@string/search_apply"
+        android:onClick="clickApplyButton"/>
+
+</RelativeLayout>

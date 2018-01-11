@@ -2,9 +2,6 @@ package com.zackyzhang.petadoptable.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by lei on 11/29/17.
- */
 data class Pet(val status: PetStatus?,
                val contact: Contact,
                val age: Age?,

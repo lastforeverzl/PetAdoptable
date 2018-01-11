@@ -14,9 +14,6 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/20/17.
- */
 class AnimalAdapter @Inject constructor() :
         RecyclerView.Adapter<AnimalAdapter.ViewHolder>(), AnkoLogger {
 
@@ -63,7 +60,7 @@ class AnimalAdapter @Inject constructor() :
                 animalInfo.text = this.getPetInfo()
                 animalLocation.text = pet.cityState
 
-                //todo("try using kotlin extension function for Glide")
+                //todo("Use kotlin extension function for Glide")
                 if (pet.medias.isNotEmpty()) {
                     Glide.with(itemView.context)
                             .asBitmap()

@@ -27,9 +27,6 @@ import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/18/17.
- */
 class FavoritesFragment : Fragment(), AnkoLogger {
 
     companion object {
@@ -38,7 +35,7 @@ class FavoritesFragment : Fragment(), AnkoLogger {
         }
     }
 
-    lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
     @Inject lateinit var favoritePetsAdapter: AnimalAdapter
     @Inject lateinit var mapper: PetMapper
     @Inject lateinit var viewModelFactory: BrowseFavoritePetsViewModelFactory
@@ -78,20 +75,20 @@ class FavoritesFragment : Fragment(), AnkoLogger {
         super.onDestroy()
     }
 
-    fun provideViewModel() {
+    private fun provideViewModel() {
         browseFavoritePetsViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(BrowseFavoritePetsViewModel::class.java)
     }
 
-    fun viewModelObserve() {
+    private fun viewModelObserve() {
         browseFavoritePetsViewModel.getFavoritePetsLiveData().observe(this,
                 Observer<Resource<List<PetView>>>{
                     if (it != null) this.handleDataState(it.status, it.data, it.message)
                 })
     }
 
-    fun handleDataState(resourceState: ResourceState, data: List<PetView>?,
-                        message: String?) {
+    private fun handleDataState(resourceState: ResourceState, data: List<PetView>?,
+                                message: String?) {
         when (resourceState) {
             ResourceState.LOADING -> setupScreenForLoadingState()
             ResourceState.SUCCESS -> setupScreenForSuccess(data)
@@ -99,13 +96,13 @@ class FavoritesFragment : Fragment(), AnkoLogger {
         }
     }
 
-    fun setupScreenForLoadingState() {
+    private fun setupScreenForLoadingState() {
         progress.visibility = View.VISIBLE
         viewEmpty.visibility = View.GONE
         viewError.visibility = View.GONE
     }
 
-    fun setupScreenForSuccess(data: List<PetView>?) {
+    private fun setupScreenForSuccess(data: List<PetView>?) {
         viewError.visibility = View.GONE
         progress.visibility = View.GONE
         if (data != null && data.isNotEmpty()) {
@@ -118,7 +115,7 @@ class FavoritesFragment : Fragment(), AnkoLogger {
         }
     }
 
-    fun setupScreenForError(message: String?) {
+    private fun setupScreenForError(message: String?) {
         progress.visibility = View.GONE
         recyclerView.visibility = View.GONE
         viewEmpty.visibility = View.GONE
@@ -131,7 +128,7 @@ class FavoritesFragment : Fragment(), AnkoLogger {
         viewError.errorListener = errorListener
     }
 
-    fun setupBrowseRecycler() {
+    private fun setupBrowseRecycler() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         setupAdapter()
@@ -141,13 +138,13 @@ class FavoritesFragment : Fragment(), AnkoLogger {
         browseFavoritePetsViewModel.fetchFavoritePets()
     }
 
-    fun updateListView(data: List<PetView>) {
+    private fun updateListView(data: List<PetView>) {
         favoritePetsAdapter.clearAdapter()
         favoritePetsAdapter.addPets(data.map { mapper.mapToViewModel(it) })
         favoritePetsAdapter.notifyDataSetChanged()
     }
 
-    fun setupAdapter() {
+    private fun setupAdapter() {
         favoritePetsAdapter.listener = {
             info("animal click: ${ it.id } ${ it.name }")
             listener.onPetClick(it)

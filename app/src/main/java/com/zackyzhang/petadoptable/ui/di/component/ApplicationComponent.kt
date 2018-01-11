@@ -10,9 +10,6 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 
-/**
- * Created by lei on 12/13/17.
- */
 @PerApplication
 @Component(modules = arrayOf(ActivityBuilder::class, ApplicationModule::class,
         AndroidSupportInjectionModule::class, ServiceBuilder::class))

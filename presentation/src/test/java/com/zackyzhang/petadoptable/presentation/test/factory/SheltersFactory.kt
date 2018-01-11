@@ -5,9 +5,6 @@ import com.zackyzhang.petadoptable.presentation.model.ShelterView
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomUuid
 
 
-/**
- * Created by lei on 12/22/17.
- */
 class SheltersFactory {
 
     companion object {

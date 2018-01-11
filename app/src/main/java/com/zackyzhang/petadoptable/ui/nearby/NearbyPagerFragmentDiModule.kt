@@ -6,9 +6,6 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 
-/**
- * Created by lei on 12/18/17.
- */
 @Module
 class NearbyPagerFragmentDiModule {
 

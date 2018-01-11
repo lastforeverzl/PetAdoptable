@@ -11,9 +11,6 @@ import dagger.android.HasServiceInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/14/17.
- */
 class PetAdoptableApplication : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>

@@ -4,16 +4,13 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_MEDIAS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_MEDIA_BY_PET_ID
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_MEDIAS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_MEDIA_BY_PET_ID
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoriteMediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_FAVORITE_MEDIAS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_FAVORITE_MEDIA_BY_PET_ID
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_MEDIAS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_MEDIA_BY_PET_ID
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteMediaDbEntity
 import com.zackyzhang.petadoptable.cache.db.entity.petcache.MediaDbEntity
 
-/**
- * Created by lei on 12/6/17.
- */
 @Dao
 interface MediaDao {
 

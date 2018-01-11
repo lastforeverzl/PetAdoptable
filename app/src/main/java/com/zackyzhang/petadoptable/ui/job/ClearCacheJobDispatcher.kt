@@ -7,9 +7,6 @@ import com.firebase.jobdispatcher.Lifetime
 import com.firebase.jobdispatcher.Trigger
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by lei on 1/10/18.
- */
 class ClearCacheJobDispatcher {
 
     companion object {

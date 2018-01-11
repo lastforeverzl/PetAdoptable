@@ -11,9 +11,6 @@ import com.zackyzhang.petadoptable.ui.di.scopes.PerActivity
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by lei on 12/29/17.
- */
 @Module
 class PetDetailActivityDiModule {
 

@@ -29,9 +29,6 @@ import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/18/17.
- */
 class AnimalFragment : Fragment(), AnkoLogger {
 
     companion object {
@@ -50,7 +47,7 @@ class AnimalFragment : Fragment(), AnkoLogger {
         }
     }
 
-    lateinit var zipCode: String
+    private lateinit var zipCode: String
     lateinit var animal: String
     private var rvPosition = 0
 
@@ -125,7 +122,7 @@ class AnimalFragment : Fragment(), AnkoLogger {
                 })
     }
 
-    fun handleDataState(resourceState: ResourceState, data: List<PetView>?, message: String?) {
+    private fun handleDataState(resourceState: ResourceState, data: List<PetView>?, message: String?) {
         when (resourceState) {
             ResourceState.LOADING -> setupScreenForLoadingState()
             ResourceState.SUCCESS -> setupScreenForSuccess(data)
@@ -138,14 +135,14 @@ class AnimalFragment : Fragment(), AnkoLogger {
         viewError.errorListener = errorListener
     }
 
-    fun setupScreenForLoadingState() {
+    private fun setupScreenForLoadingState() {
         progress.visibility = View.VISIBLE
         if (!isLoadingMore) recyclerView.visibility = View.GONE
         viewEmpty.visibility = View.GONE
         viewError.visibility = View.GONE
     }
 
-    fun setupScreenForSuccess(data: List<PetView>?) {
+    private fun setupScreenForSuccess(data: List<PetView>?) {
         viewError.visibility = View.GONE
         progress.visibility = View.GONE
         if (data != null && data.isNotEmpty()) {
@@ -157,7 +154,7 @@ class AnimalFragment : Fragment(), AnkoLogger {
         isLoadingMore = false
     }
 
-    fun setupScreenForError(message: String?) {
+    private fun setupScreenForError(message: String?) {
         progress.visibility = View.GONE
         recyclerView.visibility = View.GONE
         viewEmpty.visibility = View.GONE
@@ -165,12 +162,12 @@ class AnimalFragment : Fragment(), AnkoLogger {
         error(message)
     }
 
-    fun provideViewModel() {
+    private fun provideViewModel() {
         browsePetsViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(BrowsePetsViewModel::class.java)
     }
 
-    fun viewModelObserve() {
+    private fun viewModelObserve() {
         browsePetsViewModel.getPetsLiveData().observe(this,
                 Observer<Resource<List<PetView>>> {
                     if (it != null) this.handleDataState(it.status, it.data, it.message)
@@ -181,7 +178,7 @@ class AnimalFragment : Fragment(), AnkoLogger {
         browsePetsViewModel.fetchPets(BuildConfig.PETFINDER_API_KEY, zipCode, animalAdapter.itemCount, animal)
     }
 
-    fun setupAdapter() {
+    private fun setupAdapter() {
         animalAdapter.listener = {
             info("animal click: ${ it.id } ${ it.name }")
             listener.onPetClick(it)
@@ -189,7 +186,7 @@ class AnimalFragment : Fragment(), AnkoLogger {
         recyclerView.adapter = animalAdapter
     }
 
-    fun updateListView(data: List<PetView>) {
+    private fun updateListView(data: List<PetView>) {
 //        animalAdapter.pets = pets.map { mapper.mapToViewModel(it) }
         animalAdapter.addPets(data.map { mapper.mapToViewModel(it) })
         animalAdapter.notifyDataSetChanged()

@@ -12,9 +12,6 @@ import com.zackyzhang.petadoptable.presentation.model.PetView
 import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/28/17.
- */
 open class BrowseFavoritePetsViewModel @Inject internal constructor(
         private val getFavoritePets: GetFavoritePets,
         private val petMapper: PetMapper) : ViewModel() {

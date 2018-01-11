@@ -2,9 +2,6 @@ package com.zackyzhang.petadoptable.presentation.test.factory
 
 import java.util.concurrent.ThreadLocalRandom
 
-/**
- * Created by lei on 12/8/17.
- */
 class DataFactory {
 
     companion object Factory {

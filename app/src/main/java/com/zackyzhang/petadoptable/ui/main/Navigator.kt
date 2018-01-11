@@ -18,9 +18,6 @@ import com.zackyzhang.petadoptable.ui.shelters.SheltersFragment
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
-/**
- * Created by lei on 12/18/17.
- */
 class Navigator(private val mainActivity: MainActivity,
                 private val fragmentManager: FragmentManager) :
         AnkoLogger {

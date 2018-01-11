@@ -17,9 +17,6 @@ import com.zackyzhang.petadoptable.ui.shelters.SheltersFragmentModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-/**
- * Created by lei on 12/13/17.
- */
 @Module
 abstract class ActivityBuilder {
 

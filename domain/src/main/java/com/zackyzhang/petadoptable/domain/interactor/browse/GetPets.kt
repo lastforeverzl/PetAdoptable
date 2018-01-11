@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Use case used for retrieving a [List] of [Pet] instances from the [PetsRepository]
  */
-open class GetPets @Inject constructor(val petsRepository: PetsRepository,
+open class GetPets @Inject constructor(private val petsRepository: PetsRepository,
                                        threadExecutor: ThreadExecutor,
                                        postExecutionThread: PostExecutionThread):
         FlowableUseCase<List<Pet>, Map<String, String>>(threadExecutor, postExecutionThread) {

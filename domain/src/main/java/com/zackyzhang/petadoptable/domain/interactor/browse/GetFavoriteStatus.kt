@@ -7,10 +7,7 @@ import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/2/18.
- */
-open class GetFavoriteStatus @Inject constructor(val petsRepository: PetsRepository,
+open class GetFavoriteStatus @Inject constructor(private val petsRepository: PetsRepository,
                                                  threadExecutor: ThreadExecutor,
                                                  postExecutionThread: PostExecutionThread) :
         SingleUseCase<Boolean, String>(threadExecutor, postExecutionThread) {

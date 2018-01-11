@@ -10,9 +10,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 
-/**
- * Created by lei on 12/6/17.
- */
 @RunWith(RobolectricTestRunner::class)
 open class PetDaoTest {
 

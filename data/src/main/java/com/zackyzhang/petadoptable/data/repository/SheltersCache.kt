@@ -22,7 +22,7 @@ interface SheltersCache {
     fun saveShelters(shelters: List<ShelterEntity>): Completable
 
     /**
-     * Retrive a list of Shelters, from the cache
+     * Retrieve a list of Shelters, from the cache
      */
     fun getShelters(): Flowable<List<ShelterEntity>>
 

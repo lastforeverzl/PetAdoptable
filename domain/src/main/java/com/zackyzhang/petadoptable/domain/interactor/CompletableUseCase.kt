@@ -8,9 +8,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
 
-/**
- * Created by lei on 12/28/17.
- */
 abstract class CompletableUseCase<in Params> protected constructor(
         private val threadExecutor: ThreadExecutor,
         private val postExecutionThread: PostExecutionThread) {

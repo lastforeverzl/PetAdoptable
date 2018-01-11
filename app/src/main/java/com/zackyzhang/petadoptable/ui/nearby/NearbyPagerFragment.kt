@@ -18,9 +18,6 @@ import javax.inject.Inject
 
 
 
-/**
- * Created by lei on 12/16/17.
- */
 class NearbyPagerFragment : Fragment(), HasSupportFragmentInjector, AnkoLogger {
 
     companion object {

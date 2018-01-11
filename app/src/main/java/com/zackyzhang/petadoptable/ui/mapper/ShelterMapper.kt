@@ -1,7 +1,6 @@
-package com.zackyzhang.shelteradoptable.ui.mapper
+package com.zackyzhang.petadoptable.ui.mapper
 
 import com.zackyzhang.petadoptable.presentation.model.ShelterView
-import com.zackyzhang.petadoptable.ui.mapper.Mapper
 import com.zackyzhang.petadoptable.ui.model.ShelterViewModel
 import javax.inject.Inject
 

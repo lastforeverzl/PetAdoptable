@@ -10,12 +10,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by lei on 11/29/17.
- */
 object PetFinderServiceFactory {
 
-    const val END_POINT = "http://api.petfinder.com/"
+    private const val END_POINT = "http://api.petfinder.com/"
 
     fun makePetFinderService(isDebug: Boolean): PetFinderService {
         val okHttpClient = makeOkHttpClient(

@@ -7,10 +7,7 @@ import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Completable
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/10/18.
- */
-open class ClearCache @Inject constructor(val petsRepository: PetsRepository,
+open class ClearCache @Inject constructor(private val petsRepository: PetsRepository,
                                           threadExecutor: ThreadExecutor,
                                           postExecutionThread: PostExecutionThread) :
         CompletableUseCase<Unit>(threadExecutor, postExecutionThread) {

@@ -13,7 +13,7 @@ import javax.inject.Inject
 class PetEntityMapper @Inject constructor(): EntityMapper<PetDbEntity, PetEntity> {
 
     /**
-     * Map a [PetEntity] instance to a [CachedPet] instance
+     * Map a [PetEntity] instance to a [PetDbEntity] instance
      */
     override fun mapToCached(type: PetEntity): PetDbEntity {
         return PetDbEntity(null, type.status, type.cityState, type.age, type.size, type.medias,

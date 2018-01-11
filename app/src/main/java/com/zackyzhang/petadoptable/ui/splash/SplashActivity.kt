@@ -17,9 +17,6 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
 import java.util.*
 
-/**
- * Created by lei on 12/15/17.
- */
 class SplashActivity : AppCompatActivity(), AnkoLogger {
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -50,7 +47,8 @@ class SplashActivity : AppCompatActivity(), AnkoLogger {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setupLastLocation()
                 } else {
-                   TODO("Deal with the situation of permission denied")
+                    startActivity<LocationActivity>()
+                    finish()
                 }
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
@@ -67,7 +65,8 @@ class SplashActivity : AppCompatActivity(), AnkoLogger {
                     }
                 }
                 .addOnFailureListener {
-                    // TODO("Deal with the situation of getting GPS location failed")
+                    startActivity<LocationActivity>()
+                    finish()
                 }
     }
 

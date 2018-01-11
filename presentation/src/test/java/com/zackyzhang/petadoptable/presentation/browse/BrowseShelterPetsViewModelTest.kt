@@ -20,9 +20,6 @@ import org.junit.runners.JUnit4
 import org.mockito.Captor
 import org.mockito.Mock
 
-/**
- * Created by lei on 1/4/18.
- */
 @RunWith(JUnit4::class)
 class BrowseShelterPetsViewModelTest {
 

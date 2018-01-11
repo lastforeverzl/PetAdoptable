@@ -29,7 +29,6 @@ class SheltersDataRepository @Inject constructor(private val factory: SheltersDa
     }
 
     override fun getShelters(options: Map<String, String>): Flowable<List<Shelter>> {
-        //TODO("Disable cache shelters just for now.")
         return factory.retrieveRemoteDataStore().getShelters(options)
                 .flatMap {
                     Flowable.just(it.map { shelterMapper.mapFromEntity(it) })

@@ -3,7 +3,7 @@ package com.zackyzhang.petadoptable.cache
 import android.arch.persistence.room.Room
 import com.nhaarman.mockito_kotlin.any
 import com.zackyzhang.petadoptable.cache.db.PetAdoptableDatabase
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoritePetDbEntity
 import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 import com.zackyzhang.petadoptable.cache.mapper.FavoriteEntityMapper
 import com.zackyzhang.petadoptable.cache.mapper.PetEntityMapper
@@ -14,10 +14,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import kotlin.test.assertEquals
-
-/**
- * Created by lei on 12/6/17.
- */
 
 @RunWith(RobolectricTestRunner::class)
 class PetsCacheImplTest {

@@ -1,9 +1,6 @@
 package com.zackyzhang.petadoptable.cache.db.constants
 
-/**
- * Created by lei on 12/6/17.
- */
-object DbConstans {
+object DbConstants {
 
     const val PET_TABLE_NAME = "pet"
 

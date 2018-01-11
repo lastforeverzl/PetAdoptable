@@ -1,14 +1,11 @@
-package com.zackyzhang.petadoptable.cache.db.entity.petcache
+package com.zackyzhang.petadoptable.cache.db.entity.favorite
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.FAVORITE_MEDIA_TABLE_NAME
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.FAVORITE_MEDIA_TABLE_NAME
 
-/**
- * Created by lei on 12/6/17.
- */
 @Entity(tableName = FAVORITE_MEDIA_TABLE_NAME, foreignKeys = arrayOf(ForeignKey(entity = FavoritePetDbEntity::class,
         parentColumns = arrayOf("uid"),
         childColumns = arrayOf("pet_id"),

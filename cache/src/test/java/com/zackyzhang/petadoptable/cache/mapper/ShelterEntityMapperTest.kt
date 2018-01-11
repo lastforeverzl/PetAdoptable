@@ -10,9 +10,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import kotlin.test.assertEquals
 
-/**
- * Created by lei on 12/22/17.
- */
 @RunWith(JUnit4::class)
 class ShelterEntityMapperTest {
 

@@ -5,9 +5,6 @@ import com.zackyzhang.petadoptable.remote.model.*
 import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomIntInString
 import com.zackyzhang.petadoptable.remote.test.factory.DataFactory.factory.randomUuid
 
-/**
- * Created by lei on 12/2/17.
- */
 class PetsFactory {
 
     companion object Factory {

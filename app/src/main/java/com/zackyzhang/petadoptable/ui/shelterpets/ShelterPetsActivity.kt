@@ -28,9 +28,6 @@ import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/3/18.
- */
 class ShelterPetsActivity : AppCompatActivity(), AnkoLogger {
 
     companion object {
@@ -56,14 +53,14 @@ class ShelterPetsActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    lateinit var shelterId: String
+    private lateinit var shelterId: String
     lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var shelterName: String
-    lateinit var shelterPhone: String
+    private lateinit var shelterName: String
+    private lateinit var shelterPhone: String
     lateinit var shelterEmail: String
-    lateinit var shelterLat: String
-    lateinit var shelterLng: String
-    lateinit var shelterAddress: String
+    private lateinit var shelterLat: String
+    private lateinit var shelterLng: String
+    private lateinit var shelterAddress: String
 
     @Inject lateinit var browseShelterPetsModelFactory: BrowseShelterPetsViewModelFactory
     @Inject lateinit var mapper: PetMapper

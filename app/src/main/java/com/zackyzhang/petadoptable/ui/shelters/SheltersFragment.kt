@@ -19,11 +19,11 @@ import com.zackyzhang.petadoptable.presentation.model.ShelterView
 import com.zackyzhang.petadoptable.ui.BuildConfig
 import com.zackyzhang.petadoptable.ui.R
 import com.zackyzhang.petadoptable.ui.main.MainActivity
+import com.zackyzhang.petadoptable.ui.mapper.ShelterMapper
 import com.zackyzhang.petadoptable.ui.widget.EndlessRecyclerViewScrollListener
 import com.zackyzhang.petadoptable.ui.widget.ShelterOnClickListener
 import com.zackyzhang.petadoptable.ui.widget.empty.EmptyListener
 import com.zackyzhang.petadoptable.ui.widget.error.ErrorListener
-import com.zackyzhang.shelteradoptable.ui.mapper.ShelterMapper
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_shelters.*
 import org.jetbrains.anko.AnkoLogger
@@ -31,9 +31,6 @@ import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/18/17.
- */
 class SheltersFragment : Fragment(), AnkoLogger {
 
     companion object {
@@ -49,7 +46,7 @@ class SheltersFragment : Fragment(), AnkoLogger {
         }
     }
 
-    lateinit var zipCode: String
+    private lateinit var zipCode: String
 
     var isLoadingMore = false
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -93,20 +90,20 @@ class SheltersFragment : Fragment(), AnkoLogger {
         super.onDestroy()
     }
 
-    fun provideViewModel() {
+    private fun provideViewModel() {
         browseSheltersViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(BrowseSheltersViewModel::class.java)
     }
 
-    fun viewModelObserve() {
+    private fun viewModelObserve() {
         browseSheltersViewModel.getShelters().observe(this,
                 Observer<Resource<List<ShelterView>>> {
                     if (it != null) this.handleDataState(it.status, it.data, it.message)
                 })
     }
 
-    fun handleDataState(resourceState: ResourceState, data: List<ShelterView>?,
-                        message: String?) {
+    private fun handleDataState(resourceState: ResourceState, data: List<ShelterView>?,
+                                message: String?) {
         when (resourceState) {
             ResourceState.LOADING -> setupScreenForLoadingState()
             ResourceState.SUCCESS -> setupScreenForSuccess(data)
@@ -114,14 +111,14 @@ class SheltersFragment : Fragment(), AnkoLogger {
         }
     }
 
-    fun setupScreenForLoadingState() {
+    private fun setupScreenForLoadingState() {
         progress.visibility = View.VISIBLE
         if (!isLoadingMore) recyclerView.visibility = View.GONE
         viewEmpty.visibility = View.GONE
         viewError.visibility = View.GONE
     }
 
-    fun setupScreenForSuccess(data: List<ShelterView>?) {
+    private fun setupScreenForSuccess(data: List<ShelterView>?) {
         viewError.visibility = View.GONE
         progress.visibility = View.GONE
         if (data != null && data.isNotEmpty()) {
@@ -133,7 +130,7 @@ class SheltersFragment : Fragment(), AnkoLogger {
         isLoadingMore = false
     }
 
-    fun setupScreenForError(message: String?) {
+    private fun setupScreenForError(message: String?) {
         progress.visibility = View.GONE
         recyclerView.visibility = View.GONE
         viewEmpty.visibility = View.GONE
@@ -145,13 +142,13 @@ class SheltersFragment : Fragment(), AnkoLogger {
         browseSheltersViewModel.fetchShelters(BuildConfig.PETFINDER_API_KEY, zipCode, sheltersAdapter.itemCount)
     }
 
-    fun updateListView(data: List<ShelterView>) {
+    private fun updateListView(data: List<ShelterView>) {
         sheltersAdapter.addShelters(data.map { mapper.mapToViewModel(it) })
         sheltersAdapter.notifyDataSetChanged()
         info("Shelters adapter size: ${sheltersAdapter.itemCount}")
     }
 
-    fun setupBrowseRecycler() {
+    private fun setupBrowseRecycler() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         setupAdapter()
@@ -165,8 +162,8 @@ class SheltersFragment : Fragment(), AnkoLogger {
         recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
     }
 
-    fun setupAdapter() {
-        sheltersAdapter.shelterOnClicklistener = {
+    private fun setupAdapter() {
+        sheltersAdapter.shelterOnClickListener = {
             info("shelter click: ${ it.id } ${ it.name }")
             listener.onClickShelter(it)
         }
@@ -174,7 +171,7 @@ class SheltersFragment : Fragment(), AnkoLogger {
             listener.directToShelter(lat, lng, address)
         }
         sheltersAdapter.shelterCallListener = {
-            listener.callShelter(it)
+            if (it.isNotBlank()) listener.callShelter(it)
         }
         recyclerView.adapter = sheltersAdapter
     }

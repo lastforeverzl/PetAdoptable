@@ -21,7 +21,7 @@ class PetViewModel(val status: String, val cityState: String, val age: String, v
         return "$size - $age - $sex - $breed"
     }
 
-    fun getBreedString(): String {
+    private fun getBreedString(): String {
         return this.breeds.joinToString(separator = " & ")
     }
 

@@ -8,12 +8,9 @@ import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/29/17.
- */
-open class GetPetById @Inject constructor(val petsRepository: PetsRepository,
-                                               threadExecutor: ThreadExecutor,
-                                               postExecutionThread: PostExecutionThread) :
+open class GetPetById @Inject constructor(private val petsRepository: PetsRepository,
+                                          threadExecutor: ThreadExecutor,
+                                          postExecutionThread: PostExecutionThread) :
         SingleUseCase<Pet, Map<String, String>>(threadExecutor, postExecutionThread) {
 
     public override fun buildUseCaseObservable(params: Map<String, String>?): Single<Pet> {

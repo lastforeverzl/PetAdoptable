@@ -28,9 +28,6 @@ import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/8/18.
- */
 class SearchResultActivity : AppCompatActivity(), AnkoLogger {
 
     companion object {
@@ -56,12 +53,12 @@ class SearchResultActivity : AppCompatActivity(), AnkoLogger {
     }
 
     lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var zipCode: String
+    private lateinit var zipCode: String
     lateinit var animal: String
-    lateinit var breed: String
-    lateinit var sex: String
+    private lateinit var breed: String
+    private lateinit var sex: String
     lateinit var size: String
-    lateinit var age: String
+    private lateinit var age: String
 
     @Inject lateinit var mapper: PetMapper
     @Inject lateinit var browseSearchViewModel: BrowseSearchViewModel

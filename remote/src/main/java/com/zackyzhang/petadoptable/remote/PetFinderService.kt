@@ -9,9 +9,6 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
-/**
- * Created by lei on 11/29/17.
- */
 interface PetFinderService {
 
     @GET("pet.find?format=json")

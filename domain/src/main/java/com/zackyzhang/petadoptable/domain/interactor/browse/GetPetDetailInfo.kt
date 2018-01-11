@@ -14,9 +14,6 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/29/17.
- */
 open class GetPetDetailInfo @Inject constructor(
         val getShelterById: GetShelterById,
         val getPetById: GetPetById,

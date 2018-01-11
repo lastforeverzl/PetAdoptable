@@ -19,9 +19,6 @@ import org.jetbrains.anko.toast
 
 
 
-/**
- * Created by lei on 1/7/18.
- */
 class SearchActivity : AppCompatActivity(), AnkoLogger {
 
     companion object {
@@ -39,7 +36,7 @@ class SearchActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    lateinit var zipCode: String
+    private lateinit var zipCode: String
     private var animal = ""
     private var breed = ""
     private var sex = ""

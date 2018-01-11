@@ -8,9 +8,6 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/9/18.
- */
 class ClearCacheJobService : JobService(), AnkoLogger {
 
     @Inject lateinit var clearCacheJob: ClearCacheJob

@@ -6,9 +6,6 @@ import com.zackyzhang.petadoptable.ui.job.ClearCacheJobServiceDiModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-/**
- * Created by lei on 1/10/18.
- */
 @Module
 abstract class ServiceBuilder {
 

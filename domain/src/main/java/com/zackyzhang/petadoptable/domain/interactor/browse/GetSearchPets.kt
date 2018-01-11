@@ -8,12 +8,9 @@ import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/8/18.
- */
-open class GetSearchPets @Inject constructor(val petsRepository: PetsRepository,
-                                       threadExecutor: ThreadExecutor,
-                                       postExecutionThread: PostExecutionThread):
+open class GetSearchPets @Inject constructor(private val petsRepository: PetsRepository,
+                                             threadExecutor: ThreadExecutor,
+                                             postExecutionThread: PostExecutionThread):
         FlowableUseCase<List<Pet>, Map<String, String>>(threadExecutor, postExecutionThread) {
 
     public override fun buildUseCaseObservable(params: Map<String, String>?): Flowable<List<Pet>> {

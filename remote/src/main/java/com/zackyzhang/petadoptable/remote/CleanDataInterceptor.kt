@@ -5,9 +5,6 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import java.io.IOException
 
-/**
- * Created by lei on 11/30/17.
- */
 class CleanDataInterceptor : Interceptor {
 
     @Throws(IOException::class)

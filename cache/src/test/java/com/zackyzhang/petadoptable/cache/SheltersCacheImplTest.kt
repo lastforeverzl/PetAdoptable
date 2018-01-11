@@ -13,9 +13,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import kotlin.test.assertEquals
 
-/**
- * Created by lei on 12/22/17.
- */
 @RunWith(RobolectricTestRunner::class)
 class SheltersCacheImplTest {
 

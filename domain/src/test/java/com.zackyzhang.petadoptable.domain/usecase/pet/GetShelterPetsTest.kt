@@ -16,9 +16,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-/**
- * Created by lei on 1/4/18.
- */
 @RunWith(JUnit4::class)
 class GetShelterPetsTest {
 

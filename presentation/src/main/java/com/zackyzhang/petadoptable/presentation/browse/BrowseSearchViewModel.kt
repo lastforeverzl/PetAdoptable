@@ -12,9 +12,6 @@ import com.zackyzhang.petadoptable.presentation.model.PetView
 import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/8/18.
- */
 open class BrowseSearchViewModel @Inject internal constructor(
         private val getPets: GetSearchPets,
         private val petMapper: PetMapper) : ViewModel() {

@@ -12,7 +12,7 @@ import javax.inject.Inject
 open class PetDetailMapper @Inject constructor(): Mapper<PetDetail, Pet, Shelter> {
 
     /**
-     * Map a [Pet] instance to a [PetView] instance
+     * Map a [Pet] instance to a [PetDetail] instance
      */
     override fun mapToPetDetail(pet: Pet, shelter: Shelter): PetDetail {
         return PetDetail(pet.status, pet.cityState, pet.age, pet.size, pet.medias, pet.id, pet.breeds,

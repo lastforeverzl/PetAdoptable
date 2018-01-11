@@ -16,13 +16,10 @@ import com.zackyzhang.petadoptable.ui.R
 import kotlinx.android.synthetic.main.activity_gallery.*
 import org.jetbrains.anko.AnkoLogger
 
-/**
- * Created by lei on 12/31/17.
- */
 class GalleryActivity : AppCompatActivity(), AnkoLogger {
 
     lateinit var urls: List<String>
-    var position = 0
+    private var position = 0
 
     companion object {
 

@@ -5,9 +5,6 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 
-/**
- * Created by lei on 12/18/17.
- */
 //@Module(includes = arrayOf(BaseChildFragmentModule::class))
 @Module
 abstract class AnimalFragmentModule {

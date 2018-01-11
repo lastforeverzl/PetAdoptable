@@ -4,11 +4,8 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.SHELTER_TABLE_NAME
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.SHELTER_TABLE_NAME
 
-/**
- * Created by lei on 12/21/17.
- */
 @Entity(tableName = SHELTER_TABLE_NAME, indices = arrayOf(Index(value = arrayOf("id"), unique = true)))
 data class ShelterDbEntity(
         @PrimaryKey(autoGenerate = true)

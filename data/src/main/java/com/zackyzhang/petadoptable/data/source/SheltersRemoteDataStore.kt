@@ -9,7 +9,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 /**
- * Implementaion of the [SheltersDataStore] interface to provide a means of communicating
+ * Implementation of the [SheltersDataStore] interface to provide a means of communicating
  * with the remote data source
  */
 open class SheltersRemoteDataStore @Inject constructor(private val sheltersRemote: SheltersRemote) :

@@ -1,13 +1,15 @@
 package com.zackyzhang.petadoptable.cache.test.factory
 
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.*
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteBreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteMediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.BreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.MediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 import com.zackyzhang.petadoptable.cache.test.factory.DataFactory.Factory.randomLong
 import com.zackyzhang.petadoptable.cache.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.data.model.PetEntity
 
-/**
- * Created by lei on 12/6/17.
- */
 class PetFactory {
 
     companion object Factory {

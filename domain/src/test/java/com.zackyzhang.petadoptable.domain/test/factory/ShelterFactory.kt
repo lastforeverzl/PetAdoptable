@@ -3,9 +3,6 @@ package com.zackyzhang.shelteradoptable.domain.test.factory
 import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.domain.model.Shelter
 
-/**
- * Created by lei on 12/22/17.
- */
 class ShelterFactory {
 
     companion object Factory {

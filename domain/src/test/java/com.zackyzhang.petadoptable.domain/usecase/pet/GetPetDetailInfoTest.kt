@@ -11,9 +11,6 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-/**
- * Created by lei on 12/31/17.
- */
 @RunWith(JUnit4::class)
 class GetPetDetailInfoTest {
 

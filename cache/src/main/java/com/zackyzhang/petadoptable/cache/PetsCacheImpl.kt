@@ -1,7 +1,12 @@
 package com.zackyzhang.petadoptable.cache
 
 import com.zackyzhang.petadoptable.cache.db.PetAdoptableDatabase
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.*
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteBreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteMediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.BreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.MediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 import com.zackyzhang.petadoptable.cache.mapper.FavoriteEntityMapper
 import com.zackyzhang.petadoptable.cache.mapper.PetEntityMapper
 import com.zackyzhang.petadoptable.data.model.PetEntity

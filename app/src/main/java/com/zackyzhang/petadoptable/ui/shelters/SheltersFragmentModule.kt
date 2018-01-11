@@ -4,9 +4,6 @@ import com.zackyzhang.petadoptable.ui.di.scopes.PerFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-/**
- * Created by lei on 12/18/17.
- */
 //@Module(includes = arrayOf(BaseFragmentModule::class))
 @Module
 abstract class SheltersFragmentModule {

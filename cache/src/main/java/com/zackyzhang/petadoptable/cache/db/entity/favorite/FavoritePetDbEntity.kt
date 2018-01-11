@@ -1,11 +1,8 @@
-package com.zackyzhang.petadoptable.cache.db.entity.petcache
+package com.zackyzhang.petadoptable.cache.db.entity.favorite
 
 import android.arch.persistence.room.*
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.FAVORITE_PET_TABLE_NAME
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.FAVORITE_PET_TABLE_NAME
 
-/**
- * Created by lei on 12/6/17.
- */
 @Entity(tableName = FAVORITE_PET_TABLE_NAME, indices = arrayOf(Index(value = arrayOf("id"), unique = true)))
 data class FavoritePetDbEntity(
         @PrimaryKey(autoGenerate = true) var uid: Long? = null,

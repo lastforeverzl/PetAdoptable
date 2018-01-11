@@ -1,14 +1,11 @@
 package com.zackyzhang.petadoptable.cache.mapper
 
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoriteBreedDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoriteMediaDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteBreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteMediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoritePetDbEntity
 import com.zackyzhang.petadoptable.data.model.PetEntity
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/2/18.
- */
 class FavoriteEntityMapper @Inject constructor(): EntityMapper<FavoritePetDbEntity, PetEntity> {
 
     /**

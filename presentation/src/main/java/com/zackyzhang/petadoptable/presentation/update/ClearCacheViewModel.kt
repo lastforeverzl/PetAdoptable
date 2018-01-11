@@ -9,9 +9,6 @@ import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import io.reactivex.observers.DisposableCompletableObserver
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/10/18.
- */
 open class ClearCacheViewModel @Inject constructor(private val clearCache: ClearCache): ViewModel() {
 
     val clearCacheLiveData: MutableLiveData<Resource<Unit>> = MutableLiveData()

@@ -7,9 +7,6 @@ import android.widget.LinearLayout
 import com.zackyzhang.petadoptable.ui.R
 import kotlinx.android.synthetic.main.view_filter.view.*
 
-/**
- * Created by lei on 1/7/18.
- */
 class FilterView : LinearLayout {
 
     var filterListener: FilterListener? = null
@@ -33,6 +30,7 @@ class FilterView : LinearLayout {
         attrs?.let {
             val ta = context.obtainStyledAttributes(attrs, R.styleable.FilterView, 0, 0)
             filterTitle.text = ta.getString(R.styleable.FilterView_title)
+            ta.recycle()
         }
     }
 

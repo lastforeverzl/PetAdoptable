@@ -9,11 +9,13 @@ import com.zackyzhang.petadoptable.cache.db.dao.MediaDao
 import com.zackyzhang.petadoptable.cache.db.dao.PetDao
 import com.zackyzhang.petadoptable.cache.db.dao.ShelterDao
 import com.zackyzhang.petadoptable.cache.db.entity.ShelterDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.*
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteBreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteMediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.BreedDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.MediaDbEntity
+import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 
-/**
- * Created by lei on 12/6/17.
- */
 @Database(entities = arrayOf(PetDbEntity::class, MediaDbEntity::class, BreedDbEntity::class,
         ShelterDbEntity::class, FavoritePetDbEntity::class, FavoriteMediaDbEntity::class,
         FavoriteBreedDbEntity::class), version = 1)

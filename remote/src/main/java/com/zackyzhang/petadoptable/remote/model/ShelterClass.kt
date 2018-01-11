@@ -1,8 +1,5 @@
 package com.zackyzhang.petadoptable.remote.model
 
-/**
- * Created by lei on 11/30/17.
- */
 data class Shelter(val country: Country?,
                    val longitude: Longitude?,
                    val name: Name?,

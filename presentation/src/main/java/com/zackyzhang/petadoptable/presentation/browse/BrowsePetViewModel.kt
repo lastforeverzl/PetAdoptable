@@ -15,9 +15,6 @@ import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/29/17.
- */
 open class BrowsePetViewModel @Inject constructor(private val getPetDetailInfo: GetPetDetailInfo,
                                                   private val updateFavoritePet: UpdateFavoritePet,
                                                   private val petDetailMapper: PetDetailMapper,

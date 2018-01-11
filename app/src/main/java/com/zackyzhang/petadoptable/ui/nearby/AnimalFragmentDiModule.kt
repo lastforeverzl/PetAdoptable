@@ -7,9 +7,6 @@ import com.zackyzhang.petadoptable.ui.di.scopes.PerChildFragment
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by lei on 12/18/17.
- */
 @Module
 class AnimalFragmentDiModule {
 

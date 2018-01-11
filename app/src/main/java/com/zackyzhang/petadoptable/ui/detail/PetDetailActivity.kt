@@ -33,9 +33,6 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/28/17.
- */
 class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSliderClickListener {
 
     companion object {
@@ -50,12 +47,12 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
         }
     }
 
-    lateinit var petId: String
-    lateinit var shelterId: String
-    lateinit var petDetail: PetDetailViewModel
-    lateinit var urls: List<String>
-    lateinit var favoriteIcon: MenuItem
-    var isFavoritePet: Boolean = false
+    private lateinit var petId: String
+    private lateinit var shelterId: String
+    private lateinit var petDetail: PetDetailViewModel
+    private lateinit var urls: List<String>
+    private lateinit var favoriteIcon: MenuItem
+    private var isFavoritePet: Boolean = false
 
     @Inject lateinit var mapper: PetDetailMapper
     @Inject lateinit var browsePetViewModelFactory: BrowsePetViewModelFactory

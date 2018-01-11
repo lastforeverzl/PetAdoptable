@@ -3,9 +3,6 @@ package com.zackyzhang.petadoptable.data.test.factory
 import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.domain.model.Pet
 
-/**
- * Created by lei on 12/3/17.
- */
 class PetFactory {
 
     companion object Factory {

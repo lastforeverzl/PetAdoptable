@@ -15,16 +15,13 @@ import kotlinx.android.synthetic.main.item_shelter.view.*
 import org.jetbrains.anko.AnkoLogger
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/22/17.
- */
 class SheltersAdapter @Inject constructor() : RecyclerView.Adapter<SheltersAdapter.ViewHolder>(),
         AnkoLogger {
 
     @Inject lateinit var activity: MainActivity
     private var shelters = mutableListOf<ShelterViewModel>()
 
-    lateinit var shelterOnClicklistener: (ShelterViewModel) -> Unit
+    lateinit var shelterOnClickListener: (ShelterViewModel) -> Unit
     lateinit var shelterDirectionListener: (String, String, String) -> Unit
     lateinit var shelterCallListener: (String) -> Unit
 
@@ -73,7 +70,7 @@ class SheltersAdapter @Inject constructor() : RecyclerView.Adapter<SheltersAdapt
                 shelterCallText.setTextColor(ContextCompat.getColor(activity, R.color.colorGrayInactive))
             }
             shelterEmail.text = shelter.email
-            shelterLayout.setOnClickListener { shelterOnClicklistener(shelter) }
+            shelterLayout.setOnClickListener { shelterOnClickListener(shelter) }
             shelterDirection.setOnClickListener {
                 shelterDirectionListener(shelter.latitude, shelter.longitude, shelter.address)
             }

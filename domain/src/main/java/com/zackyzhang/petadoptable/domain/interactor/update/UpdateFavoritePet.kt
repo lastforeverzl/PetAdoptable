@@ -8,10 +8,7 @@ import com.zackyzhang.petadoptable.domain.repository.PetsRepository
 import io.reactivex.Completable
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/28/17.
- */
-open class UpdateFavoritePet @Inject constructor(val petsRepository: PetsRepository,
+open class UpdateFavoritePet @Inject constructor(private val petsRepository: PetsRepository,
                                                  threadExecutor: ThreadExecutor,
                                                  postExecutionThread: PostExecutionThread) :
         CompletableUseCase<Pet>(threadExecutor, postExecutionThread) {

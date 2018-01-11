@@ -19,9 +19,6 @@ import org.junit.runners.JUnit4
 import org.mockito.Captor
 import org.mockito.Mock
 
-/**
- * Created by lei on 12/8/17.
- */
 @RunWith(JUnit4::class)
 class BrowsePetsViewModelTest {
 

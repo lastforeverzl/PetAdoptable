@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Created by lei on 12/31/17.
- */
-/**
  * Representation for a [PetViewModel] fetched from an external layer data source
  */
 class PetDetailViewModel(val petStatus: String, val petCityState: String, val petAge: String, val petSize: String,
@@ -27,7 +24,7 @@ class PetDetailViewModel(val petStatus: String, val petCityState: String, val pe
         return "$size - $age - $sex - $breed"
     }
 
-    fun getBreedString(): String {
+    private fun getBreedString(): String {
         return this.petBreeds.joinToString(separator = " & ")
     }
 

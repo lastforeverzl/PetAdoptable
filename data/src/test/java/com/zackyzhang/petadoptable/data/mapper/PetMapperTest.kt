@@ -9,10 +9,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import kotlin.test.assertEquals
 
-/**
- * Created by lei on 12/3/17.
- */
-
 @RunWith(JUnit4::class)
 class PetMapperTest {
     private lateinit var petMapper: PetMapper

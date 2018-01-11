@@ -1,18 +1,15 @@
 package com.zackyzhang.petadoptable.cache.db.dao
 
 import android.arch.persistence.room.*
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.DELETE_ALL_PETS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_PETS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_PET_BY_ID
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PETS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PETS_BY_ANIMAL
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_PET_BY_ID
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoritePetDbEntity
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.DELETE_ALL_PETS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_FAVORITE_PETS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_FAVORITE_PET_BY_ID
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_PETS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_PETS_BY_ANIMAL
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_PET_BY_ID
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoritePetDbEntity
 import com.zackyzhang.petadoptable.cache.db.entity.petcache.PetDbEntity
 
-/**
- * Created by lei on 12/6/17.
- */
 @Dao
 interface PetDao {
 

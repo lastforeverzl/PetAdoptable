@@ -4,9 +4,6 @@ import com.zackyzhang.petadoptable.domain.model.Pet
 import com.zackyzhang.petadoptable.presentation.model.PetDetailView
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/1/18.
- */
 open class PetDetailToPetMapper @Inject constructor() : Mapper<Pet, PetDetailView> {
 
     override fun mapToView(type: PetDetailView): Pet {

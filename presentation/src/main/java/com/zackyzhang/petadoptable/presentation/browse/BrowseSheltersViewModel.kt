@@ -12,9 +12,6 @@ import com.zackyzhang.petadoptable.presentation.model.ShelterView
 import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/21/17.
- */
 open class BrowseSheltersViewModel @Inject constructor(
         private val getShelters: GetShelters,
         private val shelterMapper: ShelterMapper) : ViewModel() {

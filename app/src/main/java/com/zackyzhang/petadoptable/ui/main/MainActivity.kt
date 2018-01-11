@@ -1,5 +1,6 @@
 package com.zackyzhang.petadoptable.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -24,9 +25,6 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/16/17.
- */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger,
         PetOnClickListener, ShelterOnClickListener {
 
@@ -111,6 +109,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, AnkoLogger
     /**
      * Avoid fragments overlapping
      */
+    @SuppressLint("MissingSuperCall")
     override fun onSaveInstanceState(outState: Bundle?) {
 //        super.onSaveInstanceState(outState)
     }

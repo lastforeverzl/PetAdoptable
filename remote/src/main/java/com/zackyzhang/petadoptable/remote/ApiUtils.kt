@@ -4,9 +4,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-/**
- * Created by lei on 11/30/17.
- */
 object ApiUtils {
     fun cleanInvalidSymbol(json: String): String {
         return json
@@ -15,14 +12,14 @@ object ApiUtils {
                 .replace("@version", "version")
                 .replace("@size", "size")
                 .replace("@id", "id")
-                .replace("@xmlns:xsi", "xmls_xsi")
+                .replace("@xmlns:xsi", "xmlns_xsi")
                 .replace("@xsi:noNamespaceSchemaLocation", "xsi_noNamespaceSchemaLocation")
     }
 
     fun fixBreedObject(json: String): String {
         val jsonParser = JsonParser()
-        val jsonElments = jsonParser.parse(json)
-        val jsonObj = jsonElments.asJsonObject
+        val jsonElements = jsonParser.parse(json)
+        val jsonObj = jsonElements.asJsonObject
 
         val petFinder = jsonObj!!.getAsJsonObject("petfinder")
         if (petFinder.has("pets")) {

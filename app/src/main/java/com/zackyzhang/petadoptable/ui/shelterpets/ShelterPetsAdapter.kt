@@ -16,14 +16,11 @@ import kotlinx.android.synthetic.main.shelter_pets_header.view.*
 import org.jetbrains.anko.AnkoLogger
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/4/18.
- */
 class ShelterPetsAdapter @Inject constructor(private val activity: ShelterPetsActivity) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(), AnkoLogger {
 
-    val TYPE_HEADER = 0
-    val TYPE_NORMAL = 1
+    private val TYPE_HEADER = 0
+    private val TYPE_NORMAL = 1
     private lateinit var phone: String
     private lateinit var email: String
     private lateinit var lat: String
@@ -122,7 +119,7 @@ class ShelterPetsAdapter @Inject constructor(private val activity: ShelterPetsAc
                 animalInfo.text = this.getPetInfo()
                 animalLocation.text = pet.cityState
 
-                //todo("try using kotlin extension function for Glide")
+                //todo("Use kotlin extension function for Glide")
                 if (pet.medias.isNotEmpty()) {
                     Glide.with(itemView.context)
                             .asBitmap()

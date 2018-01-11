@@ -4,9 +4,6 @@ import com.zackyzhang.petadoptable.data.model.ShelterEntity
 import com.zackyzhang.petadoptable.data.test.factory.DataFactory.Factory.randomUuid
 import com.zackyzhang.petadoptable.domain.model.Shelter
 
-/**
- * Created by lei on 12/22/17.
- */
 class SheltersFactory {
 
     companion object Factory {

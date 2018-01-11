@@ -8,10 +8,7 @@ import com.zackyzhang.petadoptable.domain.repository.SheltersRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/31/17.
- */
-open class GetShelterById @Inject constructor(val sheltersRepository: SheltersRepository,
+open class GetShelterById @Inject constructor(private val sheltersRepository: SheltersRepository,
                                               threadExecutor: ThreadExecutor,
                                               postExecutionThread: PostExecutionThread) :
         SingleUseCase<Shelter, Map<String, String>>(threadExecutor, postExecutionThread) {

@@ -6,9 +6,6 @@ import com.zackyzhang.petadoptable.ui.di.scopes.PerService
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by lei on 1/10/18.
- */
 @Module
 class ClearCacheJobServiceDiModule {
 

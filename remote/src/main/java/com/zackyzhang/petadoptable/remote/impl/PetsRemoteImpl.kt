@@ -8,9 +8,6 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
-/**
- * Created by lei on 12/1/17.
- */
 class PetsRemoteImpl @Inject constructor(private val petFinderService: PetFinderService,
                                          private val petEntityMapper: PetEntityMapper) :
         PetsRemote {

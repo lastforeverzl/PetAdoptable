@@ -9,9 +9,6 @@ import com.zackyzhang.petadoptable.presentation.data.ResourceState
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
-/**
- * Created by lei on 1/1/18.
- */
 open class CheckFavoriteStatusViewModel @Inject constructor(private val getFavoriteStatus: GetFavoriteStatus) :
         ViewModel() {
 

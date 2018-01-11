@@ -4,16 +4,13 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_BREEDS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_BREED_BY_PET_ID
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_BREEDS
-import com.zackyzhang.petadoptable.cache.db.constants.DbConstans.QUERY_FAVORITE_BREED_BY_PET_ID
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_BREEDS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_BREED_BY_PET_ID
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_FAVORITE_BREEDS
+import com.zackyzhang.petadoptable.cache.db.constants.DbConstants.QUERY_FAVORITE_BREED_BY_PET_ID
+import com.zackyzhang.petadoptable.cache.db.entity.favorite.FavoriteBreedDbEntity
 import com.zackyzhang.petadoptable.cache.db.entity.petcache.BreedDbEntity
-import com.zackyzhang.petadoptable.cache.db.entity.petcache.FavoriteBreedDbEntity
 
-/**
- * Created by lei on 12/6/17.
- */
 @Dao
 interface BreedDao {
 

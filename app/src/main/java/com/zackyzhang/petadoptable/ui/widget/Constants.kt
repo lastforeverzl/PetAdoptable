@@ -1,8 +1,5 @@
 package com.zackyzhang.petadoptable.ui.widget
 
-/**
- * Created by lei on 12/20/17.
- */
 object Constants {
 
     val petSizeMap = mutableMapOf(

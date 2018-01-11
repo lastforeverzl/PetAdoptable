@@ -7,9 +7,6 @@ import com.zackyzhang.petadoptable.ui.di.scopes.PerActivity
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by lei on 1/8/18.
- */
 @Module
 class SearchResultActivityDiModule {
 

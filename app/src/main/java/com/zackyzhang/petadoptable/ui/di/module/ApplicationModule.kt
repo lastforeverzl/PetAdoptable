@@ -112,7 +112,7 @@ open class ApplicationModule {
 
     @Provides
     @PerApplication
-    internal fun providePetFinderServie(): PetFinderService {
+    internal fun providePetFinderService(): PetFinderService {
         return PetFinderServiceFactory.makePetFinderService(BuildConfig.DEBUG)
     }
 

@@ -7,9 +7,6 @@ import com.zackyzhang.petadoptable.presentation.model.PetView
 import com.zackyzhang.petadoptable.presentation.test.factory.DataFactory.Factory.randomUuid
 
 
-/**
- * Created by lei on 12/8/17.
- */
 class PetsFactory {
 
     companion object Factory {

@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Use case used for retrieving a [List] of [Shelter] instances from the [SheltersRepository]
  */
-open class GetShelters @Inject constructor(val sheltersRepository: SheltersRepository,
+open class GetShelters @Inject constructor(private val sheltersRepository: SheltersRepository,
                                            threadExecutor: ThreadExecutor,
                                            postExecutionThread: PostExecutionThread) :
         FlowableUseCase<List<Shelter>, Map<String, String>>(threadExecutor, postExecutionThread) {
