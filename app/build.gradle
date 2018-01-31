@@ -13,8 +13,8 @@ android {
         applicationId "com.zackyzhang.petadoptable.ui"
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.02"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "PETFINDER_API_KEY", "\"${petfinder_api_key}\""

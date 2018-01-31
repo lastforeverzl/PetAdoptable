@@ -85,14 +85,23 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
                 Observer<Resource<Boolean>> {
                     if (it != null) this.handleStatusState(it.status, it.data, it.message)
                 })
+        checkFavoriteStatusViewModel.fetchFavoriteStatus(petId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_pet_detail, menu)
-        favoriteIcon = menu!!.findItem(R.id.favoritePet)
-        checkFavoriteStatusViewModel.fetchFavoriteStatus(petId)
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        favoriteIcon = menu!!.findItem(R.id.favoritePet)
+        if (isFavoritePet) {
+            favoriteIcon.setIcon(R.drawable.ic_favorite_white_24px)
+        } else {
+            favoriteIcon.setIcon(R.drawable.ic_favorite_border_24dp)
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -107,6 +116,7 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
                 } else {
                     changeFavoriteStatus(true)
                 }
+                invalidateOptionsMenu()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -227,11 +237,6 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
     private fun changeFavoriteStatus(isFavorite: Boolean) {
         petDetail.petIsFavorite = isFavorite
         browsePetViewModel.updateFavoriteStatus(mapper.mapFromViewModel(petDetail))
-        if (isFavorite) {
-            favoriteIcon.setIcon(R.drawable.ic_favorite_white_24px)
-        } else {
-            favoriteIcon.setIcon(R.drawable.ic_favorite_border_24dp)
-        }
         isFavoritePet = isFavorite
     }
 
@@ -244,13 +249,8 @@ class PetDetailActivity : AppCompatActivity(), AnkoLogger, BaseSliderView.OnSlid
 
     private fun setupFavoriteIconForSuccess(data: Boolean?) {
         data?.let {
-            if (it) {
-                isFavoritePet = true
-                favoriteIcon.setIcon(R.drawable.ic_favorite_white_24px)
-            } else {
-                isFavoritePet = false
-                favoriteIcon.setIcon(R.drawable.ic_favorite_border_24dp)
-            }
+            isFavoritePet = it
+            invalidateOptionsMenu()
         }
     }
 

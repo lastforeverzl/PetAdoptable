@@ -59,9 +59,16 @@ class SplashActivity : AppCompatActivity(), AnkoLogger {
         val client = LocationServices.getFusedLocationProviderClient(this)
         client.lastLocation
                 .addOnSuccessListener {
-                    location -> setupZipCode(location!!) {
-                        startActivity<MainActivity>(MainActivity.ZIP_CODE to it)
-                        finish()
+                    location -> run {
+                        if (location != null) {
+                            setupZipCode(location) {
+                                startActivity<MainActivity>(MainActivity.ZIP_CODE to it)
+                                finish()
+                            }
+                        } else {
+                            startActivity<LocationActivity>()
+                            finish()
+                        }
                     }
                 }
                 .addOnFailureListener {
