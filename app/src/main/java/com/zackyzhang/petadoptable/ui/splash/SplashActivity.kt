@@ -3,9 +3,11 @@ package com.zackyzhang.petadoptable.ui.splash
 import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -60,7 +62,7 @@ class SplashActivity : AppCompatActivity(), AnkoLogger {
         client.lastLocation
                 .addOnSuccessListener {
                     location -> run {
-                        if (location != null) {
+                        if (location != null && isNetworkConnected()) {
                             setupZipCode(location) {
                                 startActivity<MainActivity>(MainActivity.ZIP_CODE to it)
                                 finish()
@@ -82,6 +84,11 @@ class SplashActivity : AppCompatActivity(), AnkoLogger {
         val geoCoder = Geocoder(this, Locale.getDefault())
         val address = geoCoder.getFromLocation(location.latitude, location.longitude, 1)[0]
         function(address.postalCode)
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo != null
     }
 
 }
